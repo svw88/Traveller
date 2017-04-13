@@ -1,0 +1,49 @@
+<div>
+	<nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#/">Traveller</a>
+			</div>
+		</div>
+	</nav>
+	<p></p>
+	<div class="list-group-item">
+		<form class="form-horizontal"  name="signUpForm">
+			<div class="table-dist">
+				<span><label for="email">Email:</label></span>
+				<span>
+					<input type="email" class="form-control" placeholder="Enter email" ng-model="signUp.Email" required>
+				</span>
+			</div>
+			<div>
+				<p></p>
+			</div>
+			<div class="table-dist">
+				<span><label for="pwd">Password:</label></span>
+				<span>
+					<input type="password" class="form-control" placeholder="Enter password" ng-model="signUp.Password" required>
+				</span>
+			</div>
+			<p></p>
+			<div class="table-dist">
+				<span>
+					<button type="button" class="btn btn-success btn-block" ng-click="login()">
+						Login
+					</button></span>
+				<span>
+					<button type="button" class="btn btn-success btn-block" ng-click="save()">
+						Sign Up
+					</button></span>
+			</div>
+	</div>
+	</form>
+</div>
+<div>
+
+	<footer>
+		<p>
+			&copy; Copyright  by The Traveller Corporation
+		</p>
+	</footer>
+</div>
+</div>

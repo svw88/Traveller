@@ -1,0 +1,59 @@
+<div>
+	<nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#/">Traveller</a>
+			</div>
+		</div>
+	</nav>
+	<p></p>
+	<div class="list-group-item">
+		<form class="form-group">
+			<div class="table-dist">
+				<span><label class="control-label col-sm-2">Name:</label></span>
+				<span>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" ng-model="event.name">
+					</div></span>
+			</div>
+			<div class="table-dist">
+				<span><label class="control-label col-sm-2">Type:</label></span>
+				<span>
+					<div class="col-sm-10">
+						<select class="form-control" ng-init="event.type = event.type || 'Club'" ng-model="event.type">
+							<option value="Club">Club</option>
+							<option>Bar</option>
+						</select>
+					</div></span>
+			</div>
+			<div class="table-dist">
+				<span><label class="control-label col-sm-2">Date:</label></span>
+				<span>
+					<div class="col-sm-10 input-group date">
+						<input type="text" class="form-control" ng-model="event.date">
+						<span class="input-group-addon"> <span class="glyphicon glyphicon-calendar"></span> </span>
+					</div></span>
+			</div>
+			<input type="file" class="form-control" fileread="event.img"/>
+			<p></p>
+			<div class="table-dist">
+				<span><a href="#/login">
+					<button class="btn btn-success btn-block" ng-click="create()">
+						Create
+					</button> </a></span>
+				<span><a href="#/login">
+					<button class="btn btn-success btn-block">
+						Close
+					</button> </a></span>
+			</div>
+		</form>
+	</div>
+	<div>
+
+		<footer>
+			<p>
+				&copy; Copyright  by The Traveller Corporation
+			</p>
+		</footer>
+	</div>
+</div>
