@@ -69,21 +69,23 @@
 </div>
 <p></p>
 <div class="list-group-item">
-	<div class="event-box" ng-repeat="item in events">		
+	<div class="event-box" ng-repeat="item in events">
 		<div class="table-dist">
-			<span style="font-weight: bold">{{item.Name}}</span>
 			<span>
-				<div class="table-dist">
-					<span><div></div></span>
-					<span style="text-align: right">{{type(item.Type)}}</span>
+				<div class="event-img"><img ng-src="data:image/PNG;base64,{{item.Image}}"/>
 				</div></span>
-		</div>
-		<div class="table-dist">
-			<span></span>
 			<span>
+				<div class="navbar-header">
+					<label class="pull-left">{{item.Name}}</label>
+					<label class ="pull-right">{{type(item.Type)}}</label>
+				</div>
+				<br>
 				<div class="table-dist">
-					<span>{{item.Date | jsDate | date:"hh:mm dd/MM/yyyy"}}</span>
-					<span><img ng-src="data:image/PNG;base64,{{item.Image}}"/></span>
+					<span>
+						<div class="table-dist">
+							<span><label>Date:</label></span>
+							<span>{{item.Date | jsDate | date:"hh:mm dd/MM/yyyy"}}</span>
+						</div></span>
 				</div></span>
 		</div>
 	</div>

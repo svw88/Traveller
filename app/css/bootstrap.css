@@ -5268,6 +5268,8 @@ a.thumbnail.active {
   display: block;
   margin-right: 20%;
   margin-left: 20%;
+  margin: 0 auto;
+  max-width: 600px;
   background-color: #ffffff;
   border: 1px solid #ecf0f1;
 }
@@ -7048,6 +7050,11 @@ div.table-dist span {
 div.event-box {
     border-bottom: 1px solid #ecf0f1;
     padding: 10px 15px;
+}
+div.event-img {
+    margin-left: 20%;
+    margin-right: 20%;
+    width:100%;
 }
 
 /*# sourceMappingURL=bootstrap.css.map */
