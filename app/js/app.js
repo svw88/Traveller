@@ -39,13 +39,6 @@ app.service("TravelerService", function($http) {
 
 	};
 
-	travelerService.save = function(entry) {
-
-		$http.post("data/users.json", entry);
-		console.log(entry);
-
-	};
-
 	travelerService.create = function(entry) {
 		$http({
 			method : 'POST',
@@ -53,6 +46,19 @@ app.service("TravelerService", function($http) {
 				'Content-Type' : 'application/json; charset=utf-8'
 			},
 			url : 'http://localhost:8327/Service1.svc/create',
+			data : entry
+		});
+		console.log(entry);
+
+	};
+	
+	travelerService.register = function(entry) {
+		$http({
+			method : 'POST',
+			headers : {
+				'Content-Type' : 'application/json; charset=utf-8'
+			},
+			url : 'http://localhost:8327/Service1.svc/register',
 			data : entry
 		});
 		console.log(entry);
@@ -66,8 +72,8 @@ app.service("TravelerService", function($http) {
 app.controller("LoginDataController", ["$scope", "$routeParams", "$location", "TravelerService",
 function($scope, $routeParams, $location, TravelerService) {
 
-	$scope.save = function() {
-		TravelerService.save($scope.signUp);
+	$scope.register = function() {
+		TravelerService.register($scope.signUp);
 		$location.path("/");
 	};
 
