@@ -51,7 +51,7 @@ app.service("TravelerService", function($http) {
 		console.log(entry);
 
 	};
-	
+
 	travelerService.register = function(entry) {
 		$http({
 			method : 'POST',
@@ -62,6 +62,15 @@ app.service("TravelerService", function($http) {
 			data : entry
 		});
 		console.log(entry);
+
+	};
+
+	travelerService.login = function(entry) {
+
+		return $http.get("http://localhost:8327/Service1.svc/login/" + entry.Email + "/" + entry.Password).then(function(data) {
+
+			return data.data;
+		});
 
 	};
 
@@ -78,7 +87,12 @@ function($scope, $routeParams, $location, TravelerService) {
 	};
 
 	$scope.login = function() {
-		$location.path("/login");
+		TravelerService.login($scope.signUp).then(function(response) {;
+			if (response == true) {
+				$location.path("/login");
+			};
+		});
+
 	};
 }]);
 
