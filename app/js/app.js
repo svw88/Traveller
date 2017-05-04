@@ -6,7 +6,7 @@ app.config(function($routeProvider, $locationProvider) {
 		templateUrl : "views/main.html"
 	}).when("/login", {
 		templateUrl : "views/login.html",
-		controller : "EventsController"
+		controller : "MyEventsController"
 	}).when("/sign", {
 		templateUrl : "views/sign-up.html",
 		controller : "LoginDataController"
@@ -115,21 +115,33 @@ function($scope, userId, $routeParams, $location, TravelerService) {
 app.controller("EventsController", ["$scope", "userId", "$routeParams", "$location", "TravelerService", "myConfig",
 function($scope, userId, $routeParams, $location, TravelerService, myConfig) {
 
-	if (userId.userId == " ") {
-		TravelerService.getEvents().then(function(response) {
-			$scope.events = response;
-			console.log($scope.events);
-		});
-	} else {
-		TravelerService.getMyEvents(userId.userId).then(function(response) {
-			$scope.events = response;
-			console.log($scope.events);
-		});
-	};
+	TravelerService.getEvents().then(function(response) {
+		$scope.events = response;
+		console.log($scope.events);
+	});
+
 	$scope.type = function(typeId) {
 		return myConfig[typeId];
 	};
 
+}]);
+
+app.controller("MyEventsController", ["$scope", "userId", "$routeParams", "$location", "TravelerService", "myConfig",
+function($scope, userId, $routeParams, $location, TravelerService, myConfig) {
+
+	if (userId.userId != " ") {
+		TravelerService.getMyEvents(userId.userId).then(function(response) {
+			$scope.events = response;
+			console.log($scope.events);
+		});
+
+		$scope.type = function(typeId) {
+			return myConfig[typeId];
+		};
+	} else {
+	$location.path("/");
+	};
+	
 }]);
 
 app.controller("CreateEventController", ["$scope", "userId", "$routeParams", "$location", "TravelerService", "myConfig",
