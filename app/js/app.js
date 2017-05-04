@@ -139,9 +139,9 @@ function($scope, userId, $routeParams, $location, TravelerService, myConfig) {
 			return myConfig[typeId];
 		};
 	} else {
-	$location.path("/");
+		$location.path("/");
 	};
-	
+
 }]);
 
 app.controller("CreateEventController", ["$scope", "userId", "$routeParams", "$location", "TravelerService", "myConfig",
@@ -149,34 +149,37 @@ function($scope, userId, $routeParams, $location, TravelerService, myConfig) {
 
 	$scope.create = function() {
 
-		var img = new Image();
-		img.src = $scope.event.img;
-		img.onload = function() {
-			var canvas = document.createElement("canvas");
-			var ctx = canvas.getContext("2d");
-			canvas.width = 150;
-			canvas.height = 150;
-			ctx.drawImage(img, 5, 5, 150, 150);
+		if (userId.userId != " ") {
+			var img = new Image();
+			img.src = $scope.event.img;
+			img.onload = function() {
+				var canvas = document.createElement("canvas");
+				var ctx = canvas.getContext("2d");
+				canvas.width = 150;
+				canvas.height = 150;
+				ctx.drawImage(img, 5, 5, 150, 150);
 
-			var temp = {
-				Name : $scope.event.name,
-				Description : "Test",
-				Type : 0,
-				Date : $scope.event.date,
-				Image : canvas.toDataURL("image/png"),
-				UserId : userId.userId
+				var temp = {
+					Name : $scope.event.name,
+					Description : "Test",
+					Type : 0,
+					Date : $scope.event.date,
+					Image : canvas.toDataURL("image/png"),
+					UserId : userId.userId
+				};
+
+				angular.forEach(myConfig, function(v1, k1) {//this is nested angular.forEach loop
+					if (v1 == $scope.event.type) {
+						temp["Type"] = k1;
+					};
+				});
+				console.log(temp);
+
+				TravelerService.create(temp);
 			};
 
-			angular.forEach(myConfig, function(v1, k1) {//this is nested angular.forEach loop
-				if (v1 == $scope.event.type) {
-					temp["Type"] = k1;
-				};
-			});
-			console.log(temp);
-			TravelerService.create(temp);
+			$location.path("/login");
 		};
-
-		$location.path("/login");
 	};
 
 }]);
