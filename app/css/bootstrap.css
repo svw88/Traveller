@@ -7057,4 +7057,31 @@ div.event-img {
     width:100%;
 }
 
+div.main-frame {
+	max-width: 500px;
+	margin: 30px auto;
+	border: 1px solid #ecf0f1;
+	border-radius: 4px;
+}
+div.main-frame span{
+	display: inline-block;
+	width: 48%;
+	padding: 10px;
+}
+
+div.main-frame select{
+	width: 100%;
+}
+
+div.main-frame label{
+	margin-left: 40px;
+}
+
+div.my-date-picker span{
+	display: auto;
+	width: auto;
+	padding: 0px;
+}
+
+
 /*# sourceMappingURL=bootstrap.css.map */

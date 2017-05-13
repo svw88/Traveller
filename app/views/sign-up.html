@@ -6,37 +6,30 @@
 			</div>
 		</div>
 	</nav>
-	<p></p>
-	<div class="list-group-item">
-		<form class="form-horizontal"  name="signUpForm">
-			<div class="table-dist">
-				<span><label for="email">Email:</label></span>
-				<span>
-					<input type="email" class="form-control" placeholder="Enter email" ng-model="signUp.Email" required>
-				</span>
-			</div>
-			<div>
-				<p></p>
-			</div>
-			<div class="table-dist">
-				<span><label for="pwd">Password:</label></span>
-				<span>
-					<input type="password" class="form-control" placeholder="Enter password" ng-model="signUp.Password" required>
-				</span>
-			</div>
-			<p></p>
-			<div class="table-dist">
-				<span>
-					<button type="button" class="btn btn-success btn-block" ng-click="login()">
-						Login
-					</button></span>
-				<span>
-					<button type="button" class="btn btn-success btn-block" ng-click="register()">
-						Sign Up
-					</button></span>
-			</div>
+	<div class="main-frame">
+		<div style="margin-top: 10px">
+			<span><label for="email">Email:</label></span>
+			<span>
+				<input type="email" class="form-control" placeholder="Enter email" ng-model="signUp.Email" required>
+			</span>
+		</div>
+		<div>
+			<span><label for="pwd">Password:</label></span>
+			<span>
+				<input type="password" class="form-control" placeholder="Enter password" ng-model="signUp.Password" required>
+			</span>
+		</div>
+		<div style="padding-left: 18px; border-top: 1px solid #ecf0f1">
+			<span>
+				<button type="button" class="btn btn-success btn-block" ng-click="login()">
+					Login
+				</button></span>
+			<span>
+				<button type="button" class="btn btn-success btn-block" ng-click="register()">
+					Sign Up
+				</button></span>
+		</div>
 	</div>
-	</form>
 </div>
 <div>
 
