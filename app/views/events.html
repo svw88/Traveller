@@ -61,44 +61,57 @@
 		</div>
 	</div>
 </nav>
-<p></p>
-<div class="list-group-item">
+<div class="main-frame">
 	<div class="navbar-header">
-		Events in Pretoria
+		Events in {{city}}
 	</div>
 </div>
-<p></p>
-<div class="list-group-item">
-	<div class="event-box" ng-repeat="item in events">
-		<div class="table-dist">
-			<span>
-				<div class="event-img"><img ng-src="data:image/PNG;base64,{{item.Image}}"/>
-				</div></span>
-			<span>
-				<div class="navbar-header">
-					<label class="pull-left">{{item.Name}}</label>
-					<label class ="pull-right">{{type(item.Type)}}</label>
-				</div>
-				<br>
-				<div class="table-dist">
-					<span>
-						<div class="table-dist">
-							<span><label>Date:</label></span>
-							<span>{{item.Date | jsDate | date:"HH:mm dd/MM/yyyy"}}</span>
-						</div></span>
-				</div></span>
-		</div>
+<div class="main-frame">
+	<div class="event-form" ng-repeat="item in events">
+		<span>
+			<div align="center">
+				<img ng-src="data:image/PNG;base64,{{item.Image}}"/>
+			</div> </span>
+		<span>
+			<div>
+				<h1>{{item.Name}}</h1>
+			</div>
+			<br>
+			<div>
+				<p>{{item.Description}}</p>
+			</div>
+		</span>
+		<span>
+			<div>
+				<label>Type:</label><label>{{type(item.Type)}}</label>
+			</div>
+			<br>
+			<div>
+				<label>Date: </label><label>{{item.Date | jsDate | date:"dd/MM/yyyy"}}</label>
+			</div> 
+			<br>
+			<div>
+				<label>Time: </label><label>{{item.Date | jsDate | date:"HH:mm"}}</label>
+			</div>
+			<br>
+			<div>
+				<label>Price:</label><label>{{item.Currency}} {{item.Price}}</label>
+			</div>
+			<br>
+			<div>
+				<label>Website: </label><label><a href="{{item.Site}}">{{item.Site}}</a></label>
+			</div>
+			</span>
 	</div>
-	<p></p>
-	<div class="table-dist">
+	<div style="border-top: 1px solid #ecf0f1">
 		<span>
 			<button type="button" class="btn btn-success btn-block">
 				Previous
-			</button></span>
+			</button> </span>
 		<span>
 			<button type="button" class="btn btn-success btn-block">
 				Next
-			</button></span>
+			</button> </span>
 	</div>
 </div>
 <div>

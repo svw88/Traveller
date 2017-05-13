@@ -3,14 +3,15 @@ var app = angular.module('travelerWeb', ["ngRoute"]);
 app.config(function($routeProvider, $locationProvider) {
 	$locationProvider.hashPrefix('');
 	$routeProvider.when("/", {
-		templateUrl : "views/main.html"
+		templateUrl : "views/main.html",
+		controller : "MainController"
 	}).when("/login", {
 		templateUrl : "views/login.html",
 		controller : "MyEventsController"
 	}).when("/sign", {
 		templateUrl : "views/sign-up.html",
 		controller : "LoginDataController"
-	}).when("/events", {
+	}).when("/events/:country/:state/:city", {
 		templateUrl : "views/events.html",
 		controller : "EventsController"
 	}).when("/create", {
@@ -36,9 +37,9 @@ app.service("TravelerService", function($http) {
 
 	var travelerService = {};
 
-	travelerService.getEvents = function() {
+	travelerService.getEvents = function(entry) {
 
-		return $http.get("http://localhost:8327/Service1.svc/events/10/10/10").then(function(data) {
+		return $http.get("http://localhost:8327/Service1.svc/events/" + entry.country + "/" + entry.state + "/" + entry.city).then(function(data) {
 
 			return data.data;
 		});
@@ -48,6 +49,33 @@ app.service("TravelerService", function($http) {
 	travelerService.getMyEvents = function(entry) {
 
 		return $http.get("http://localhost:8327/Service1.svc/myevents/" + entry).then(function(data) {
+
+			return data.data;
+		});
+
+	};
+
+	travelerService.getCountries = function() {
+
+		return $http.get("http://localhost:8327/Service1.svc/countries").then(function(data) {
+
+			return data.data;
+		});
+
+	};
+
+	travelerService.getStates = function(entry) {
+
+		return $http.get("http://localhost:8327/Service1.svc/states/" + entry).then(function(data) {
+
+			return data.data;
+		});
+
+	};
+
+	travelerService.getCities = function(entry) {
+
+		return $http.get("http://localhost:8327/Service1.svc/cities/" + entry).then(function(data) {
 
 			return data.data;
 		});
@@ -112,10 +140,35 @@ function($scope, userId, $routeParams, $location, TravelerService) {
 	};
 }]);
 
+app.controller("MainController", ["$scope", "$routeParams", "$location", "TravelerService",
+function($scope, $routeParams, $location, TravelerService) {
+
+	TravelerService.getCountries().then(function(response) {
+		$scope.countries = response;
+	});
+
+	$scope.getStates = function() {
+		TravelerService.getStates($scope.country).then(function(response) {
+			$scope.states = response;
+		});
+	};
+
+	$scope.getCities = function() {
+		TravelerService.getCities($scope.state).then(function(response) {
+			$scope.cities = response;
+		});
+	};
+
+	$scope.search = function() {
+		$location.path("/events/" + $scope.country + "/" + $scope.state + "/" + $scope.city);
+	};
+
+}]);
+
 app.controller("EventsController", ["$scope", "userId", "$routeParams", "$location", "TravelerService", "myConfig",
 function($scope, userId, $routeParams, $location, TravelerService, myConfig) {
 
-	TravelerService.getEvents().then(function(response) {
+	TravelerService.getEvents($routeParams).then(function(response) {
 		$scope.events = response;
 		console.log($scope.events);
 	});
@@ -123,6 +176,8 @@ function($scope, userId, $routeParams, $location, TravelerService, myConfig) {
 	$scope.type = function(typeId) {
 		return myConfig[typeId];
 	};
+	
+	$scope.city = $routeParams.city;
 
 }]);
 
@@ -147,6 +202,21 @@ function($scope, userId, $routeParams, $location, TravelerService, myConfig) {
 app.controller("CreateEventController", ["$scope", "userId", "$routeParams", "$location", "TravelerService", "myConfig",
 function($scope, userId, $routeParams, $location, TravelerService, myConfig) {
 
+	TravelerService.getCountries().then(function(response) {
+		$scope.countries = response;
+	});
+
+	$scope.getStates = function() {
+		TravelerService.getStates($scope.event.country).then(function(response) {
+			$scope.states = response;
+		});
+	};
+
+	$scope.getCities = function() {
+		TravelerService.getCities($scope.event.state).then(function(response) {
+			$scope.cities = response;
+		});
+	};
 	$scope.create = function() {
 
 		if (userId.userId != " ") {
@@ -155,19 +225,21 @@ function($scope, userId, $routeParams, $location, TravelerService, myConfig) {
 			img.onload = function() {
 				var canvas = document.createElement("canvas");
 				var ctx = canvas.getContext("2d");
-				canvas.width = 150;
-				canvas.height = 150;
-				ctx.drawImage(img, 5, 5, 150, 150);
+				canvas.width = 300;
+				canvas.height = 400;
+				ctx.drawImage(img, 5, 5, 300, 400);
 
 				var temp = {
 					Name : $scope.event.name,
 					Description : $scope.event.description,
 					Type : 0,
+					Price : $scope.event.price,
+					Currency : $scope.event.currency,
 					Country : $scope.event.country,
 					State : $scope.event.state,
 					City : $scope.event.city,
 					Site : $scope.event.site,
-					Date : $scope.event.date + " " + $scope.event.time ,
+					Date : $scope.event.date + " " + $scope.event.time,
 					Image : canvas.toDataURL("image/png"),
 					UserId : userId.userId
 				};
@@ -221,9 +293,10 @@ function() {
 			dateget : "="
 		},
 		link : function(scope, element, attributes) {
-			element.on("focusout", function() {		
-						scope.dateget = $(this).val();		
+			element.on("focusout", function() {
+				scope.dateget = $(this).val();
 			});
 		}
 	};
 }]);
+
