@@ -161,9 +161,13 @@ function($scope, userId, $routeParams, $location, TravelerService, myConfig) {
 
 				var temp = {
 					Name : $scope.event.name,
-					Description : "Test",
+					Description : $scope.event.description,
 					Type : 0,
-					Date : $scope.event.date,
+					Country : $scope.event.country,
+					State : $scope.event.state,
+					City : $scope.event.city,
+					Site : $scope.event.site,
+					Date : $scope.event.date + " " + $scope.event.time ,
 					Image : canvas.toDataURL("image/png"),
 					UserId : userId.userId
 				};
@@ -205,6 +209,20 @@ function() {
 					});
 				};
 				reader.readAsDataURL(changeEvent.target.files[0]);
+			});
+		}
+	};
+}]);
+
+app.directive("dateget", [
+function() {
+	return {
+		scope : {
+			dateget : "="
+		},
+		link : function(scope, element, attributes) {
+			element.on("focusout", function() {		
+						scope.dateget = $(this).val();		
 			});
 		}
 	};

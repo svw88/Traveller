@@ -35,21 +35,24 @@
 			<span><label for="country">Country:</label></span>
 			<span>
 				<select class="form-control" ng-init="event.country = event.country || 'Country'" ng-model="event.country">
-					<option value="Country">South-Africa</option>
+					<option value="Country">Country</option>
+					<option>South-Africa</option>
 				</select></span>
 		</div>
 		<div>
 			<span><label for="state">State:</label></span>
 			<span>
 				<select class="form-control" ng-init="event.state = event.state || 'State'" ng-model="event.state">
-					<option value="State">Gauteng</option>
+					<option value="State">State</option>
+					<option>Gauteng</option>
 				</select></span>
 		</div>
 		<div>
 			<span><label for="city">City:</label></span>
 			<span>
 				<select class="form-control" ng-init="event.city = event.city || 'City'" ng-model="event.city">
-					<option value="City">Pretoria</option>
+					<option value="City">City</option>
+					<option>Pretoria</option>
 				</select></span>
 		</div>
 		<div>
@@ -62,18 +65,25 @@
 		<span><label>Date:</label></span>
 		<span>
 			<div class='input-group date' id='datetimepicker1' style="display: inline-block; width: 100%">
-				<input style="width: 75%" type='text' class="form-control" ng-init="event.date = event.date || 'DD-MM-YYYY'" ng-model="event.date" />
+				<input style="width: 75%" type='text' class="form-control" dateget="event.date"/>
 				<span style="width: 25%; padding: 0px" class="input-group-addon"> <span style="padding: 5px" class="glyphicon glyphicon-calendar"></span> </span>
 			</div> </span>
 		<script type="text/javascript">
 			$(function() {
 				$('#datetimepicker1').datetimepicker({
-					format : 'DD-MM-YYYY',
+					format : 'DD/MM/YYYY',
 					defaultDate : new Date(),
 					minDate : new Date()
 				});
 			});
 		</script>
+		<div>
+			<span><label>Time:</label></span>
+			<span>
+				<div>
+					<input type="text" class="form-control" ng-model="event.time">
+				</div></span>
+		</div>
 		<div>
 			<span><label>Image:</label></span>
 			<span>
