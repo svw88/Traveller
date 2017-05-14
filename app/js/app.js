@@ -307,30 +307,53 @@ function($scope, userId, $routeParams, $location, TravelerService, myConfig, $ro
 
 }]);
 
-app.controller("CreateEventController", ["$scope", "userId", "$routeParams", "$location", "TravelerService", "myConfig", "$geolocation",
-function($scope, userId, $routeParams, $location, TravelerService, myConfig, ngGeolocation) {
+app.controller("CreateEventController", ["$scope", "userId", "$routeParams", "$location", "TravelerService", "myConfig", "$geolocation", "$window","$route",
+function($scope, userId, $routeParams, $location, TravelerService, myConfig, ngGeolocation, $window, $route) {
 
-	ngGeolocation.getCurrentPosition().then(function(position) {
-		TravelerService.location(position.coords).then(function(response) {
-			$scope.location = response;
-		}).then(TravelerService.getCountries().then(function(response) {
-			$scope.countries = response;
-		}).then(function() {
-			$scope.countries.splice(0, 0, {
-				Name : $scope.location[6].long_name
+	$window.navigator.permissions.query({
+		'name' : 'geolocation'
+	}).then(function(permissions) {
+		if (permissions.state == 'prompt') {
+			ngGeolocation.getCurrentPosition();
+			$route.reload();
+		} else if (permissions.state == 'granted') {
+			ngGeolocation.getCurrentPosition().then(function(position) {
+				TravelerService.location(position.coords).then(function(response) {
+					$scope.location = response;
+				}).then(TravelerService.getCountries().then(function(response) {
+					$scope.countries = response;
+				}).then(function() {
+					$scope.countries.splice(0, 0, {
+						Name : $scope.location[6].long_name
+					});
+					$scope.country = $scope.countries[0];
+					$scope.states = [{
+						Name : $scope.location[5].long_name
+					}];
+					$scope.state = $scope.states[0];
+					$scope.cities = [{
+						Name : $scope.location[4].long_name
+					}];
+					$scope.city = $scope.cities[0];
+				}));
 			});
-			$scope.country = $scope.countries[0];
-			$scope.states = [{
-				Name : $scope.location[5].long_name
-			}];
-			$scope.state = $scope.states[0];
-			$scope.cities = [{
-				Name : $scope.location[4].long_name
-			}];
-			$scope.city = $scope.cities[0];
-		}));
+		} else {
+			TravelerService.getCountries().then(function(response) {
+				$scope.countries = response;
+			}).then(function() {
+				$scope.country = $scope.countries[0];
+				$scope.states = [{
+					Name : 'Select'
+				}];
+				$scope.state = $scope.states[0];
+				$scope.cities = [{
+					Name : 'Select'
+				}];
+				$scope.city = $scope.cities[0];
+			});
+		}
+		;
 	});
-
 	$scope.getStates = function() {
 		TravelerService.getStates($scope.country.Name).then(function(response) {
 			$scope.states = response;
