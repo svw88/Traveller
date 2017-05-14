@@ -1,4 +1,4 @@
-var app = angular.module('travelerWeb', ["ngRoute"]);
+var app = angular.module('travelerWeb', ["ngRoute", "ngGeolocation"]);
 
 app.config(function($routeProvider, $locationProvider) {
 	$locationProvider.hashPrefix('');
@@ -76,8 +76,12 @@ app.service("TravelerService", function($http) {
 	travelerService.getCities = function(entry) {
 
 		return $http.get("http://localhost:8327/Service1.svc/cities/" + entry).then(function(data) {
+			if (data.data.length > 0) {
+				return data.data;
+			} else {
+				return [{Name: entry}];
+			};
 
-			return data.data;
 		});
 
 	};
@@ -117,6 +121,14 @@ app.service("TravelerService", function($http) {
 
 	};
 
+	travelerService.location = function(entry) {
+
+		return $http.get("http://maps.googleapis.com/maps/api/geocode/json?latlng=" + entry.latitude + "," + entry.longitude + "&sensor=true").then(function(data) {
+			return data.data.results[0].address_components;
+		});
+
+	};
+
 	return travelerService;
 
 });
@@ -140,22 +152,45 @@ function($scope, userId, $routeParams, $location, TravelerService) {
 	};
 }]);
 
-app.controller("MainController", ["$scope", "$routeParams", "$location", "TravelerService",
-function($scope, $routeParams, $location, TravelerService) {
+app.controller("MainController", ["$scope", "$routeParams", "$location", "TravelerService", "$geolocation",
+function($scope, $routeParams, $location, TravelerService, ngGeolocation) {
 
-	TravelerService.getCountries().then(function(response) {
-		$scope.countries = response;
+	ngGeolocation.getCurrentPosition().then(function(position) {
+		TravelerService.location(position.coords).then(function(response) {
+			$scope.location = response;
+		}).then(TravelerService.getCountries().then(function(response) {
+			$scope.countries = response;
+		}).then(function() {
+			$scope.countries.splice(0, 0, {
+				Name : $scope.location[6].long_name
+			});
+			$scope.country = $scope.countries[0];
+			$scope.states = [{
+				Name : $scope.location[5].long_name
+			}];
+			$scope.state = $scope.states[0];
+			$scope.cities = [{
+				Name : $scope.location[4].long_name
+			}];
+			$scope.city = $scope.cities[0];
+		}));
 	});
 
 	$scope.getStates = function() {
-		TravelerService.getStates($scope.country).then(function(response) {
+		TravelerService.getStates($scope.country.Name).then(function(response) {
 			$scope.states = response;
+			$scope.state = $scope.states[0];
+			TravelerService.getCities($scope.state.Name).then(function(response) {
+				$scope.cities = response;
+				$scope.city = $scope.cities[0];
+			});
 		});
 	};
 
 	$scope.getCities = function() {
-		TravelerService.getCities($scope.state).then(function(response) {
+		TravelerService.getCities($scope.state.Name).then(function(response) {
 			$scope.cities = response;
+			$scope.city = $scope.cities[0];
 		});
 	};
 
@@ -176,7 +211,7 @@ function($scope, userId, $routeParams, $location, TravelerService, myConfig) {
 	$scope.type = function(typeId) {
 		return myConfig[typeId];
 	};
-	
+
 	$scope.city = $routeParams.city;
 
 }]);

@@ -23,24 +23,15 @@
 <div class="main-frame">
 	<div style="margin-top: 10px">
 		<span><label for="country">Country</label></span>
-		<span>
-			<select class="form-control" id="country" ng-change="getStates()" ng-model="country">
-				<option ng-repeat="item in countries">{{item.Name}}</option>
-			</select></span>
+		<span> <select class="form-control" id="country" ng-change="getStates()" ng-model="country" ng-options="item.Name for item in countries"></select></span>
 	</div>
 	<div>
 		<span><label for="state">State</label></span>
-		<span>
-			<select class="form-control" id="state" ng-change="getCities()" ng-model="state">
-				<option ng-repeat="item in states">{{item.Name}}</option>
-			</select></span>
+		<span> <select class="form-control" id="state" ng-change="getCities()" ng-model="state" ng-options="item.Name for item in states"></select></span>
 	</div>
 	<div>
 		<span><label for="city">City</label></span>
-		<span>
-			<select class="form-control" id="city" ng-model="city">
-				<option ng-repeat="item in cities">{{item.Name}}</option>
-			</select></span>
+		<span> <select class="form-control" id="city" ng-model="city" ng-options="item.Name for item in cities"></select></span>
 	</div>
 	<div style="border-top: 1px solid #ecf0f1">
 		<button type="button" class="btn btn-success btn-block" ng-click="search()">
