@@ -11,7 +11,7 @@ app.config(function($routeProvider, $locationProvider) {
 	}).when("/sign", {
 		templateUrl : "views/sign-up.html",
 		controller : "LoginDataController"
-	}).when("/events/:country/:state/:city", {
+	}).when("/events/:country/:state/:city/:id", {
 		templateUrl : "views/events.html",
 		controller : "EventsController"
 	}).when("/create", {
@@ -33,15 +33,33 @@ app.factory('userId', function() {
 	};
 });
 
-app.service("TravelerService", function($http) {
+app.service("TravelerService", function($http, $window) {
 
 	var travelerService = {};
 
 	travelerService.getEvents = function(entry) {
 
-		return $http.get("http://localhost:8327/Service1.svc/events/" + entry.country + "/" + entry.state + "/" + entry.city).then(function(data) {
+		return $http.get("http://localhost:8327/Service1.svc/events/" + entry.country + "/" + entry.state + "/" + entry.city + "/" + entry.id).then(function(data) {
+			if (data.data.length > 0) {
+				return data.data;
+			} else {
+				return [{
+				City:	'', 
+				Country: '',
+				Currency: '',
+				Date:'/Date(1495922400000-0300)/',
+				Description: '', 
+				Id: -1, 
+				Image:'0x', 
+				Name : 'No More Events',
+				Price: 0,
+				Site: '', 
+				State: '', 
+				Type: 1,
+				UserId:" "
 
-			return data.data;
+			}];
+			};
 		});
 
 	};
@@ -154,9 +172,10 @@ function($scope, userId, $routeParams, $location, TravelerService) {
 	};
 }]);
 
-app.controller("MainController", ["$scope", "$routeParams", "$location", "TravelerService", "$geolocation",
-function($scope, $routeParams, $location, TravelerService, ngGeolocation) {
-
+app.controller("MainController", ["$scope", "$routeParams", "$location", "TravelerService", "$geolocation", "userId", "$route",
+function($scope, $routeParams, $location, TravelerService, ngGeolocation, userId, $route) {
+	$scope.id = userId.userId;
+	console.log($scope.id);
 	ngGeolocation.getCurrentPosition().then(function(position) {
 		TravelerService.location(position.coords).then(function(response) {
 			$scope.location = response;
@@ -197,13 +216,19 @@ function($scope, $routeParams, $location, TravelerService, ngGeolocation) {
 	};
 
 	$scope.search = function() {
-		$location.path("/events/" + $scope.country + "/" + $scope.state + "/" + $scope.city);
+		$location.path("/events/" + $scope.country.Name + "/" + $scope.state.Name + "/" + $scope.city.Name + "/" + -1);
+	};
+
+	$scope.logout = function() {
+		userId.userId = " ";
+		$route.reload();
 	};
 
 }]);
 
-app.controller("EventsController", ["$scope", "userId", "$routeParams", "$location", "TravelerService", "myConfig",
-function($scope, userId, $routeParams, $location, TravelerService, myConfig) {
+app.controller("EventsController", ["$scope", "$routeParams", "$location", "TravelerService", "myConfig", "userId", "$window",
+function($scope, $routeParams, $location, TravelerService, myConfig, userId, $window) {
+	$scope.id = userId.userId;
 
 	TravelerService.getEvents($routeParams).then(function(response) {
 		$scope.events = response;
@@ -216,10 +241,22 @@ function($scope, userId, $routeParams, $location, TravelerService, myConfig) {
 
 	$scope.city = $routeParams.city;
 
+	$scope.logout = function() {
+		userId.userId = " ";
+	};
+
+	$scope.next = function() {
+		$location.path("/events/" + $routeParams.country + "/" + $routeParams.state + "/" + $routeParams.city + "/" + $scope.events[($scope.events.length - 1)].Id);
+	};
+
+	$scope.prev = function() {
+			$window.history.back();
+	};
+
 }]);
 
-app.controller("MyEventsController", ["$scope", "userId", "$routeParams", "$location", "TravelerService", "myConfig",
-function($scope, userId, $routeParams, $location, TravelerService, myConfig) {
+app.controller("MyEventsController", ["$scope", "userId", "$routeParams", "$location", "TravelerService", "myConfig", "$route",
+function($scope, userId, $routeParams, $location, TravelerService, myConfig, $route) {
 
 	if (userId.userId != " ") {
 		TravelerService.getMyEvents(userId.userId).then(function(response) {
@@ -234,9 +271,17 @@ function($scope, userId, $routeParams, $location, TravelerService, myConfig) {
 		$location.path("/");
 	};
 
+	$scope.logout = function() {
+		userId.userId = " ";
+	};
+
+	$scope.refresh = function() {
+		$route.reload();
+	};
+
 }]);
 
-app.controller("CreateEventController", ["$scope", "userId", "$routeParams", "$location", "TravelerService", "myConfig","$geolocation",
+app.controller("CreateEventController", ["$scope", "userId", "$routeParams", "$location", "TravelerService", "myConfig", "$geolocation",
 function($scope, userId, $routeParams, $location, TravelerService, myConfig, ngGeolocation) {
 
 	ngGeolocation.getCurrentPosition().then(function(position) {
@@ -295,9 +340,9 @@ function($scope, userId, $routeParams, $location, TravelerService, myConfig, ngG
 					Type : 0,
 					Price : $scope.event.price,
 					Currency : $scope.event.currency,
-					Country : $scope.event.country,
-					State : $scope.event.state,
-					City : $scope.event.city,
+					Country : $scope.country.Name,
+					State : $scope.state.Name,
+					City : $scope.city.Name,
 					Site : $scope.event.site,
 					Date : $scope.event.date + " " + $scope.event.time,
 					Image : canvas.toDataURL("image/png"),
@@ -311,7 +356,7 @@ function($scope, userId, $routeParams, $location, TravelerService, myConfig, ngG
 				});
 				console.log(temp);
 
-				TravelerService.create(temp);
+				TravelerService.create(temp).then();
 			};
 
 			$location.path("/login");

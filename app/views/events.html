@@ -4,9 +4,20 @@
 			<ul class="nav navbar-nav pull-left">
 				<li class="dropdown">
 					<a class="dropdown-toggle" data-toggle="dropdown" href="">Menu<span class="caret"></span></a>
-					<ul class="dropdown-menu">
+					<ul class="dropdown-menu" ng-show="id == ' '">
 						<li>
 							<a href="#/sign"><span class="glyphicon glyphicon-log-in"></span> Login</a>
+						</li>
+					</ul>
+					<ul class="dropdown-menu" ng-show="id != ' '">
+						<li>
+							<a href="#/login"><span class="glyphicon"></span>My Events</a>
+						</li>
+						<li>
+							<a href="#/create"><span class="glyphicon"></span>New Event</a>
+						</li>
+						<li>
+							<a href="#/" ng-click="logout()"><span class="glyphicon"></span>Logout</a>
 						</li>
 					</ul>
 				</li>
@@ -67,9 +78,9 @@
 	</div>
 </div>
 <div class="main-frame">
-	<div class="event-form" ng-repeat="item in events">
+	<div class="event-form" ng-repeat="item in events | orderBy: 'Date'">
 		<span>
-			<div align="center">
+			<div align="center" ng-hide="events[0].Name == 'No More Events'">
 				<img ng-src="data:image/PNG;base64,{{item.Image}}"/>
 			</div> </span>
 		<span>
@@ -78,17 +89,18 @@
 			</div>
 			<br>
 			<div>
-				<p>{{item.Description}}</p>
-			</div>
-		</span>
-		<span>
+				<p>
+					{{item.Description}}
+				</p>
+			</div> </span>
+		<span ng-hide="events[0].Name == 'No More Events'">
 			<div>
 				<label>Type:</label><label>{{type(item.Type)}}</label>
 			</div>
 			<br>
 			<div>
 				<label>Date: </label><label>{{item.Date | jsDate | date:"dd/MM/yyyy"}}</label>
-			</div> 
+			</div>
 			<br>
 			<div>
 				<label>Time: </label><label>{{item.Date | jsDate | date:"HH:mm"}}</label>
@@ -100,16 +112,15 @@
 			<br>
 			<div>
 				<label>Website: </label><label><a href="{{item.Site}}">{{item.Site}}</a></label>
-			</div>
-			</span>
+			</div> </span>
 	</div>
 	<div style="border-top: 1px solid #ecf0f1">
 		<span>
-			<button type="button" class="btn btn-success btn-block">
+			<button type="button" class="btn btn-success btn-block" ng-hide="events[0].Id == 1" ng-click="prev()">
 				Previous
 			</button> </span>
 		<span>
-			<button type="button" class="btn btn-success btn-block">
+			<button ng-hide="events[0].Name == 'No More Events'" type="button" class="btn btn-success btn-block" ng-click="next()">
 				Next
 			</button> </span>
 	</div>
