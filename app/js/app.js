@@ -44,21 +44,21 @@ app.service("TravelerService", function($http, $window) {
 				return data.data;
 			} else {
 				return [{
-				City:	'', 
-				Country: '',
-				Currency: '',
-				Date:'/Date(1495922400000-0300)/',
-				Description: '', 
-				Id: -1, 
-				Image:'0x', 
-				Name : 'No More Events',
-				Price: 0,
-				Site: '', 
-				State: '', 
-				Type: 1,
-				UserId:" "
+					City : '',
+					Country : '',
+					Currency : '',
+					Date : '/Date(1495922400000-0300)/',
+					Description : '',
+					Id : -1,
+					Image : '0x',
+					Name : 'No More Events',
+					Price : 0,
+					Site : '',
+					State : '',
+					Type : 1,
+					UserId : " "
 
-			}];
+				}];
 			};
 		});
 
@@ -250,7 +250,10 @@ function($scope, $routeParams, $location, TravelerService, myConfig, userId, $wi
 	};
 
 	$scope.prev = function() {
+		if ($scope.events[0].Id != 0) {
 			$window.history.back();
+		};
+
 	};
 
 }]);
@@ -330,9 +333,9 @@ function($scope, userId, $routeParams, $location, TravelerService, myConfig, ngG
 			img.onload = function() {
 				var canvas = document.createElement("canvas");
 				var ctx = canvas.getContext("2d");
-				canvas.width = 300;
+				canvas.width = 350;
 				canvas.height = 400;
-				ctx.drawImage(img, 5, 5, 300, 400);
+				ctx.drawImage(img, 5, 5, 350, 400);
 
 				var temp = {
 					Name : $scope.event.name,
@@ -343,6 +346,7 @@ function($scope, userId, $routeParams, $location, TravelerService, myConfig, ngG
 					Country : $scope.country.Name,
 					State : $scope.state.Name,
 					City : $scope.city.Name,
+					Addr : $scope.event.no + " " + $scope.event.street + ", " + $scope.event.suburb,
 					Site : $scope.event.site,
 					Date : $scope.event.date + " " + $scope.event.time,
 					Image : canvas.toDataURL("image/png"),
@@ -356,7 +360,7 @@ function($scope, userId, $routeParams, $location, TravelerService, myConfig, ngG
 				});
 				console.log(temp);
 
-				TravelerService.create(temp).then();
+				TravelerService.create(temp);
 			};
 
 			$location.path("/login");

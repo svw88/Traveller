@@ -72,12 +72,12 @@
 		</div>
 	</div>
 </nav>
-<div class="main-frame">
+<div class="main-frame" style="max-width: 900px">
 	<div class="navbar-header">
 		Events in {{city}}
 	</div>
 </div>
-<div class="main-frame">
+<div class="main-frame" style="max-width: 900px">
 	<div class="event-form" ng-repeat="item in events | orderBy: 'Date'">
 		<span>
 			<div align="center" ng-hide="events[0].Name == 'No More Events'">
@@ -92,8 +92,14 @@
 				<p>
 					{{item.Description}}
 				</p>
-			</div> </span>
-		<span ng-hide="events[0].Name == 'No More Events'">
+			</div>
+			<br>
+			<div>
+				<p>
+					<a href="https://www.google.com.br/maps/place/{{item.Addr}},{{item.City}},{{item.State}},{{item.Country}}">{{item.Addr}}</a>
+				</p>
+			</div></span>
+		<span style="margin-top: 10px" ng-hide="events[0].Name == 'No More Events'">
 			<div>
 				<label>Type:</label><label>{{type(item.Type)}}</label>
 			</div>

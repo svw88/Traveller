@@ -43,18 +43,38 @@
 				</div></span>
 		</div>
 		<div style="margin-top: 10px">
-		<span><label for="country">Country:</label></span>
-		<span> <select class="form-control" id="country" ng-change="getStates()" ng-model="country" ng-options="item.Name for item in countries"></select></span>
-	</div>
-	<div>
-		<span><label for="state">State:</label></span>
-		<span> <select class="form-control" id="state" ng-change="getCities()" ng-model="state" ng-options="item.Name for item in states"></select></span>
-	</div>
-	<div>
-		<span><label for="city">City:</label></span>
-		<span> <select class="form-control" id="city" ng-model="city" ng-options="item.Name for item in cities"></select></span>
-	</div>
-
+			<span><label for="country">Country:</label></span>
+			<span> <select class="form-control" id="country" ng-change="getStates()" ng-model="country" ng-options="item.Name for item in countries"></select></span>
+		</div>
+		<div>
+			<span><label for="state">State:</label></span>
+			<span> <select class="form-control" id="state" ng-change="getCities()" ng-model="state" ng-options="item.Name for item in states"></select></span>
+		</div>
+		<div>
+			<span><label for="city">City:</label></span>
+			<span> <select class="form-control" id="city" ng-model="city" ng-options="item.Name for item in cities"></select></span>
+		</div>
+		<div>
+			<span><label>Suburb:</label></span>
+			<span>
+				<div>
+					<input type="text" class="form-control" ng-model="event.suburb">
+				</div></span>
+		</div>
+		<div>
+			<span><label>Street:</label></span>
+			<span>
+				<div>
+					<input type="text" class="form-control" ng-model="event.street">
+				</div></span>
+		</div>
+		<div>
+			<span><label>No:</label></span>
+			<span>
+				<div>
+					<input type="text" class="form-control" ng-model="event.no">
+				</div></span>
+		</div>
 		<div>
 			<span><label>Website:</label></span>
 			<span>
