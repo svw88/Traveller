@@ -1,59 +1,81 @@
-<div>
-	<nav class="navbar navbar-default">
-		<div class="container-fluid">
-			<div class="navbar-header">
-				<ul class="nav navbar-nav pull-left">
-					<li class="dropdown">
-						<a class="dropdown-toggle" data-toggle="dropdown" href="">Menu<span class="caret"></span></a>
-						<ul class="dropdown-menu">
-							<li>
-								<a href="#/login" ng-click="refresh()"><span class="glyphicon"></span>My Events</a>
-							</li>
-							<li>
-								<a href="#/create"><span class="glyphicon"></span>New Event</a>
-							</li>
-							<li>
-								<a href="#/" ng-click="logout()"><span class="glyphicon"></span>Logout</a>
-							</li>
-						</ul>
-					</li>
-				</ul>
-				<a class="navbar-brand" href="#/">Traveller</a>
-				<div class="form-group pull-right">
-					<select class="form-control" id="sel1">
-						<option>English</option>
-					</select>
-				</div>
+<nav class="navbar navbar-default">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<ul class="nav navbar-nav pull-left">
+				<li class="dropdown">
+					<a class="dropdown-toggle" data-toggle="dropdown" href="">Menu<span class="caret"></span></a>
+					<ul class="dropdown-menu">
+						<li>
+							<a href="#/login" ng-click="refresh()"><span class="glyphicon"></span>My Events</a>
+						</li>
+						<li>
+							<a href="#/create"><span class="glyphicon"></span>New Event</a>
+						</li>
+						<li>
+							<a href="#/" ng-click="logout()"><span class="glyphicon"></span>Logout</a>
+						</li>
+					</ul>
+				</li>
+			</ul>
+			<a class="navbar-brand" href="#/">Traveller</a>
+			<div class="form-group pull-right">
+				<select class="form-control" id="sel1">
+					<option>English</option>
+				</select>
 			</div>
 		</div>
-	</nav>
-	<p></p>
-	<div class="list-group-item">
-		<div class="navbar-header">
-			My Events
-		</div>
 	</div>
-	<p></p>
-	<div class="list-group-item">
-		<div class="table-dist event-box" ng-repeat="item in events">
-			<span style="font-weight: bold">{{item.Name}}</span>
-			<span>
-				<div class="table-dist">
-					<span>{{item.Date | jsDate | date:"hh:mm dd/MM/yyyy"}}</span>
-					<span style="text-align: right">{{type(item.Type)}}</span>
-				</div></span>
-		</div>
-
-		<p></p>
-		<div class="table-dist">
-			<span>
-				<button type="button" class="btn btn-success btn-block">
-					Previous
-				</button></span>
-			<span>
-				<button type="button" class="btn btn-success btn-block">
-					Next
-				</button></span>
-		</div>
+</nav>
+<div class="main-frame" style="max-width: 900px">
+	<div class="navbar-header">
+		My Events
+	</div>
+</div>
+<div class="main-frame" style="max-width: 900px">
+	<div class="event-form" ng-repeat="item in events | orderBy: 'Date'">
+		<span>
+			<div align="center" ng-hide="events[0].Name == 'No More Events'">
+				<img ng-src="data:image/PNG;base64,{{item.Image}}"/>
+			</div> </span>
+		<span>
+			<div>
+				<h1>{{item.Name}}</h1>
+			</div>
+			<br>
+			<div>
+				<p>
+					{{item.Description}}
+				</p>
+			</div>
+			<div style="padding-top: 10px">
+				<p>
+					<a href="{{item.Site}}">{{item.Site}}</a>
+				</p>
+			</div>
+			<div style="padding-top: 10px">
+				<p>
+					<a style="font-size: 14px" href="https://www.google.com.br/maps/place/{{item.Addr}},{{item.City}},{{item.State}},{{item.Country}}">{{item.Addr}}</a>
+				</p>
+			</div></span>
+		<span style="margin-top: 10px" ng-hide="events[0].Name == 'No More Events'">
+			<div>
+				<label>Type:</label><label>{{type(item.Type)}}</label>
+			</div>
+			<br>
+			<div>
+				<label>Date: </label><label>{{item.Date | jsDate | date:"dd/MM/yyyy"}}</label>
+			</div>
+			<br>
+			<div>
+				<label>Time: </label><label>{{item.Date | jsDate | date:"HH:mm"}}</label>
+			</div>
+			<br>
+			<div>
+				<label>Price:</label><label>{{item.Currency}} {{item.Price}}</label>
+			</div>
+			<br>
+			<div>
+				<label>By:</label><label>{{item.Currency}} {{item.Price}}</label>
+			</div></span>
 	</div>
 </div>

@@ -360,10 +360,11 @@ function($scope, userId, $routeParams, $location, TravelerService, myConfig, $ro
 
 }]);
 
-app.controller("CreateEventController", ["$scope", "userId", "$routeParams", "$location", "TravelerService", "myConfig", "$geolocation", "$window", "$route",
-function($scope, userId, $routeParams, $location, TravelerService, myConfig, ngGeolocation, $window, $route) {
+app.controller("CreateEventController", ["$scope", "userId", "$routeParams", "$location", "TravelerService", "myConfig", "$geolocation", "$window", "$route","$filter",
+function($scope, userId, $routeParams, $location, TravelerService, myConfig, ngGeolocation, $window, $route, $filter) {
 	$scope.types = myConfig;
 	$scope.type = myConfig[1];
+	$scope.date = $filter('date')(new Date(), 'dd/MM/yyyy');
 	$window.navigator.permissions.query({
 		'name' : 'geolocation'
 	}).then(function(permissions) {
@@ -448,7 +449,7 @@ function($scope, userId, $routeParams, $location, TravelerService, myConfig, ngG
 					City : $scope.city.Name,
 					Addr : $scope.event.no + " " + $scope.event.street + ", " + $scope.event.suburb,
 					Site : $scope.event.site,
-					Date : $scope.event.date + " " + $scope.event.time,
+					Date : $scope.date + " " + $scope.event.time,
 					Image : canvas.toDataURL("image/png"),
 					UserId : userId.userId
 				};
