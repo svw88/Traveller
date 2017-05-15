@@ -188,7 +188,7 @@ function($scope, $routeParams, $location, TravelerService, ngGeolocation, userId
 					$scope.location = response;
 				}).then(TravelerService.getCountries().then(function(response) {
 					$scope.countries = response;
-				}).then(function() {
+				}).then(function(response) {
 					$scope.countries.splice(0, 0, {
 						Name : $scope.location[6].long_name
 					});

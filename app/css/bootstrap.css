@@ -7081,7 +7081,7 @@ div.my-date-picker span{
 div.event-form{
 	width:100%;
 	border-bottom: 1px solid #ecf0f1;
-    padding: 10px 15px;
+	padding: 10px 0px 5px 0px;
 }
 
 div.event-form span{
