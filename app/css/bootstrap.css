@@ -7094,8 +7094,17 @@ div.event-form span{
     vertical-align: top;
 }
 
+@media(max-width: 900px){
+	div.event-form span{
+    width:33%;
+    vertical-align: top;
+    padding:0px;
+}
+}
+
 div.event-form img{
-    height: 240px;
+    max-width: 75%;
+    height: auto;
 }
 
 div.event-form label{
@@ -7114,5 +7123,45 @@ div.event-form h1{
 div.form-group label{
 	margin-left: 5px;
 }
+
+@media(max-width: 900px){
+	.mobile-hide{
+		display:none !important;
+	}
+}
+
+.mobile-event{
+		width: 66% !important;
+		padding: 0px !important;
+	}
+	
+.mobile-event label{
+		font-size: 12px !important;
+		margin:0px !important;
+		width: 40% !important;
+	}	
+	
+.mobile-event p{
+		font-size: 10px !important;
+		margin:0px !important;
+	}	
+
+.mobile-event h1{
+		text-align:center !important;
+		font-size: 16px !important;
+		margin:0px auto !important;
+	}	
+	
+.mobile-event span{
+		max-width:65% !important;
+		width: auto !important;
+	}	
+
+@media(min-width: 900px){
+	.mobile-event{
+		display:none !important;
+	}
+}
+
 
 /*# sourceMappingURL=bootstrap.css.map */

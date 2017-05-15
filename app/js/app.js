@@ -146,6 +146,19 @@ app.service("TravelerService", function($http, $window) {
 		console.log(entry);
 
 	};
+	
+	travelerService.removeEvent = function(entry) {
+		$http({
+			method : 'POST',
+			headers : {
+				'Content-Type' : 'application/json; charset=utf-8'
+			},
+			url : 'http://localhost:8327/Service1.svc/remove',
+			data : entry
+		});
+		console.log(entry);
+
+	};
 
 	travelerService.register = function(entry) {
 		$http({
@@ -358,9 +371,13 @@ function($scope, userId, $routeParams, $location, TravelerService, myConfig, $ro
 		$route.reload();
 	};
 
+	$scope.remove = function(id) {
+		TravelerService.removeEvent(id);
+	};
+
 }]);
 
-app.controller("CreateEventController", ["$scope", "userId", "$routeParams", "$location", "TravelerService", "myConfig", "$geolocation", "$window", "$route","$filter",
+app.controller("CreateEventController", ["$scope", "userId", "$routeParams", "$location", "TravelerService", "myConfig", "$geolocation", "$window", "$route", "$filter",
 function($scope, userId, $routeParams, $location, TravelerService, myConfig, ngGeolocation, $window, $route, $filter) {
 	$scope.types = myConfig;
 	$scope.type = myConfig[1];
