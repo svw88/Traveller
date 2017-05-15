@@ -25,9 +25,7 @@
 			<span><label>Type:</label></span>
 			<span>
 				<div>
-					<select class="form-control" ng-init="event.type = event.type || 'Club'" ng-model="event.type">
-						<option value="Club">Club</option>
-						<option>Bar</option>
+					<select class="form-control" ng-options="val for (key, val) in types" ng-model="type">
 					</select>
 				</div></span>
 		</div>

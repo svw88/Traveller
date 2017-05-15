@@ -23,47 +23,6 @@
 				</li>
 			</ul>
 			<a class="navbar-brand" href="#/">Traveller</a>
-			<ul class="nav navbar-nav-icon pull-right">
-				<li class="dropdown">
-					<a class="dropdown-toggle" data-toggle="dropdown" href=""><span class="glyphicon glyphicon-search"></span></a>
-					<ul class="dropdown-menu pull-right">
-						<div class="form-group">
-							<label for="eventName">Event Name:</label>
-							<input type="text" class="form-control" id="eventName">
-						</div>
-						<div class="table-dist">
-							<span> <label class="checkbox-inline">
-									<input type="checkbox" value="">
-									Club</label></span>
-							<span><label class="checkbox-inline">
-									<input type="checkbox" value="">
-									Bar</label></span>
-						</div>
-						<div class="table-dist">
-							<span> <label class="checkbox-inline">
-									<input type="checkbox" value="">
-									Club</label></span>
-							<span><label class="checkbox-inline">
-									<input type="checkbox" value="">
-									Bar</label></span>
-						</div>
-						<div class="table-dist">
-							<span> <label class="checkbox-inline">
-									<input type="checkbox" value="">
-									Club</label></span>
-							<span><label class="checkbox-inline">
-									<input type="checkbox" value="">
-									Bar</label></span>
-						</div>
-						<p></p>
-						<div>
-							<button class="btn btn-success btn-block">
-								Search
-							</button>
-						</div>
-					</ul>
-				</li>
-			</ul>
 			<div class="form-group pull-right">
 				<select class="form-control" id="sel1">
 					<option>English</option>
@@ -74,7 +33,48 @@
 </nav>
 <div class="main-frame" style="max-width: 900px">
 	<div class="navbar-header">
-		Events in {{city}}
+		<label style="padding: 5px">Events in {{city}}</label>
+		<ul class="nav navbar-nav-icon pull-right">
+			<li class="dropdown">
+				<a style="padding:0px" class="dropdown-toggle" data-toggle="dropdown" href=""><span style="width: auto;" class="glyphicon glyphicon-search"></span></a>
+				<ul class="dropdown-menu pull-right">
+					<div class="form-group">
+						<label for="eventName">Find:</label>
+						<input type="text" class="form-control" id="eventName" ng-model="find">
+					</div>
+					<div class="table-dist">
+						<span> <label class="checkbox-inline">
+								<input type="checkbox" value="" ng-model="types.Club">
+								Club</label></span>
+						<span><label class="checkbox-inline">
+								<input type="checkbox" value="" ng-model="types.Bar">
+								Bar</label></span>
+					</div>
+					<div class="table-dist">
+						<span> <label class="checkbox-inline" >
+								<input type="checkbox" value="" ng-model="types.Concert">
+								Concert</label></span>
+						<span><label class="checkbox-inline">
+								<input type="checkbox" value="" ng-model="types.Market">
+								Market</label></span>
+					</div>
+					<div class="table-dist">
+						<span> <label class="checkbox-inline">
+								<input type="checkbox" value="" ng-model="types.Festival">
+								Festival</label></span>
+						<span><label class="checkbox-inline">
+								<input type="checkbox" value="" ng-model="types.Charity">
+								Charity</label></span>
+					</div>
+					<br>
+					<div>
+						<button class="btn btn-success btn-block" ng-click="searchEvents()">
+							Search
+						</button>
+					</div>
+				</ul>
+			</li>
+		</ul>
 	</div>
 </div>
 <div class="main-frame" style="max-width: 900px">

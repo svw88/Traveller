@@ -3524,7 +3524,7 @@ tbody.collapse.in {
   z-index: 1000;
   display: none;
   float: left;
-  min-width: 160px;
+  min-width: 200px;
   padding: 5px 0;
   margin: 2px 0 0;
   list-style: none;
@@ -7048,6 +7048,11 @@ div.table-dist span {
     width:50%;
 }
 
+div.table-dist span label {
+    margin-left: 5px;
+    font-size: 14px;
+}
+
 div.main-frame {
 	max-width: 800px;
 	margin: 30px auto;
@@ -7104,6 +7109,10 @@ div.event-form h1{
     font-size: 20px;
     font-weight: bold;
     text-align: center;
+}
+
+div.form-group label{
+	margin-left: 5px;
 }
 
 /*# sourceMappingURL=bootstrap.css.map */

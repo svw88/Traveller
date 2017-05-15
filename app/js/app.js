@@ -11,7 +11,7 @@ app.config(function($routeProvider, $locationProvider) {
 	}).when("/sign", {
 		templateUrl : "views/sign-up.html",
 		controller : "LoginDataController"
-	}).when("/events/:country/:state/:city/:id", {
+	}).when("/events/:country/:state/:city/:id/:types/:find", {
 		templateUrl : "views/events.html",
 		controller : "EventsController"
 	}).when("/create", {
@@ -24,7 +24,11 @@ app.config(function($routeProvider, $locationProvider) {
 
 app.constant("myConfig", {
 	"1" : "Club",
-	"2" : "Bar"
+	"2" : "Bar",
+	"3" : "Concert",
+	"4" : "Market",
+	"5" : "Festival",
+	"6" : "Charity"
 });
 
 app.factory('userId', function() {
@@ -38,30 +42,54 @@ app.service("TravelerService", function($http, $window) {
 	var travelerService = {};
 
 	travelerService.getEvents = function(entry) {
+		if (entry.types == "All") {
+			return $http.get("http://localhost:8327/Service1.svc/events/" + entry.country + "/" + entry.state + "/" + entry.city + "/" + entry.id).then(function(data) {
+				if (data.data.length > 0) {
+					return data.data;
+				} else {
+					return [{
+						City : '',
+						Country : '',
+						Currency : '',
+						Date : '/Date(1495922400000-0300)/',
+						Description : '',
+						Id : -1,
+						Image : '0x',
+						Name : 'No More Events',
+						Price : 0,
+						Site : '',
+						State : '',
+						Type : 1,
+						UserId : " "
 
-		return $http.get("http://localhost:8327/Service1.svc/events/" + entry.country + "/" + entry.state + "/" + entry.city + "/" + entry.id).then(function(data) {
-			if (data.data.length > 0) {
-				return data.data;
-			} else {
-				return [{
-					City : '',
-					Country : '',
-					Currency : '',
-					Date : '/Date(1495922400000-0300)/',
-					Description : '',
-					Id : -1,
-					Image : '0x',
-					Name : 'No More Events',
-					Price : 0,
-					Site : '',
-					State : '',
-					Type : 1,
-					UserId : " "
+					}];
+				};
+			});
+		} else {
+			return $http.get("http://localhost:8327/Service1.svc/events/" + entry.country + "/" + entry.state + "/" + entry.city + "/" + entry.id + "/" + entry.types + "/" + entry.find).then(function(data) {
+				if (data.data.length > 0) {
+					return data.data;
+				} else {
+					return [{
+						City : '',
+						Country : '',
+						Currency : '',
+						Date : '/Date(1495922400000-0300)/',
+						Description : '',
+						Id : -1,
+						Image : '0x',
+						Name : 'No More Events',
+						Price : 0,
+						Site : '',
+						State : '',
+						Type : 1,
+						UserId : " "
 
-				}];
-			};
-		});
+					}];
+				};
+			});
 
+		};
 	};
 
 	travelerService.getMyEvents = function(entry) {
@@ -239,7 +267,7 @@ function($scope, $routeParams, $location, TravelerService, ngGeolocation, userId
 	};
 
 	$scope.search = function() {
-		$location.path("/events/" + $scope.country.Name + "/" + $scope.state.Name + "/" + $scope.city.Name + "/" + -1);
+		$location.path("/events/" + $scope.country.Name + "/" + $scope.state.Name + "/" + $scope.city.Name + "/" + -1 + "/All" + "/All");
 	};
 
 	$scope.logout = function() {
@@ -261,6 +289,31 @@ function($scope, $routeParams, $location, TravelerService, myConfig, userId, $wi
 	$scope.type = function(typeId) {
 		return myConfig[typeId];
 	};
+	$scope.types = {
+		Club : false,
+		Bar : false,
+		Concert : false,
+		Market : false,
+		Festival : false,
+		Charity : false
+	};
+
+	$scope.searchEvents = function() {
+		var temp = "";
+		angular.forEach($scope.types, function(x1, z1) {//this is nested angular.forEach loop
+			if (x1) {
+				angular.forEach(myConfig, function(v1, k1) {//this is nested angular.forEach loop
+					if (v1 == z1) {
+						z1 = k1;
+					};
+				});
+				temp = temp + z1 + ",";
+			};
+		});
+		temp = temp.slice(0, -1);
+
+		$location.path("/events/" + $routeParams.country + "/" + $routeParams.state + "/" + $routeParams.city + "/" + -1 + "/" + temp + "/" + $scope.find);
+	};
 
 	$scope.city = $routeParams.city;
 
@@ -269,7 +322,7 @@ function($scope, $routeParams, $location, TravelerService, myConfig, userId, $wi
 	};
 
 	$scope.next = function() {
-		$location.path("/events/" + $routeParams.country + "/" + $routeParams.state + "/" + $routeParams.city + "/" + $scope.events[($scope.events.length - 1)].Id);
+		$location.path("/events/" + $routeParams.country + "/" + $routeParams.state + "/" + $routeParams.city + "/" + $scope.events[($scope.events.length - 1)].Id + "/All" + "/All");
 	};
 
 	$scope.prev = function() {
@@ -307,9 +360,10 @@ function($scope, userId, $routeParams, $location, TravelerService, myConfig, $ro
 
 }]);
 
-app.controller("CreateEventController", ["$scope", "userId", "$routeParams", "$location", "TravelerService", "myConfig", "$geolocation", "$window","$route",
+app.controller("CreateEventController", ["$scope", "userId", "$routeParams", "$location", "TravelerService", "myConfig", "$geolocation", "$window", "$route",
 function($scope, userId, $routeParams, $location, TravelerService, myConfig, ngGeolocation, $window, $route) {
-
+	$scope.types = myConfig;
+	$scope.type = myConfig[1];
 	$window.navigator.permissions.query({
 		'name' : 'geolocation'
 	}).then(function(permissions) {
@@ -322,7 +376,7 @@ function($scope, userId, $routeParams, $location, TravelerService, myConfig, ngG
 					$scope.location = response;
 				}).then(TravelerService.getCountries().then(function(response) {
 					$scope.countries = response;
-				}).then(function() {
+				}).then(function(response) {
 					$scope.countries.splice(0, 0, {
 						Name : $scope.location[6].long_name
 					});
@@ -400,7 +454,7 @@ function($scope, userId, $routeParams, $location, TravelerService, myConfig, ngG
 				};
 
 				angular.forEach(myConfig, function(v1, k1) {//this is nested angular.forEach loop
-					if (v1 == $scope.event.type) {
+					if (v1 == $scope.type) {
 						temp["Type"] = k1;
 					};
 				});
