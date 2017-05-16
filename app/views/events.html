@@ -32,7 +32,7 @@
 	</div>
 </nav>
 <div class="main-frame" style="max-width: 900px">
-	<div class="navbar-header event-form">
+	<div class="navbar-header">
 		<label style="padding: 10px 0px 5px 0px">Events in {{city}}</label>
 		<ul class="nav navbar-nav-icon pull-right">
 			<li class="dropdown">
@@ -76,6 +76,8 @@
 			</li>
 		</ul>
 	</div>
+</div>
+<div class="main-frame" style="max-width: 900px">
 	<div class="event-form" ng-repeat="item in events | orderBy: 'Date'">
 		<span style="width: 33% !important;">
 			<div align="center" ng-hide="events[0].Name == 'No More Events'" >

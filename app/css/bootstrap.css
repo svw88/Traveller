@@ -7074,6 +7074,14 @@ div.main-frame label{
 	margin-left: 40px;
 }
 
+div.main-frame h2{
+	display:inline;
+	margin: 0px;
+  	max-width: 100%;
+  	font-weight: bold;
+  	font-size: 16px;
+}
+
 div.main-frame span button{
 	margin: 0px 15px;
 }
