@@ -79,83 +79,43 @@
 </div>
 <div class="main-frame" style="max-width: 900px">
 	<div class="event-form" ng-repeat="item in events | orderBy: 'Date'">
-		<div class="mobile-event" style="width:100% !important">
-			<h1>{{item.Name}}</h1>
-		</div>
-		<span>
-			<div align="center" ng-hide="events[0].Name == 'No More Events'">
+		<span style="width: 33% !important; padding-top:5px;">
+			<div align="center" ng-hide="events[0].Name == 'No More Events'" >
 				<img ng-src="data:image/PNG;base64,{{item.Image}}"/>
 			</div> </span>
-		<span class="mobile-hide">
+		<span class="mobile-desc" style="vertical-align:top !important;">
 			<div>
 				<h1>{{item.Name}}</h1>
 			</div>
-			<br>
 			<div>
 				<p>
 					{{item.Description}}
 				</p>
 			</div>
-			<div style="padding-top: 10px">
-				<p>
-					<a href="{{item.Site}}">{{item.Site}}</a>
-				</p>
+			<div class="mobile-hide"  >
+				<a style="font-size: 16px" class="glyphicon glyphicon-globe" href="{{item.Site}}"></a>&nbsp; <a href="{{item.Site}}">{{item.Site}}</a>
 			</div>
-			<div style="padding-top: 10px">
-				<p>
-					<a style="font-size: 14px" href="https://www.google.com.br/maps/place/{{item.Addr}},{{item.City}},{{item.State}},{{item.Country}}">{{item.Addr}}</a>
-				</p>
-			</div></span>
-		<span class="mobile-hide" style="margin-top: 10px" ng-hide="events[0].Name == 'No More Events'">
-			<div>
-				<label>Type: </label><label>{{type(item.Type)}}</label>
+			<div class="mobile-hide"  >
+				<a style="font-size: 16px" class="glyphicon glyphicon-map-marker" href="https://www.google.com.br/maps/place/{{item.Addr}},{{item.City}},{{item.State}},{{item.Country}}"></a>&nbsp; <a style="font-size: 14px" href="https://www.google.com.br/maps/place/{{item.Addr}},{{item.City}},{{item.State}},{{item.Country}}">{{item.Addr}}</a>
 			</div>
-			<br>
-			<div>
-				<label>Date: </label><label>{{item.Date | jsDate | date:"dd/MM/yyyy"}}</label>
-			</div>
-			<br>
-			<div>
-				<label>Time: </label><label>{{item.Date | jsDate | date:"HH:mm"}}</label>
-			</div>
-			<br>
-			<div>
-				<label>Price:</label><label>{{item.Currency}} {{item.Price}}</label>
-			</div>
-			<br>
-			<div>
-				<label>By:</label><label>{{item.Currency}} {{item.Price}}</label>
-			</div></span>
-		<span class="mobile-event" ng-hide="events[0].Name == 'No More Events'">
-			<div>
-				<span>
-					<div style="padding-top: 5px">
-						<p>
-							{{item.Description}}
-						</p>
-					</div>
-					<div style="padding-top: 8px">
-						<p>
-							<a style="font-size: 16px" class="glyphicon glyphicon-map-marker" href="https://www.google.com.br/maps/place/{{item.Addr}},{{item.City}},{{item.State}},{{item.Country}}"></a>
-							&nbsp;&nbsp;
-							<a style="font-size: 16px" class="glyphicon glyphicon-globe" href="{{item.Site}}"></a>
-						</p>
-					</div> </span><span>
-					<div>
-						<div>
-							<label>{{type(item.Type)}}</label>
-						</div>
-						<div>
-							<label>{{item.Date | jsDate | date:"HH:mm"}}</label>
-						</div>
-						<div>
-							<label>{{item.Date | jsDate | date:"dd/MM/yyyy"}}</label>
-						</div>
-						<div>
-							<label>{{item.Currency}}{{item.Price}}</label>
-						</div>
-					</div></span>
+			<div class="mobile-show" style="display: none" style="padding-top: 8px" ng-hide="events[0].Name == 'No More Events'">
+				<a style="font-size: 16px" class="glyphicon glyphicon-globe" href="{{item.Site}}"></a>
+				&nbsp;&nbsp;
+				<a style="font-size: 16px" class="glyphicon glyphicon-map-marker" href="https://www.google.com.br/maps/place/{{item.Addr}},{{item.City}},{{item.State}},{{item.Country}}"></a>
 			</div> </span>
+		<span ng-hide="events[0].Name == 'No More Events'">
+			<div>
+				<label class="mobile-hide">Type: </label><label>{{type(item.Type)}}</label>
+			</div>
+			<div>
+				<label class="mobile-hide">Date: </label><label>{{item.Date | jsDate | date:"dd/MM/yyyy"}}</label>
+			</div>
+			<div>
+				<label class="mobile-hide">Time: </label><label>{{item.Date | jsDate | date:"HH:mm"}}</label>
+			</div>
+			<div>
+				<label class="mobile-hide">Price:</label><label>{{item.Currency}} {{item.Price}}</label>
+			</div></span>
 	</div>
 	<div style="border-top: 1px solid #ecf0f1">
 		<span>

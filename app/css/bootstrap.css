@@ -7086,19 +7086,18 @@ div.my-date-picker span{
 div.event-form{
 	width:100%;
 	border-bottom: 1px solid #ecf0f1;
-	padding: 10px 0px 5px 0px;
 }
 
 div.event-form span{
     width:33%;
-    vertical-align: top;
+    vertical-align: middle;
 }
 
 @media(max-width: 900px){
 	div.event-form span{
     width:33%;
-    vertical-align: top;
-    padding:0px;
+    vertical-align: middle;
+    padding:0px 0px 5px 0px;
 }
 }
 
@@ -7109,11 +7108,19 @@ div.event-form img{
 
 div.event-form label{
     width: 25%;
+    	padding: 15px 0px 15px 0px;
+}
+div.event-form p{
+    min-height: 115px;
+}
+
+div.event-form a{
+   padding-top: 10px;
 }
 
 div.event-form h1{
 	text-transform: uppercase;
-	padding: 0px;
+	padding: 0px 0px 15px 0px;
 	margin: 0px;
     font-size: 20px;
     font-weight: bold;
@@ -7124,44 +7131,65 @@ div.form-group label{
 	margin-left: 5px;
 }
 
-@media(max-width: 900px){
+@media(max-width: 750px){
 	.mobile-hide{
 		display:none !important;
 	}
 }
 
-.mobile-event{
-		width: 66% !important;
+@media(max-width: 900px){
+.event-form{
+		width: 100% !important;
 		padding: 0px !important;
 	}
-	
-.mobile-event label{
+}
+@media(max-width: 750px){	
+.event-form label{
+		font-size: 11px !important;
+		margin:0px !important;
+		width: 100% !important;
+		padding: 0px 0px 3px 0px !important;
+	}	
+}
+@media(max-width: 750px){	
+.event-form p{
 		font-size: 12px !important;
 		margin:0px !important;
-		width: 40% !important;
+		min-height: 60px !important;
 	}	
 	
-.mobile-event p{
-		font-size: 10px !important;
-		margin:0px !important;
-	}	
+@media(max-width: 750px){	
+.event-form a{
+		font-size: 12px !important;
+	}
 
-.mobile-event h1{
+@media(max-width: 750px){	
+.event-form h1{
 		text-align:center !important;
 		font-size: 16px !important;
-		margin:0px auto !important;
-	}	
-	
-.mobile-event span{
-		max-width:65% !important;
-		width: auto !important;
+		padding: 3px 0px 3px 0px !important;
+	}
 	}	
 
-@media(min-width: 900px){
-	.mobile-event{
-		display:none !important;
-	}
+@media(max-width: 750px){		
+.event-form span{
+		width: auto !important;
+	}	
 }
+
+@media(max-width: 900px){		
+.mobile-show{
+		display:block !important;
+	}	
+}
+
+@media(max-width: 900px){		
+.mobile-desc{
+		min-width:45%;
+	}	
+}
+
+
 
 
 /*# sourceMappingURL=bootstrap.css.map */
