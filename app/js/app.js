@@ -17,7 +17,7 @@ app.config(function($routeProvider, $locationProvider) {
 	}).when("/events/:country/:state/:city/:id/:types/:find", {
 		templateUrl : "views/events.html",
 		controller : "EventsController"
-	}).when("/:alias", {
+	}).when("/user/:alias", {
 		templateUrl : "views/userEvents.html",
 		controller : "UserEventsController"
 	}).when("/create", {
@@ -48,7 +48,7 @@ app.service("TravelerService", function($http, $window) {
 	var travelerService = {};
 
 	travelerService.getEvents = function(entry) {
-		if (entry.types == "All") {
+	
 			return $http.get("http://localhost:8327/Service1.svc/events/" + entry.country + "/" + entry.state + "/" + entry.city + "/" + entry.id).then(function(data) {
 				if (data.data.length > 0) {
 					return data.data;
@@ -72,7 +72,11 @@ app.service("TravelerService", function($http, $window) {
 					}];
 				};
 			});
-		} else {
+		
+	};
+	
+	travelerService.searchEvents = function(entry) {
+	
 			return $http.get("http://localhost:8327/Service1.svc/events/" + entry.country + "/" + entry.state + "/" + entry.city + "/" + entry.id + "/" + entry.types + "/" + entry.find).then(function(data) {
 				if (data.data.length > 0) {
 					return data.data;
@@ -96,8 +100,7 @@ app.service("TravelerService", function($http, $window) {
 					}];
 				};
 			});
-
-		};
+		
 	};
 
 	travelerService.getUserEvents = function(entry) {
@@ -332,25 +335,26 @@ function($scope, $routeParams, $location, TravelerService, ngGeolocation, userId
 
 }]);
 
-app.controller("EventsController", ["$scope", "$routeParams", "$location", "TravelerService", "myConfig", "userId", "$window",
-function($scope, $routeParams, $location, TravelerService, myConfig, userId, $window) {
+app.controller("EventsController", ["$scope", "$routeParams", "$location", "TravelerService", "myConfig", "userId",
+function($scope, $routeParams, $location, TravelerService, myConfig, userId) {
 	$scope.id = userId.userId;
+	var params = $routeParams;
+	var id = '-1';
 
-	TravelerService.getEvents($routeParams).then(function(response) {
+	TravelerService.getEvents(params).then(function(response) {
 		$scope.events = response;
-		console.log($scope.events);
 	});
 
 	$scope.type = function(typeId) {
 		return myConfig[typeId];
 	};
 	$scope.types = {
-		Club : false,
-		Bar : false,
-		Concert : false,
-		Market : false,
-		Festival : false,
-		Charity : false
+		Club : true,
+		Bar : true,
+		Concert : true,
+		Market : true,
+		Festival : true,
+		Charity : true
 	};
 
 	$scope.searchEvents = function() {
@@ -366,8 +370,12 @@ function($scope, $routeParams, $location, TravelerService, myConfig, userId, $wi
 			};
 		});
 		temp = temp.slice(0, -1);
-
-		$location.path("/events/" + $routeParams.country + "/" + $routeParams.state + "/" + $routeParams.city + "/" + -1 + "/" + temp + "/" + $scope.find);
+		params.types = temp;
+		params.find = $scope.find;
+		console.log(params);
+		TravelerService.searchEvents(params).then(function(response) {
+			$scope.events = response;
+		});
 	};
 
 	$scope.searchAlias = function(alias) {
@@ -378,7 +386,7 @@ function($scope, $routeParams, $location, TravelerService, myConfig, userId, $wi
 		});
 		temp = temp.slice(0, -1);
 
-		$location.path("/" + alias);
+		$location.path("/user/" + alias);
 	};
 
 	$scope.city = $routeParams.city;
@@ -388,11 +396,20 @@ function($scope, $routeParams, $location, TravelerService, myConfig, userId, $wi
 	};
 
 	$scope.next = function() {
-		$location.path("/events/" + $routeParams.country + "/" + $routeParams.state + "/" + $routeParams.city + "/" + $scope.events[($scope.events.length - 1)].Id + "/All" + "/All");
+		id = params.id;
+		params.id = $scope.events[($scope.events.length - 1)].Id;
+		TravelerService.getEvents(params).then(function(response) {
+			$scope.events = response;
+		});
 	};
 
 	$scope.prev = function() {
-		$window.history.back();
+		if (id != params.id) {
+			params.id = id;
+			TravelerService.getEvents(params).then(function(response) {
+				$scope.events = response;
+			});
+		};
 	};
 
 }]);
@@ -404,7 +421,7 @@ function($scope, $routeParams, $location, TravelerService, myConfig, userId) {
 		alias : $routeParams.alias,
 		id : '-1'
 	};
-	
+
 	var id = '-1';
 
 	TravelerService.getUserEvents(params).then(function(response) {
@@ -416,7 +433,7 @@ function($scope, $routeParams, $location, TravelerService, myConfig, userId) {
 	$scope.type = function(typeId) {
 		return myConfig[typeId];
 	};
-	
+
 	$scope.logout = function() {
 		userId.userId = " ";
 	};
@@ -430,10 +447,12 @@ function($scope, $routeParams, $location, TravelerService, myConfig, userId) {
 	};
 
 	$scope.prev = function() {
-		params.id = id;
-		TravelerService.getUserEvents(params).then(function(response) {
-			$scope.events = response;
-		});
+		if (id != params.id) {
+			params.id = id;
+			TravelerService.getUserEvents(params).then(function(response) {
+				$scope.events = response;
+			});
+		};
 	};
 
 }]);
