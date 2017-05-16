@@ -1117,7 +1117,7 @@ figure {
   margin: 0;
 }
 img {
-  vertical-align: middle;
+
 }
 .img-responsive,
 .thumbnail > img,
@@ -7104,6 +7104,7 @@ div.event-form span{
 div.event-form img{
     max-width: 75%;
     height: auto;
+    padding-top: 5px;
 }
 
 div.event-form label{
@@ -7111,7 +7112,8 @@ div.event-form label{
     	padding: 15px 0px 15px 0px;
 }
 div.event-form p{
-    min-height: 115px;
+	font-size:14px;
+    min-height: 105px;
 }
 
 div.event-form a{
@@ -7120,7 +7122,7 @@ div.event-form a{
 
 div.event-form h1{
 	text-transform: uppercase;
-	padding: 0px 0px 15px 0px;
+	padding: 0px 0px 20px 0px;
 	margin: 0px;
     font-size: 20px;
     font-weight: bold;
@@ -7153,9 +7155,9 @@ div.form-group label{
 }
 @media(max-width: 750px){	
 .event-form p{
-		font-size: 12px !important;
+		font-size: 10px !important;
 		margin:0px !important;
-		min-height: 60px !important;
+		min-height: 40px !important;
 	}	
 	
 @media(max-width: 750px){	
@@ -7166,8 +7168,9 @@ div.form-group label{
 @media(max-width: 750px){	
 .event-form h1{
 		text-align:center !important;
-		font-size: 16px !important;
+		font-size: 12px !important;
 		padding: 3px 0px 3px 0px !important;
+		
 	}
 	}	
 
@@ -7185,7 +7188,8 @@ div.form-group label{
 
 @media(max-width: 900px){		
 .mobile-desc{
-		min-width:45%;
+		min-width:44%;
+		max-width:44%;
 	}	
 }
 

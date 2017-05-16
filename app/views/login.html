@@ -1,79 +1,33 @@
-<nav class="navbar navbar-default">
-	<div class="container-fluid">
-		<div class="navbar-header">
-			<ul class="nav navbar-nav pull-left">
-				<li class="dropdown">
-					<a class="dropdown-toggle" data-toggle="dropdown" href="">Menu<span class="caret"></span></a>
-					<ul class="dropdown-menu">
-						<li>
-							<a href="#/login" ng-click="refresh()"><span class="glyphicon"></span>My Events</a>
-						</li>
-						<li>
-							<a href="#/create"><span class="glyphicon"></span>New Event</a>
-						</li>
-						<li>
-							<a href="#/" ng-click="logout()"><span class="glyphicon"></span>Logout</a>
-						</li>
-					</ul>
-				</li>
-			</ul>
-			<a class="navbar-brand" href="#/">Traveller</a>
-			<div class="form-group pull-right">
-				<select class="form-control" id="sel1">
-					<option>English</option>
-				</select>
+<div>
+	<nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#/">Traveller</a>
 			</div>
 		</div>
-	</div>
-</nav>
-<div class="main-frame" style="max-width: 900px">
-	<div class="navbar-header">
-		My Events
-	</div>
-</div>
-<div class="main-frame" style="max-width: 900px">
-	<div class="event-form" ng-repeat="item in events | orderBy: 'Date'">
-		<span style="width: 33% !important; padding-top:5px;">
-			<div align="center" ng-hide="events[0].Name == 'No More Events'" >
-				<img ng-src="data:image/PNG;base64,{{item.Image}}"/>
-			</div> </span>
-		<span class="mobile-desc" style="vertical-align:top !important;">
-			<div>
-				<h1>{{item.Name}}</h1>
-			</div>
-			<div>
-				<p>
-					{{item.Description}}
-				</p>
-			</div>
-			<div class="mobile-hide"  >
-				<a style="font-size: 16px" class="glyphicon glyphicon-globe" href="{{item.Site}}"></a>&nbsp; <a href="{{item.Site}}">{{item.Site}}</a>
-			</div>
-			<div class="mobile-hide"  >
-				<a style="font-size: 16px" class="glyphicon glyphicon-map-marker" href="https://www.google.com.br/maps/place/{{item.Addr}},{{item.City}},{{item.State}},{{item.Country}}"></a>&nbsp; <a style="font-size: 14px" href="https://www.google.com.br/maps/place/{{item.Addr}},{{item.City}},{{item.State}},{{item.Country}}">{{item.Addr}}</a>
-			</div>
-			<div class="mobile-show" style="display: none" style="padding-top: 8px" ng-hide="events[0].Name == 'No More Events'">
-				<a style="font-size: 16px" class="glyphicon glyphicon-globe" href="{{item.Site}}"></a>
-				&nbsp;&nbsp;
-				<a style="font-size: 16px" class="glyphicon glyphicon-map-marker" href="https://www.google.com.br/maps/place/{{item.Addr}},{{item.City}},{{item.State}},{{item.Country}}"></a>
-			</div> </span>
-		<span ng-hide="events[0].Name == 'No More Events'">
-			<div>
-				<label class="mobile-hide">Type: </label><label>{{type(item.Type)}}</label>
-			</div>
-			<div>
-				<label class="mobile-hide">Date: </label><label>{{item.Date | jsDate | date:"dd/MM/yyyy"}}</label>
-			</div>
-			<div>
-				<label class="mobile-hide">Time: </label><label>{{item.Date | jsDate | date:"HH:mm"}}</label>
-			</div>
-			<div>
-				<label class="mobile-hide">Price:</label><label>{{item.Currency}} {{item.Price}}</label>
-			</div></span>
+	</nav>
+	<div class="main-frame">
+		<div style="margin-top: 10px">
+			<span><label for="email">Email:</label></span>
+			<span>
+				<input type="email" class="form-control" placeholder="Enter email" ng-model="signUp.Email" required>
+			</span>
+		</div>
 		<div>
-			<button type="button" class="btn btn-success btn-block" ng-click="remove(item.Id)">
-				Remove
-			</button>
+			<span><label for="pwd">Password:</label></span>
+			<span>
+				<input type="password" class="form-control" placeholder="Enter password" ng-model="signUp.Password" required>
+			</span>
+		</div>
+		<div style="border-top: 1px solid #ecf0f1">
+			<span>
+				<button type="button" class="btn btn-success btn-block" ng-click="login()">
+					Login
+				</button></span>
+			<span>
+				<button type="button" class="btn btn-success btn-block" ng-click="sign()">
+					Sign Up
+				</button></span>
 		</div>
 	</div>
 </div>

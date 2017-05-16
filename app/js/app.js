@@ -6,10 +6,13 @@ app.config(function($routeProvider, $locationProvider) {
 		templateUrl : "views/main.html",
 		controller : "MainController"
 	}).when("/login", {
-		templateUrl : "views/login.html",
+		templateUrl : "views/myEvents.html",
 		controller : "MyEventsController"
 	}).when("/sign", {
-		templateUrl : "views/sign-up.html",
+		templateUrl : "views/login.html",
+		controller : "LoginDataController"
+	}).when("/register", {
+		templateUrl : "views/signUp.html",
 		controller : "LoginDataController"
 	}).when("/events/:country/:state/:city/:id/:types/:find", {
 		templateUrl : "views/events.html",
@@ -146,7 +149,7 @@ app.service("TravelerService", function($http, $window) {
 		console.log(entry);
 
 	};
-	
+
 	travelerService.removeEvent = function(entry) {
 		$http({
 			method : 'POST',
@@ -170,7 +173,6 @@ app.service("TravelerService", function($http, $window) {
 			data : entry
 		});
 		console.log(entry);
-
 	};
 
 	travelerService.login = function(entry) {
@@ -194,12 +196,20 @@ app.service("TravelerService", function($http, $window) {
 
 });
 
-app.controller("LoginDataController", ["$scope", "userId", "$routeParams", "$location", "TravelerService",
-function($scope, userId, $routeParams, $location, TravelerService) {
+app.controller("LoginDataController", ["$scope", "userId", "$routeParams", "$location", "TravelerService", "$window",
+function($scope, userId, $routeParams, $location, TravelerService, $window) {
 
-	$scope.register = function() {
+	$scope.register = function() {		
 		TravelerService.register($scope.signUp);
 		$location.path("/");
+	};
+
+	$scope.back = function() {
+		$window.history.back();
+	};
+
+	$scope.sign = function() {
+		$location.path("/register");
 	};
 
 	$scope.login = function() {
@@ -339,10 +349,7 @@ function($scope, $routeParams, $location, TravelerService, myConfig, userId, $wi
 	};
 
 	$scope.prev = function() {
-		if ($scope.events[0].Id != 0) {
-			$window.history.back();
-		};
-
+		$window.history.back();
 	};
 
 }]);
