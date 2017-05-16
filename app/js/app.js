@@ -48,59 +48,59 @@ app.service("TravelerService", function($http, $window) {
 	var travelerService = {};
 
 	travelerService.getEvents = function(entry) {
-	
-			return $http.get("http://localhost:8327/Service1.svc/events/" + entry.country + "/" + entry.state + "/" + entry.city + "/" + entry.id).then(function(data) {
-				if (data.data.length > 0) {
-					return data.data;
-				} else {
-					return [{
-						City : '',
-						Country : '',
-						Currency : '',
-						Date : '/Date(1495922400000-0300)/',
-						Description : '',
-						Id : -1,
-						Image : '0x',
-						Name : 'No More Events',
-						Price : 0,
-						Site : '',
-						State : '',
-						Type : 1,
-						UserId : " ",
-						Alias : " "
 
-					}];
-				};
-			});
-		
+		return $http.get("http://localhost:8327/Service1.svc/events/" + entry.country + "/" + entry.state + "/" + entry.city + "/" + entry.id).then(function(data) {
+			if (data.data.length > 0) {
+				return data.data;
+			} else {
+				return [{
+					City : '',
+					Country : '',
+					Currency : '',
+					Date : '/Date(1495922400000-0300)/',
+					Description : '',
+					Id : -1,
+					Image : '0x',
+					Name : 'No More Events',
+					Price : 0,
+					Site : '',
+					State : '',
+					Type : 1,
+					UserId : " ",
+					Alias : " "
+
+				}];
+			};
+		});
+
 	};
-	
-	travelerService.searchEvents = function(entry) {
-	
-			return $http.get("http://localhost:8327/Service1.svc/events/" + entry.country + "/" + entry.state + "/" + entry.city + "/" + entry.id + "/" + entry.types + "/" + entry.find).then(function(data) {
-				if (data.data.length > 0) {
-					return data.data;
-				} else {
-					return [{
-						City : '',
-						Country : '',
-						Currency : '',
-						Date : '/Date(1495922400000-0300)/',
-						Description : '',
-						Id : -1,
-						Image : '0x',
-						Name : 'No More Events',
-						Price : 0,
-						Site : '',
-						State : '',
-						Type : 1,
-						UserId : " ",
-						Alias : " "
 
-					}];
-				};
-			});
-		
+	travelerService.searchEvents = function(entry) {
+
+		return $http.get("http://localhost:8327/Service1.svc/events/" + entry.country + "/" + entry.state + "/" + entry.city + "/" + entry.id + "/" + entry.types + "/" + entry.find).then(function(data) {
+			if (data.data.length > 0) {
+				return data.data;
+			} else {
+				return [{
+					City : '',
+					Country : '',
+					Currency : '',
+					Date : '/Date(1495922400000-0300)/',
+					Description : '',
+					Id : -1,
+					Image : '0x',
+					Name : 'No More Events',
+					Price : 0,
+					Site : '',
+					State : '',
+					Type : 1,
+					UserId : " ",
+					Alias : " "
+
+				}];
+			};
+		});
+
 	};
 
 	travelerService.getUserEvents = function(entry) {
@@ -371,7 +371,12 @@ function($scope, $routeParams, $location, TravelerService, myConfig, userId) {
 		});
 		temp = temp.slice(0, -1);
 		params.types = temp;
-		params.find = $scope.find;
+		if ($scope.find != '') {
+			params.find = $scope.find;
+		} else {
+			params.find = "undefined";
+		};
+
 		console.log(params);
 		TravelerService.searchEvents(params).then(function(response) {
 			$scope.events = response;
