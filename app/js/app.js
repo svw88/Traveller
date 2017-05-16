@@ -17,6 +17,9 @@ app.config(function($routeProvider, $locationProvider) {
 	}).when("/events/:country/:state/:city/:id/:types/:find", {
 		templateUrl : "views/events.html",
 		controller : "EventsController"
+	}).when("/:alias", {
+		templateUrl : "views/userEvents.html",
+		controller : "UserEventsController"
 	}).when("/create", {
 		templateUrl : "views/createEvent.html",
 		controller : "CreateEventController"
@@ -63,7 +66,8 @@ app.service("TravelerService", function($http, $window) {
 						Site : '',
 						State : '',
 						Type : 1,
-						UserId : " "
+						UserId : " ",
+						Alias : " "
 
 					}];
 				};
@@ -86,13 +90,41 @@ app.service("TravelerService", function($http, $window) {
 						Site : '',
 						State : '',
 						Type : 1,
-						UserId : " "
+						UserId : " ",
+						Alias : " "
 
 					}];
 				};
 			});
 
 		};
+	};
+
+	travelerService.getUserEvents = function(entry) {
+
+		return $http.get("http://localhost:8327/Service1.svc/events/" + entry.alias + "/" + entry.id).then(function(data) {
+			if (data.data.length > 0) {
+				return data.data;
+			} else {
+				return [{
+					City : '',
+					Country : '',
+					Currency : '',
+					Date : '/Date(1495922400000-0300)/',
+					Description : '',
+					Id : -1,
+					Image : '0x',
+					Name : 'No More Events',
+					Price : 0,
+					Site : '',
+					State : '',
+					Type : 1,
+					UserId : " ",
+					Alias : " "
+
+				}];
+			};
+		});
 	};
 
 	travelerService.getMyEvents = function(entry) {
@@ -199,7 +231,7 @@ app.service("TravelerService", function($http, $window) {
 app.controller("LoginDataController", ["$scope", "userId", "$routeParams", "$location", "TravelerService", "$window",
 function($scope, userId, $routeParams, $location, TravelerService, $window) {
 
-	$scope.register = function() {		
+	$scope.register = function() {
 		TravelerService.register($scope.signUp);
 		$location.path("/");
 	};
@@ -338,6 +370,17 @@ function($scope, $routeParams, $location, TravelerService, myConfig, userId, $wi
 		$location.path("/events/" + $routeParams.country + "/" + $routeParams.state + "/" + $routeParams.city + "/" + -1 + "/" + temp + "/" + $scope.find);
 	};
 
+	$scope.searchAlias = function(alias) {
+		var temp = "";
+
+		angular.forEach(myConfig, function(v1, k1) {//this is nested angular.forEach loop
+			temp = temp + k1 + ",";
+		});
+		temp = temp.slice(0, -1);
+
+		$location.path("/" + alias);
+	};
+
 	$scope.city = $routeParams.city;
 
 	$scope.logout = function() {
@@ -350,6 +393,47 @@ function($scope, $routeParams, $location, TravelerService, myConfig, userId, $wi
 
 	$scope.prev = function() {
 		$window.history.back();
+	};
+
+}]);
+
+app.controller("UserEventsController", ["$scope", "$routeParams", "$location", "TravelerService", "myConfig", "userId",
+function($scope, $routeParams, $location, TravelerService, myConfig, userId) {
+	$scope.id = userId.userId;
+	var params = {
+		alias : $routeParams.alias,
+		id : '-1'
+	};
+	
+	var id = '-1';
+
+	TravelerService.getUserEvents(params).then(function(response) {
+		$scope.events = response;
+		$scope.alias = response[0].Alias;
+		console.log($scope.events);
+	});
+
+	$scope.type = function(typeId) {
+		return myConfig[typeId];
+	};
+	
+	$scope.logout = function() {
+		userId.userId = " ";
+	};
+
+	$scope.next = function() {
+		id = params.id;
+		params.id = $scope.events[($scope.events.length - 1)].Id;
+		TravelerService.getUserEvents(params).then(function(response) {
+			$scope.events = response;
+		});
+	};
+
+	$scope.prev = function() {
+		params.id = id;
+		TravelerService.getUserEvents(params).then(function(response) {
+			$scope.events = response;
+		});
 	};
 
 }]);

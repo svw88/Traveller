@@ -33,48 +33,7 @@
 </nav>
 <div class="main-frame" style="max-width: 900px">
 	<div class="navbar-header">
-		<label style="padding: 5px">Events in {{city}}</label>
-		<ul class="nav navbar-nav-icon pull-right">
-			<li class="dropdown">
-				<a style="padding:0px" class="dropdown-toggle" data-toggle="dropdown" href=""><span style="width: auto;" class="glyphicon glyphicon-search"></span></a>
-				<ul class="dropdown-menu pull-right">
-					<div class="form-group">
-						<label for="eventName">Find:</label>
-						<input type="text" class="form-control" id="eventName" ng-model="find">
-					</div>
-					<div class="table-dist">
-						<span> <label class="checkbox-inline">
-								<input type="checkbox" value="" ng-model="types.Club">
-								Club</label></span>
-						<span><label class="checkbox-inline">
-								<input type="checkbox" value="" ng-model="types.Bar">
-								Bar</label></span>
-					</div>
-					<div class="table-dist">
-						<span> <label class="checkbox-inline" >
-								<input type="checkbox" value="" ng-model="types.Concert">
-								Concert</label></span>
-						<span><label class="checkbox-inline">
-								<input type="checkbox" value="" ng-model="types.Market">
-								Market</label></span>
-					</div>
-					<div class="table-dist">
-						<span> <label class="checkbox-inline">
-								<input type="checkbox" value="" ng-model="types.Festival">
-								Festival</label></span>
-						<span><label class="checkbox-inline">
-								<input type="checkbox" value="" ng-model="types.Charity">
-								Charity</label></span>
-					</div>
-					<br>
-					<div>
-						<button class="btn btn-success btn-block" ng-click="searchEvents()">
-							Search
-						</button>
-					</div>
-				</ul>
-			</li>
-		</ul>
+		<label style="padding: 5px">Events by {{alias}}</label>
 	</div>
 </div>
 <div class="main-frame" style="max-width: 900px">
@@ -98,15 +57,11 @@
 			<div class="mobile-hide"  ng-hide="events[0].Name == 'No More Events'">
 				<a style="font-size: 16px" class="glyphicon glyphicon-globe" href="{{item.Site}}"></a>&nbsp; <a href="{{item.Site}}">{{item.Site}}</a>
 			</div>
-			<div class="mobile-hide"  ng-hide="events[0].Name == 'No More Events'" ng-click="searchAlias(item.Alias)">
-				<a href="" style="font-size: 20px">@</a><a href="">&nbsp;&nbsp;{{item.Alias}}</a>
-			</div>
 			<div class="mobile-show" style="display: none" style="padding-top: 8px" ng-hide="events[0].Name == 'No More Events'">
 				<a style="font-size: 16px" class="glyphicon glyphicon-globe" href="{{item.Site}}"></a>
 				&nbsp;&nbsp;
 				<a style="font-size: 16px" class="glyphicon glyphicon-map-marker" href="https://www.google.com.br/maps/place/{{item.Addr}},{{item.City}},{{item.State}},{{item.Country}}"></a>
 				&nbsp;&nbsp;
-				<a href="" ng-click="searchAlias(item.Alias)">@{{item.Alias}}</a>
 			</div> </span>
 		<span ng-hide="events[0].Name == 'No More Events'">
 			<div>
