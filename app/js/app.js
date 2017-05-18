@@ -530,11 +530,11 @@ function($scope, userId, $routeParams, $location, TravelerService, myConfig, ngG
 			}).then(function() {
 				$scope.country = $scope.countries[0];
 				$scope.states = [{
-					Name : 'Select'
+					Name : 'Gauteng'
 				}];
 				$scope.state = $scope.states[0];
 				$scope.cities = [{
-					Name : 'Select'
+					Name : 'Pretoria'
 				}];
 				$scope.city = $scope.cities[0];
 			});
