@@ -105,7 +105,7 @@ app.service("TravelerService", function($http, $window) {
 
 	travelerService.getUserEvents = function(entry) {
 
-		return $http.get("http://104.198.175.48:8327:8327/userEvents/?a=" + entry.alias + "&i=" + entry.id).then(function(data) {
+		return $http.get("http://104.198.175.48:8327/userEvents/?a=" + entry.alias + "&i=" + entry.id).then(function(data) {
 			if (data.data.length > 0) {
 				return data.data;
 			} else {
