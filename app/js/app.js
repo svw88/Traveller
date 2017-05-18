@@ -566,9 +566,9 @@ function($scope, userId, $routeParams, $location, TravelerService, myConfig, ngG
 			img.onload = function() {
 				var canvas = document.createElement("canvas");
 				var ctx = canvas.getContext("2d");
-				canvas.width = 350;
-				canvas.height = 400;
-				ctx.drawImage(img, 5, 5, 350, 400);
+				canvas.width = 207;
+				canvas.height = 242;
+				ctx.drawImage(img, 5, 5, 207, 242);
 
 				var temp = {
 					Name : $scope.event.name,
