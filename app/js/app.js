@@ -105,7 +105,7 @@ app.service("TravelerService", function($http, $window) {
 
 	travelerService.getUserEvents = function(entry) {
 
-		return $http.get("http://104.198.175.48:8372/events/" + entry.alias + "/" + entry.id).then(function(data) {
+		return $http.get("http://104.198.175.48:8327/events/" + entry.alias + "/" + entry.id).then(function(data) {
 			if (data.data.length > 0) {
 				return data.data;
 			} else {
@@ -132,7 +132,7 @@ app.service("TravelerService", function($http, $window) {
 
 	travelerService.getMyEvents = function(entry) {
 
-		return $http.get("http://104.198.175.48:8372/myevents/" + entry).then(function(data) {
+		return $http.get("http://104.198.175.48:8327/myevents/" + entry).then(function(data) {
 
 			return data.data;
 		});
@@ -141,7 +141,7 @@ app.service("TravelerService", function($http, $window) {
 
 	travelerService.getCountries = function() {
 
-		return $http.get("http://104.198.175.48:8372/countries").then(function(data) {
+		return $http.get("http://104.198.175.48:8327/countries").then(function(data) {
 
 			return data.data;
 		});
@@ -150,7 +150,7 @@ app.service("TravelerService", function($http, $window) {
 
 	travelerService.getStates = function(entry) {
 
-		return $http.get("http://104.198.175.48:8372/states/" + entry).then(function(data) {
+		return $http.get("http://104.198.175.48:8327/states/" + entry).then(function(data) {
 
 			return data.data;
 		});
@@ -159,7 +159,7 @@ app.service("TravelerService", function($http, $window) {
 
 	travelerService.getCities = function(entry) {
 
-		return $http.get("http://104.198.175.48:8372/cities/" + entry).then(function(data) {
+		return $http.get("http://104.198.175.48:8327/cities/" + entry).then(function(data) {
 			if (data.data.length > 0) {
 				return data.data;
 			} else {
@@ -178,7 +178,7 @@ app.service("TravelerService", function($http, $window) {
 			headers : {
 				'Content-Type' : 'application/json; charset=utf-8'
 			},
-			url : 'http://104.198.175.48:8372/create',
+			url : 'http://104.198.175.48:8327/create',
 			data : entry
 		});
 		console.log(entry);
@@ -191,7 +191,7 @@ app.service("TravelerService", function($http, $window) {
 			headers : {
 				'Content-Type' : 'application/json; charset=utf-8'
 			},
-			url : 'http://104.198.175.48:8372/remove',
+			url : 'http://104.198.175.48:8327/remove',
 			data : entry
 		});
 		console.log(entry);
@@ -204,7 +204,7 @@ app.service("TravelerService", function($http, $window) {
 			headers : {
 				'Content-Type' : 'application/json; charset=utf-8'
 			},
-			url : 'http://104.198.175.48:8372/register',
+			url : 'http://104.198.175.48:8327/register',
 			data : entry
 		});
 		console.log(entry);
@@ -212,7 +212,7 @@ app.service("TravelerService", function($http, $window) {
 
 	travelerService.login = function(entry) {
 
-		return $http.get("http://104.198.175.48:8372/login/" + entry.Email + "/" + entry.Password).then(function(data) {
+		return $http.get("http://104.198.175.48:8327/login/" + entry.Email + "/" + entry.Password).then(function(data) {
 
 			return data.data;
 		});
