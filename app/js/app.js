@@ -132,7 +132,7 @@ app.service("TravelerService", function($http, $window) {
 
 	travelerService.getMyEvents = function(entry) {
 
-		return $http.get("http://104.198.175.48:8327/myevents/" + entry).then(function(data) {
+		return $http.get("http://104.198.175.48:8327/myevents/?u=" + entry).then(function(data) {
 
 			return data.data;
 		});
@@ -582,7 +582,7 @@ function($scope, userId, $routeParams, $location, TravelerService, myConfig, ngG
 					Addr : $scope.event.no + " " + $scope.event.street + ", " + $scope.event.suburb,
 					Site : $scope.event.site,
 					Date : $scope.date + " " + $scope.event.time,
-					Image : canvas.toDataURL("image/png"),
+					Image : canvas.toDataURL("image/png",0.5),
 					UserId : userId.userId
 				};
 
