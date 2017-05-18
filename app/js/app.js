@@ -49,7 +49,7 @@ app.service("TravelerService", function($http, $window) {
 
 	travelerService.getEvents = function(entry) {
 
-		return $http.get("http://localhost:8327/Service1.svc/events/" + entry.country + "/" + entry.state + "/" + entry.city + "/" + entry.id).then(function(data) {
+		return $http.get("http://104.198.175.48/events/" + entry.country + "/" + entry.state + "/" + entry.city + "/" + entry.id).then(function(data) {
 			if (data.data.length > 0) {
 				return data.data;
 			} else {
@@ -77,7 +77,7 @@ app.service("TravelerService", function($http, $window) {
 
 	travelerService.searchEvents = function(entry) {
 
-		return $http.get("http://localhost:8327/Service1.svc/events/" + entry.country + "/" + entry.state + "/" + entry.city + "/" + entry.id + "/" + entry.types + "/" + entry.find).then(function(data) {
+		return $http.get("http://104.198.175.48/events/" + entry.country + "/" + entry.state + "/" + entry.city + "/" + entry.id + "/" + entry.types + "/" + entry.find).then(function(data) {
 			if (data.data.length > 0) {
 				return data.data;
 			} else {
@@ -105,7 +105,7 @@ app.service("TravelerService", function($http, $window) {
 
 	travelerService.getUserEvents = function(entry) {
 
-		return $http.get("http://localhost:8327/Service1.svc/events/" + entry.alias + "/" + entry.id).then(function(data) {
+		return $http.get("http://104.198.175.48/events/" + entry.alias + "/" + entry.id).then(function(data) {
 			if (data.data.length > 0) {
 				return data.data;
 			} else {
@@ -132,7 +132,7 @@ app.service("TravelerService", function($http, $window) {
 
 	travelerService.getMyEvents = function(entry) {
 
-		return $http.get("http://localhost:8327/Service1.svc/myevents/" + entry).then(function(data) {
+		return $http.get("http://104.198.175.48/myevents/" + entry).then(function(data) {
 
 			return data.data;
 		});
@@ -141,7 +141,7 @@ app.service("TravelerService", function($http, $window) {
 
 	travelerService.getCountries = function() {
 
-		return $http.get("http://localhost:8327/Service1.svc/countries").then(function(data) {
+		return $http.get("http://104.198.175.48/countries").then(function(data) {
 
 			return data.data;
 		});
@@ -150,7 +150,7 @@ app.service("TravelerService", function($http, $window) {
 
 	travelerService.getStates = function(entry) {
 
-		return $http.get("http://localhost:8327/Service1.svc/states/" + entry).then(function(data) {
+		return $http.get("http://104.198.175.48/states/" + entry).then(function(data) {
 
 			return data.data;
 		});
@@ -159,7 +159,7 @@ app.service("TravelerService", function($http, $window) {
 
 	travelerService.getCities = function(entry) {
 
-		return $http.get("http://localhost:8327/Service1.svc/cities/" + entry).then(function(data) {
+		return $http.get("http://104.198.175.48/cities/" + entry).then(function(data) {
 			if (data.data.length > 0) {
 				return data.data;
 			} else {
@@ -178,7 +178,7 @@ app.service("TravelerService", function($http, $window) {
 			headers : {
 				'Content-Type' : 'application/json; charset=utf-8'
 			},
-			url : 'http://localhost:8327/Service1.svc/create',
+			url : 'http://104.198.175.48/create',
 			data : entry
 		});
 		console.log(entry);
@@ -191,7 +191,7 @@ app.service("TravelerService", function($http, $window) {
 			headers : {
 				'Content-Type' : 'application/json; charset=utf-8'
 			},
-			url : 'http://localhost:8327/Service1.svc/remove',
+			url : 'http://104.198.175.48/remove',
 			data : entry
 		});
 		console.log(entry);
@@ -204,7 +204,7 @@ app.service("TravelerService", function($http, $window) {
 			headers : {
 				'Content-Type' : 'application/json; charset=utf-8'
 			},
-			url : 'http://localhost:8327/Service1.svc/register',
+			url : 'http://104.198.175.48/register',
 			data : entry
 		});
 		console.log(entry);
@@ -212,7 +212,7 @@ app.service("TravelerService", function($http, $window) {
 
 	travelerService.login = function(entry) {
 
-		return $http.get("http://localhost:8327/Service1.svc/login/" + entry.Email + "/" + entry.Password).then(function(data) {
+		return $http.get("http://104.198.175.48/login/" + entry.Email + "/" + entry.Password).then(function(data) {
 
 			return data.data;
 		});
