@@ -49,7 +49,7 @@ app.service("TravelerService", function($http, $window) {
 
 	travelerService.getEvents = function(entry) {
 
-		return $http.get("http://104.198.175.48/events/" + entry.country + "/" + entry.state + "/" + entry.city + "/" + entry.id).then(function(data) {
+		return $http.get("http://104.198.175.48/events/?c=" + entry.country + "&s=" + entry.state + "&y=" + entry.city + "&i=" + entry.id).then(function(data) {
 			if (data.data.length > 0) {
 				return data.data;
 			} else {
@@ -77,7 +77,7 @@ app.service("TravelerService", function($http, $window) {
 
 	travelerService.searchEvents = function(entry) {
 
-		return $http.get("http://104.198.175.48/events/" + entry.country + "/" + entry.state + "/" + entry.city + "/" + entry.id + "/" + entry.types + "/" + entry.find).then(function(data) {
+		return $http.get("http://104.198.175.48/searchEvents/?c=" + entry.country + "&s=" + entry.state + "%y=" + entry.city + "&i=" + entry.id + "&t=" + entry.types + "&f=" + entry.find).then(function(data) {
 			if (data.data.length > 0) {
 				return data.data;
 			} else {
@@ -105,7 +105,7 @@ app.service("TravelerService", function($http, $window) {
 
 	travelerService.getUserEvents = function(entry) {
 
-		return $http.get("http://104.198.175.48:8327/events/" + entry.alias + "/" + entry.id).then(function(data) {
+		return $http.get("http://104.198.175.48:8327/userEvents/?a=" + entry.alias + "&i=" + entry.id).then(function(data) {
 			if (data.data.length > 0) {
 				return data.data;
 			} else {
@@ -150,7 +150,7 @@ app.service("TravelerService", function($http, $window) {
 
 	travelerService.getStates = function(entry) {
 
-		return $http.get("http://104.198.175.48:8327/states/" + entry).then(function(data) {
+		return $http.get("http://104.198.175.48:8327/states/?n=" + entry).then(function(data) {
 
 			return data.data;
 		});
@@ -159,7 +159,7 @@ app.service("TravelerService", function($http, $window) {
 
 	travelerService.getCities = function(entry) {
 
-		return $http.get("http://104.198.175.48:8327/cities/" + entry).then(function(data) {
+		return $http.get("http://104.198.175.48:8327/cities/?n=" + entry).then(function(data) {
 			if (data.data.length > 0) {
 				return data.data;
 			} else {
@@ -212,7 +212,7 @@ app.service("TravelerService", function($http, $window) {
 
 	travelerService.login = function(entry) {
 
-		return $http.get("http://104.198.175.48:8327/login/" + entry.Email + "/" + entry.Password).then(function(data) {
+		return $http.get("http://104.198.175.48:8327/login/?e=" + entry.Email + "&p=" + entry.Password).then(function(data) {
 
 			return data.data;
 		});
