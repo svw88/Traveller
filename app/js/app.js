@@ -626,7 +626,7 @@ function($scope, $routeParams, $location, TravelerService, myConfig, ngGeolocati
 				Addr : $scope.event.no + " " + $scope.event.street + ", " + $scope.event.suburb,
 				Site : "http://" + $scope.event.site,
 				Date : $scope.date + " " + $scope.event.time,
-				Image : "https://storage.cloud.google.com/travellerstore/images/" + $scope.event.name + userId[0].id,
+				Image : "https://console.cloud.google.com/storage/browser/travellerstorage/images/" + $scope.event.name + userId[0].id,
 				UserId : userId[0].id,
 				Alias : userId[0].alias
 			};
