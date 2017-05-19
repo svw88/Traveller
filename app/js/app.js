@@ -195,7 +195,7 @@ app.service("TravelerService", function($http, $window) {
 			headers : {
 				'Content-Type' : 'image/*',
 			},
-			url : 'https://www.googleapis.com/upload/storage/v1/b/travellerstore/o?uploadType=media&name=images/' + entry.name + entry.id,
+			url : 'https://www.googleapis.com/upload/storage/v1/b/travellerstorage/o?uploadType=media&name=images/' + entry.name + entry.id,
 			data : entry.img
 		});
 
