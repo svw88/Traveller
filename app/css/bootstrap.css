@@ -1090,7 +1090,8 @@ body {
   font-size: 15px;
   line-height: 1.42857143;
   color: #2c3e50;
-  background-color: #ecf0f1;
+  background-image: url('images/background.jpg');
+  background-size: cover;
 }
 input,
 button,
@@ -1101,13 +1102,12 @@ textarea {
   line-height: inherit;
 }
 a {
-  color: #18bc9c;
+  color: #fff;
   text-decoration: none;
 }
 a:hover,
 a:focus {
   color: #18bc9c;
-  text-decoration: underline;
 }
 a:focus {
   outline: 5px auto -webkit-focus-ring-color;
@@ -4318,7 +4318,6 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   }
 }
 .navbar-nav {
-  margin-top:10px;
 }
 .navbar-nav > li > a {
   padding:10px;
@@ -4359,8 +4358,6 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
     float: left;
   }
   .navbar-nav > li > a {
-    padding-top: 19.5px;
-    padding-bottom: 19.5px;
   }
 }
 .navbar-form {
@@ -7055,10 +7052,11 @@ div.table-dist span label {
 
 div.main-frame {
 	max-width: 800px;
-	margin: 30px auto;
+	margin: 20px auto 40px auto;
 	border: 1px solid #ecf0f1;
 	border-radius: 4px;
 	background-color: #fff;
+	position:relative;
 }
 div.main-frame span{
 	display: inline-block;
@@ -7068,6 +7066,10 @@ div.main-frame span{
 
 div.main-frame select{
 	width: 100%;
+}
+
+div.main-frame a{
+	color: #18bc9c;
 }
 
 div.main-frame label{
@@ -7100,6 +7102,7 @@ div.event-form{
 div.event-form span{
     width:33%;
     vertical-align: middle;
+    padding:0px;
 }
 
 @media(max-width: 900px){
@@ -7123,6 +7126,7 @@ div.event-form label{
 div.event-form p{
 	font-size:14px;
     min-height: 75px;
+    white-space: pre-wrap;
 }
 
 div.event-form a{
@@ -7131,11 +7135,12 @@ div.event-form a{
 
 div.event-form h1{
 	text-transform: uppercase;
-	padding: 0px 0px 20px 0px;
+	padding: 20px 0px 0px 0px;
 	margin: 0px;
     font-size: 20px;
     font-weight: bold;
     text-align: center;
+    color: #2c3e50;
 }
 
 div.form-group label{
@@ -7151,6 +7156,16 @@ div.form-group label{
 @media(max-width: 900px){
 .event-form{
 		width: 100% !important;
+		padding: 0px !important;
+	}
+}
+
+.image-padding-remove{
+		padding:10px 20px 20px 20px;
+	}
+	
+@media(max-width: 750px){
+.image-padding-remove{
 		padding: 0px !important;
 	}
 }
@@ -7178,7 +7193,7 @@ div.form-group label{
 .event-form h1{
 		text-align:center !important;
 		font-size: 12px !important;
-		padding: 3px 0px 3px 0px !important;
+		padding: 10px 0px 0px 0px !important;
 		
 	}
 	}	

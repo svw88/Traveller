@@ -37,19 +37,20 @@ app.constant("myConfig", {
 	"6" : "Charity"
 });
 
-app.factory('userId', function() {
-	return {
-		userId : " "
-	};
-});
+var userId = [{
+	id : -1,
+	alias : ''
+}];
 
 app.service("TravelerService", function($http, $window) {
 
 	var travelerService = {};
 
+	var serverAddr = "http://localhost:3000/Tasks";
+
 	travelerService.getEvents = function(entry) {
 
-		return $http.get("http://104.198.175.48:8327/events/?c=" + entry.country + "&s=" + entry.state + "&y=" + entry.city + "&i=" + entry.id).then(function(data) {
+		return $http.get(serverAddr + "/events/" + entry.date + "/" + entry.country + "/" + entry.state + "/" + entry.city + "/" + entry.id).then(function(data) {
 			if (data.data.length > 0) {
 				return data.data;
 			} else {
@@ -57,17 +58,17 @@ app.service("TravelerService", function($http, $window) {
 					City : '',
 					Country : '',
 					Currency : '',
-					Date : '/Date(1495922400000-0300)/',
+					Date : '2017-05-19T15:00:00.000Z',
 					Description : '',
 					Id : -1,
-					Image : '0x',
+					Image : '',
 					Name : 'No More Events',
 					Price : 0,
 					Site : '',
 					State : '',
 					Type : 1,
-					UserId : " ",
-					Alias : " "
+					UserId : -1,
+					Alias : ""
 
 				}];
 			};
@@ -76,8 +77,10 @@ app.service("TravelerService", function($http, $window) {
 	};
 
 	travelerService.searchEvents = function(entry) {
-
-		return $http.get("http://104.198.175.48:8327/searchEvents/?c=" + entry.country + "&s=" + entry.state + "%y=" + entry.city + "&i=" + entry.id + "&t=" + entry.types + "&f=" + entry.find).then(function(data) {
+		if (entry.find == undefined || entry.find == "") {
+			entry.find = "?";
+		};
+		return $http.get(serverAddr + "/events/" + entry.date + "/" + entry.country + "/" + entry.state + "/" + entry.city + "/" + entry.id + "/" + entry.types + "/" + entry.find).then(function(data) {
 			if (data.data.length > 0) {
 				return data.data;
 			} else {
@@ -85,16 +88,16 @@ app.service("TravelerService", function($http, $window) {
 					City : '',
 					Country : '',
 					Currency : '',
-					Date : '/Date(1495922400000-0300)/',
+					Date : '2017-05-19T15:00:00.000Z',
 					Description : '',
 					Id : -1,
-					Image : '0x',
+					Image : '',
 					Name : 'No More Events',
 					Price : 0,
 					Site : '',
 					State : '',
 					Type : 1,
-					UserId : " ",
+					UserId : -1,
 					Alias : " "
 
 				}];
@@ -105,7 +108,7 @@ app.service("TravelerService", function($http, $window) {
 
 	travelerService.getUserEvents = function(entry) {
 
-		return $http.get("http://104.198.175.48:8327/userEvents/?a=" + entry.alias + "&i=" + entry.id).then(function(data) {
+		return $http.get(serverAddr + "/events/" + entry.date + "/" + entry.alias + "/" + entry.id).then(function(data) {
 			if (data.data.length > 0) {
 				return data.data;
 			} else {
@@ -113,16 +116,16 @@ app.service("TravelerService", function($http, $window) {
 					City : '',
 					Country : '',
 					Currency : '',
-					Date : '/Date(1495922400000-0300)/',
+					Date : '2017-05-19T15:00:00.000Z',
 					Description : '',
 					Id : -1,
-					Image : '0x',
+					Image : '',
 					Name : 'No More Events',
 					Price : 0,
 					Site : '',
 					State : '',
 					Type : 1,
-					UserId : " ",
+					UserId : -1,
 					Alias : " "
 
 				}];
@@ -132,7 +135,7 @@ app.service("TravelerService", function($http, $window) {
 
 	travelerService.getMyEvents = function(entry) {
 
-		return $http.get("http://104.198.175.48:8327/myevents/?u=" + entry).then(function(data) {
+		return $http.get(serverAddr + "/events/" + entry.userId + "/" + entry.date).then(function(data) {
 
 			return data.data;
 		});
@@ -141,7 +144,7 @@ app.service("TravelerService", function($http, $window) {
 
 	travelerService.getCountries = function() {
 
-		return $http.get("http://104.198.175.48:8327/countries").then(function(data) {
+		return $http.get(serverAddr + "/countries").then(function(data) {
 
 			return data.data;
 		});
@@ -150,7 +153,7 @@ app.service("TravelerService", function($http, $window) {
 
 	travelerService.getStates = function(entry) {
 
-		return $http.get("http://104.198.175.48:8327/states/?n=" + entry).then(function(data) {
+		return $http.get(serverAddr + "/states/" + entry).then(function(data) {
 
 			return data.data;
 		});
@@ -159,7 +162,7 @@ app.service("TravelerService", function($http, $window) {
 
 	travelerService.getCities = function(entry) {
 
-		return $http.get("http://104.198.175.48:8327/cities/?n=" + entry).then(function(data) {
+		return $http.get(serverAddr + "/cities/" + entry).then(function(data) {
 			if (data.data.length > 0) {
 				return data.data;
 			} else {
@@ -173,28 +176,35 @@ app.service("TravelerService", function($http, $window) {
 	};
 
 	travelerService.create = function(entry) {
+		console.log(entry);
 		$http({
 			method : 'POST',
 			headers : {
 				'Content-Type' : 'application/json; charset=utf-8'
 			},
-			url : 'http://104.198.175.48:8327/create',
+			url : serverAddr + '/create',
 			data : entry
 		});
+
+	};
+
+	travelerService.imageUpload = function(entry) {
 		console.log(entry);
+		$http({
+			method : 'POST',
+			headers : {
+				'Content-Type' : 'image/*',
+			},
+			url : 'https://www.googleapis.com/upload/storage/v1/b/travellerstore/o?uploadType=media&name=images/' + entry.name + entry.id,
+			data : entry.img
+		});
 
 	};
 
 	travelerService.removeEvent = function(entry) {
-		$http({
-			method : 'POST',
-			headers : {
-				'Content-Type' : 'application/json; charset=utf-8'
-			},
-			url : 'http://104.198.175.48:8327/remove',
-			data : entry
+		$http.delete(serverAddr + '/remove/' + entry).then(function(data) {
+			return data.data;
 		});
-		console.log(entry);
 
 	};
 
@@ -204,7 +214,7 @@ app.service("TravelerService", function($http, $window) {
 			headers : {
 				'Content-Type' : 'application/json; charset=utf-8'
 			},
-			url : 'http://104.198.175.48:8327/register',
+			url : serverAddr + '/register',
 			data : entry
 		});
 		console.log(entry);
@@ -212,7 +222,7 @@ app.service("TravelerService", function($http, $window) {
 
 	travelerService.login = function(entry) {
 
-		return $http.get("http://104.198.175.48:8327/login/?e=" + entry.Email + "&p=" + entry.Password).then(function(data) {
+		return $http.get(serverAddr + "/login/" + entry.Email + "/" + entry.Password).then(function(data) {
 
 			return data.data;
 		});
@@ -231,8 +241,8 @@ app.service("TravelerService", function($http, $window) {
 
 });
 
-app.controller("LoginDataController", ["$scope", "userId", "$routeParams", "$location", "TravelerService", "$window",
-function($scope, userId, $routeParams, $location, TravelerService, $window) {
+app.controller("LoginDataController", ["$scope", "$routeParams", "$location", "TravelerService", "$window",
+function($scope, $routeParams, $location, TravelerService, $window) {
 
 	$scope.register = function() {
 		TravelerService.register($scope.signUp);
@@ -248,9 +258,10 @@ function($scope, userId, $routeParams, $location, TravelerService, $window) {
 	};
 
 	$scope.login = function() {
-		TravelerService.login($scope.signUp).then(function(response) {;
-			if (response != "") {
-				userId.userId = response;
+		TravelerService.login($scope.signUp).then(function(response) {
+
+			if (response.length > 0) {
+				userId = response;
 				$location.path("/login");
 			};
 		});
@@ -258,54 +269,60 @@ function($scope, userId, $routeParams, $location, TravelerService, $window) {
 	};
 }]);
 
-app.controller("MainController", ["$scope", "$routeParams", "$location", "TravelerService", "$geolocation", "userId", "$route", "$window",
-function($scope, $routeParams, $location, TravelerService, ngGeolocation, userId, $route, $window) {
-	$scope.id = userId.userId;
+app.controller("MainController", ["$scope", "$routeParams", "$location", "TravelerService", "$geolocation", "$route", "$window",
+function($scope, $routeParams, $location, TravelerService, ngGeolocation, $route, $window) {
+	$scope.id = userId[0].id;
+	$scope.alias = userId[0].alias;
 
-	$window.navigator.permissions.query({
-		'name' : 'geolocation'
-	}).then(function(permissions) {
-		if (permissions.state == 'prompt') {
-			ngGeolocation.getCurrentPosition();
-			$route.reload();
-		} else if (permissions.state == 'granted') {
-			ngGeolocation.getCurrentPosition().then(function(position) {
-				TravelerService.location(position.coords).then(function(response) {
-					$scope.location = response;
-				}).then(TravelerService.getCountries().then(function(response) {
-					$scope.countries = response;
-				}).then(function(response) {
-					$scope.countries.splice(0, 0, {
-						Name : $scope.location[6].long_name
-					});
-					$scope.country = $scope.countries[0];
-					$scope.states = [{
-						Name : $scope.location[5].long_name
-					}];
-					$scope.state = $scope.states[0];
-					$scope.cities = [{
-						Name : $scope.location[4].long_name
-					}];
-					$scope.city = $scope.cities[0];
-				}));
-			});
-		} else {
-			TravelerService.getCountries().then(function(response) {
-				$scope.countries = response;
-			}).then(function() {
-				$scope.country = $scope.countries[0];
-				$scope.states = [{
-					Name : 'Gauteng'
-				}];
-				$scope.state = $scope.states[0];
-				$scope.cities = [{
-					Name : 'Pretoria'
-				}];
+	//$window.navigator.permissions.query({
+	//'name' : 'geolocation'
+	//}).then(function(permissions) {
+	//if (permissions.state == 'prompt') {
+	//ngGeolocation.getCurrentPosition();
+	//$route.reload();
+	//} else if (permissions.state == 'granted') {
+	//ngGeolocation.getCurrentPosition().then(function(position) {
+	//TravelerService.location(position.coords).then(function(response) {
+	//$scope.location = response;
+	//}).then(TravelerService.getCountries().then(function(response) {
+	//	$scope.countries = response;
+	//}).then(function(response) {
+	//$scope.countries.splice(0, 0, {
+	//Name : $scope.location[6].long_name
+	//});
+	//$scope.country = $scope.countries[0];
+	//$scope.states = [{
+	//Name : $scope.location[5].long_name
+	//}];
+	//$scope.state = $scope.states[0];
+	//$scope.cities = [{
+	//	Name : $scope.location[4].long_name
+	//	}];
+	//	$scope.city = $scope.cities[0];
+	//	}));
+	//	});
+	//} else {
+	$scope.countries = [{
+		id : 0,
+		name : ''
+	}];
+	TravelerService.getCountries().then(function(response) {
+		$scope.countries = response;
+		$scope.country = $scope.countries[0];
+	}).then(function() {
+		TravelerService.getStates($scope.country.id).then(function(response) {
+			$scope.states = response;
+			$scope.state = $scope.states[0];
+		}).then(function(response) {
+			TravelerService.getCities($scope.state.id).then(function(response) {
+				$scope.cities = response;
 				$scope.city = $scope.cities[0];
 			});
-		}
-		;
+		});
 	});
+	//};
+	//});
+
 	$scope.getStates = function() {
 		TravelerService.getStates($scope.country.Name).then(function(response) {
 			$scope.states = response;
@@ -325,24 +342,27 @@ function($scope, $routeParams, $location, TravelerService, ngGeolocation, userId
 	};
 
 	$scope.search = function() {
-		$location.path("/events/" + $scope.country.Name + "/" + $scope.state.Name + "/" + $scope.city.Name + "/" + -1 + "/All" + "/All");
+		$location.path("/events/" + $scope.country.name + "/" + $scope.state.name + "/" + $scope.city.name + "/" + -1 + "/All" + "/All");
 	};
 
 	$scope.logout = function() {
-		userId.userId = " ";
+		userId[0].id = -1;
 		$route.reload();
 	};
 
 }]);
 
-app.controller("EventsController", ["$scope", "$routeParams", "$location", "TravelerService", "myConfig", "userId",
-function($scope, $routeParams, $location, TravelerService, myConfig, userId) {
-	$scope.id = userId.userId;
+app.controller("EventsController", ["$scope", "$routeParams", "$location", "TravelerService", "myConfig", "$filter",
+function($scope, $routeParams, $location, TravelerService, myConfig, $filter) {
+	$scope.id = userId[0].id;
+	$scope.alias = userId[0].alias;
 	var params = $routeParams;
 	var id = '-1';
+	params.date = $filter('date')(new Date(), 'dd-MM-yyyy');
 
 	TravelerService.getEvents(params).then(function(response) {
 		$scope.events = response;
+		console.log($scope.events);
 	});
 
 	$scope.type = function(typeId) {
@@ -371,11 +391,8 @@ function($scope, $routeParams, $location, TravelerService, myConfig, userId) {
 		});
 		temp = temp.slice(0, -1);
 		params.types = temp;
-		if ($scope.find != '') {
-			params.find = $scope.find;
-		} else {
-			params.find = "undefined";
-		};
+
+		params.find = $scope.find;
 
 		console.log(params);
 		TravelerService.searchEvents(params).then(function(response) {
@@ -393,11 +410,10 @@ function($scope, $routeParams, $location, TravelerService, myConfig, userId) {
 
 		$location.path("/user/" + alias);
 	};
-
 	$scope.city = $routeParams.city;
 
 	$scope.logout = function() {
-		userId.userId = " ";
+		userId[0].id = -1;
 	};
 
 	$scope.next = function() {
@@ -419,13 +435,15 @@ function($scope, $routeParams, $location, TravelerService, myConfig, userId) {
 
 }]);
 
-app.controller("UserEventsController", ["$scope", "$routeParams", "$location", "TravelerService", "myConfig", "userId",
-function($scope, $routeParams, $location, TravelerService, myConfig, userId) {
-	$scope.id = userId.userId;
+app.controller("UserEventsController", ["$scope", "$routeParams", "$location", "TravelerService", "myConfig", "$filter",
+function($scope, $routeParams, $location, TravelerService, myConfig, $filter) {
+	$scope.id = userId[0].id;
+	$scope.alias = userId[0].alias;
 	var params = {
 		alias : $routeParams.alias,
 		id : '-1'
 	};
+	params.date = $filter('date')(new Date(), 'dd-MM-yyyy');
 
 	var id = '-1';
 
@@ -440,7 +458,7 @@ function($scope, $routeParams, $location, TravelerService, myConfig, userId) {
 	};
 
 	$scope.logout = function() {
-		userId.userId = " ";
+		userId[0].id = -1;
 	};
 
 	$scope.next = function() {
@@ -462,13 +480,21 @@ function($scope, $routeParams, $location, TravelerService, myConfig, userId) {
 
 }]);
 
-app.controller("MyEventsController", ["$scope", "userId", "$routeParams", "$location", "TravelerService", "myConfig", "$route",
-function($scope, userId, $routeParams, $location, TravelerService, myConfig, $route) {
+app.controller("MyEventsController", ["$scope", "$routeParams", "$location", "TravelerService", "myConfig", "$route", "$filter",
+function($scope, $routeParams, $location, TravelerService, myConfig, $route, $filter) {
+	$scope.id = userId[0].id;
+	$scope.alias = userId[0].alias;
+	var params = {
+		userId : userId[0].id,
+		date : $filter('date')(new Date(), 'dd-MM-yyyy')
 
-	if (userId.userId != " ") {
-		TravelerService.getMyEvents(userId.userId).then(function(response) {
+	};
+
+	if (userId[0].id != -1) {
+		TravelerService.getMyEvents(params).then(function(response) {
+			console.log(response);
 			$scope.events = response;
-			console.log($scope.events);
+
 		});
 
 		$scope.type = function(typeId) {
@@ -479,68 +505,76 @@ function($scope, userId, $routeParams, $location, TravelerService, myConfig, $ro
 	};
 
 	$scope.logout = function() {
-		userId.userId = " ";
+		userId[0].id = -1;
 	};
 
 	$scope.refresh = function() {
 		$route.reload();
 	};
 
-	$scope.remove = function(id) {
-		TravelerService.removeEvent(id);
+	$scope.remove = function(Id) {
+		console.log(Id);
+		TravelerService.removeEvent(Id);
 	};
 
 }]);
 
-app.controller("CreateEventController", ["$scope", "userId", "$routeParams", "$location", "TravelerService", "myConfig", "$geolocation", "$window", "$route", "$filter",
-function($scope, userId, $routeParams, $location, TravelerService, myConfig, ngGeolocation, $window, $route, $filter) {
+app.controller("CreateEventController", ["$scope", "$routeParams", "$location", "TravelerService", "myConfig", "$geolocation", "$window", "$route", "$filter",
+function($scope, $routeParams, $location, TravelerService, myConfig, ngGeolocation, $window, $route, $filter) {
+	$scope.id = userId[0].id;
+	$scope.alias = userId[0].alias;
 	$scope.types = myConfig;
 	$scope.type = myConfig[1];
-	$scope.date = $filter('date')(new Date(), 'dd/MM/yyyy');
-	$window.navigator.permissions.query({
-		'name' : 'geolocation'
-	}).then(function(permissions) {
-		if (permissions.state == 'prompt') {
-			ngGeolocation.getCurrentPosition();
-			$route.reload();
-		} else if (permissions.state == 'granted') {
-			ngGeolocation.getCurrentPosition().then(function(position) {
-				TravelerService.location(position.coords).then(function(response) {
-					$scope.location = response;
-				}).then(TravelerService.getCountries().then(function(response) {
-					$scope.countries = response;
-				}).then(function(response) {
-					$scope.countries.splice(0, 0, {
-						Name : $scope.location[6].long_name
-					});
-					$scope.country = $scope.countries[0];
-					$scope.states = [{
-						Name : $scope.location[5].long_name
-					}];
-					$scope.state = $scope.states[0];
-					$scope.cities = [{
-						Name : $scope.location[4].long_name
-					}];
-					$scope.city = $scope.cities[0];
-				}));
-			});
-		} else {
-			TravelerService.getCountries().then(function(response) {
-				$scope.countries = response;
-			}).then(function() {
-				$scope.country = $scope.countries[0];
-				$scope.states = [{
-					Name : 'Gauteng'
-				}];
-				$scope.state = $scope.states[0];
-				$scope.cities = [{
-					Name : 'Pretoria'
-				}];
+	$scope.date = $filter('date')(new Date(), 'yyyy/MM/dd');
+	$scope.countries = [{
+		id : 0,
+		name : ''
+	}];
+	TravelerService.getCountries().then(function(response) {
+		$scope.countries = response;
+		$scope.country = $scope.countries[0];
+	}).then(function() {
+		TravelerService.getStates($scope.country.id).then(function(response) {
+			$scope.states = response;
+			$scope.state = $scope.states[0];
+		}).then(function(response) {
+			TravelerService.getCities($scope.state.id).then(function(response) {
+				$scope.cities = response;
 				$scope.city = $scope.cities[0];
 			});
-		}
-		;
+		});
+
 	});
+
+	$scope.logout = function() {
+		userId[0].id = -1;
+		$route.reload();
+	};
+
+	function dataURItoBlob(dataURI) {
+
+		// convert base64/URLEncoded data component to raw binary data held in a string
+		var byteString;
+		if (dataURI.split(',')[0].indexOf('base64') >= 0)
+			byteString = atob(dataURI.split(',')[1]);
+		else
+			byteString = unescape(dataURI.split(',')[1]);
+
+		// separate out the mime component
+		var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+
+		// write the bytes of the string to a typed array
+		var ia = new Uint8Array(byteString.length);
+		for (var i = 0; i < byteString.length; i++) {
+			ia[i] = byteString.charCodeAt(i);
+		}
+
+		return new Blob([ia], {
+			type : mimeString
+		});
+	}
+
+
 	$scope.getStates = function() {
 		TravelerService.getStates($scope.country.Name).then(function(response) {
 			$scope.states = response;
@@ -558,55 +592,58 @@ function($scope, userId, $routeParams, $location, TravelerService, myConfig, ngG
 			$scope.city = $scope.cities[0];
 		});
 	};
-	$scope.create = function() {
+	$scope.createEvent = function() {
 
-		if (userId.userId != " ") {
+		if (userId[0].id != -1) {
+			var canvas = document.createElement("canvas");
 			var img = new Image();
 			img.src = $scope.event.img;
 			img.onload = function() {
-				var canvas = document.createElement("canvas");
+
 				var ctx = canvas.getContext("2d");
 				canvas.width = 207;
 				canvas.height = 242;
 				ctx.drawImage(img, 5, 5, 207, 242);
-
-				var temp = {
-					Name : $scope.event.name,
-					Description : $scope.event.description,
-					Type : 0,
-					Price : $scope.event.price,
-					Currency : $scope.event.currency,
-					Country : $scope.country.Name,
-					State : $scope.state.Name,
-					City : $scope.city.Name,
-					Addr : $scope.event.no + " " + $scope.event.street + ", " + $scope.event.suburb,
-					Site : $scope.event.site,
-					Date : $scope.date + " " + $scope.event.time,
-					Image : canvas.toDataURL("image/png",0.5),
-					UserId : userId.userId
-				};
-
-				angular.forEach(myConfig, function(v1, k1) {//this is nested angular.forEach loop
-					if (v1 == $scope.type) {
-						temp["Type"] = k1;
-					};
+				var dataurl = canvas.toDataURL("image/png", 0.7);
+				var blob = dataURItoBlob(dataurl);
+				$scope.event.img = new File([blob], 'fileName.jpeg', {
+					type : "'image/jpeg"
 				});
-				console.log(temp);
-
-				TravelerService.create(temp);
+				TravelerService.imageUpload($scope.event);
 			};
+
+			$scope.event.id = userId[0].id;
+
+			var temp = {
+				Name : $scope.event.name,
+				Description : $scope.event.description,
+				Type : 0,
+				Price : parseInt($scope.event.price),
+				Currency : $scope.event.currency,
+				Country : $scope.country.name,
+				State : $scope.state.name,
+				City : $scope.city.name,
+				Addr : $scope.event.no + " " + $scope.event.street + ", " + $scope.event.suburb,
+				Site : "http://" + $scope.event.site,
+				Date : $scope.date + " " + $scope.event.time,
+				Image : "https://storage.cloud.google.com/travellerstore/images/" + $scope.event.name + userId[0].id,
+				UserId : userId[0].id,
+				Alias : userId[0].alias
+			};
+
+			angular.forEach(myConfig, function(v1, k1) {//this is nested angular.forEach loop
+				if (v1 == $scope.type) {
+					temp["Type"] = parseInt(k1);
+				};
+			});
+			console.log(temp);
+
+			TravelerService.create(temp);
 
 			$location.path("/login");
 		};
 	};
-
 }]);
-
-app.filter("jsDate", function() {
-	return function(x) {
-		return new Date(parseInt(x.substr(6)));
-	};
-});
 
 app.directive("fileread", [
 function() {
@@ -627,6 +664,12 @@ function() {
 		}
 	};
 }]);
+
+app.filter('dateToISO', function() {
+	return function(input) {
+		return new Date(input).toISOString();
+	};
+});
 
 app.directive("dateget", [
 function() {

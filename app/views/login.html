@@ -1,33 +1,69 @@
-<div>
-	<nav class="navbar navbar-default">
-		<div class="container-fluid">
-			<div class="navbar-header">
-				<a class="navbar-brand" href="#/">Traveller</a>
+<nav class="navbar navbar-default">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<ul class="nav navbar-nav pull-left">
+				<li class="dropdown">
+					<a href="" id="menu-toggle"><span style="font-size: 20px" class="glyphicon glyphicon-align-justify"></span></a>
+					<script>
+						$("#menu-toggle").click(function(e) {
+							e.preventDefault();
+							$("#wrapper").toggleClass("toggled");
+						});
+					</script>
+				</li>
+			</ul>
+			<div class="form-group pull-left">
+				<a href="#/"><span class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;Home</a>
 			</div>
 		</div>
-	</nav>
-	<div class="main-frame">
-		<div style="margin-top: 10px">
-			<span><label for="email">Email:</label></span>
-			<span>
-				<input type="email" class="form-control" placeholder="Enter email" ng-model="signUp.Email" required>
-			</span>
+	</div>
+</nav>
+<div id="wrapper">
+
+	<!-- Sidebar -->
+	<div id="sidebar-wrapper">
+		<ul class="sidebar-nav">
+			<div style="margin-top: 10px">
+				<li>
+					<a href="#/register"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;Register</a>
+				</li>
+			</div>
+		</ul>
+	</div>
+	<!-- /#sidebar-wrapper -->
+
+	<!-- Page Content -->
+
+	<div id="page-content-wrapper">
+		<br>
+		<div class="main-frame">
+			<div style="margin-top: 10px">
+				<span><label for="email">Email:</label></span>
+				<span>
+					<input type="email" class="form-control" placeholder="Enter email" ng-model="signUp.Email" required>
+				</span>
+			</div>
+			<div>
+				<span><label for="pwd">Password:</label></span>
+				<span>
+					<input type="password" class="form-control" placeholder="Enter password" ng-model="signUp.Password" required>
+				</span>
+			</div>
+			<div style="border-top: 1px solid #ecf0f1">
+				<span>
+					<button type="button" class="btn btn-success btn-block" ng-click="login()">
+						Login
+					</button></span>
+				<span>
+					<button type="button" class="btn btn-success btn-block" ng-click="sign()">
+						Sign Up
+					</button></span>
+			</div>
 		</div>
 		<div>
-			<span><label for="pwd">Password:</label></span>
-			<span>
-				<input type="password" class="form-control" placeholder="Enter password" ng-model="signUp.Password" required>
-			</span>
-		</div>
-		<div style="border-top: 1px solid #ecf0f1">
-			<span>
-				<button type="button" class="btn btn-success btn-block" ng-click="login()">
-					Login
-				</button></span>
-			<span>
-				<button type="button" class="btn btn-success btn-block" ng-click="sign()">
-					Sign Up
-				</button></span>
+			<p style="color: #fff" align="center">
+				&copy; Copyright 2017 by The Traveller Corporation. Designed by Sabrsoft. All Rights Reserved
+			</p>
 		</div>
 	</div>
 </div>

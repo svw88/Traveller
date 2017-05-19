@@ -1,17 +1,51 @@
-<div>
-	<nav class="navbar navbar-default">
-		<div class="container-fluid">
-			<div class="navbar-header">
-				<a class="navbar-brand" href="#/">Traveller</a>
+<nav class="navbar navbar-default">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<ul class="nav navbar-nav pull-left">
+				<li class="dropdown">
+					<a href="" id="menu-toggle"><span style="font-size: 20px" class="glyphicon glyphicon-align-justify"></span></a>
+					<script>
+						$("#menu-toggle").click(function(e) {
+							e.preventDefault();
+							$("#wrapper").toggleClass("toggled");
+						});
+					</script>
+				</li>
+			</ul>
+			<div class="form-group pull-left">
+				<a href="#/"><span class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;Home</a>
 			</div>
 		</div>
-	</nav>
+	</div>
+</nav>
+<div id="wrapper">
+
+	<!-- Sidebar -->
+	<div id="sidebar-wrapper">
+		<ul class="sidebar-nav">
+			<div ng-show="id != -1" style="margin-top: 10px">
+				<li>
+					<a href="#/login"><span class="glyphicon glyphicon-book"></span>&nbsp;&nbsp;My Events</a>
+				</li>
+				<li>
+					<a href="#/" ng-click="logout()"><span class="glyphicon glyphicon-log-out"></span>&nbsp;&nbsp;Logout</a>
+				</li>
+			</div>
+		</ul>
+	</div>
+</div>
+<!-- /#sidebar-wrapper -->
+
+<!-- Page Content -->
+
+<div id="page-content-wrapper">
+	<br>
 	<div class="main-frame">
 		<div style="margin-top: 10px">
 			<span><label>Name:</label></span>
 			<span>
 				<div>
-					<input type="text" class="form-control" ng-model="event.name">
+					<input placeholder="Event Name" type="text" class="form-control" ng-model="event.name">
 				</div></span>
 		</div>
 		<div>
@@ -36,47 +70,47 @@
 						<option value="R">R</option>
 						<option>$</option>
 					</select>
-					<input style="max-width:310px; display: inline-block" type="text" class="form-control" ng-model="event.price">
+					<input placeholder="0.00" style="max-width:310px; display: inline-block" type="text" class="form-control" ng-model="event.price">
 				</div></span>
 		</div>
 		<div style="margin-top: 10px">
 			<span><label for="country">Country:</label></span>
-			<span> <select class="form-control" id="country" ng-change="getStates()" ng-model="country" ng-options="item.Name for item in countries"></select></span>
+			<span> <select class="form-control" id="country" ng-change="getStates()" ng-model="country" ng-options="item.name for item in countries"></select></span>
 		</div>
 		<div>
 			<span><label for="state">State:</label></span>
-			<span> <select class="form-control" id="state" ng-change="getCities()" ng-model="state" ng-options="item.Name for item in states"></select></span>
+			<span> <select class="form-control" id="state" ng-change="getCities()" ng-model="state" ng-options="item.name for item in states"></select></span>
 		</div>
 		<div>
 			<span><label for="city">City:</label></span>
-			<span> <select class="form-control" id="city" ng-model="city" ng-options="item.Name for item in cities"></select></span>
+			<span> <select class="form-control" id="city" ng-model="city" ng-options="item.name for item in cities"></select></span>
 		</div>
 		<div>
 			<span><label>Suburb:</label></span>
 			<span>
 				<div>
-					<input type="text" class="form-control" ng-model="event.suburb">
+					<input placeholder="Suburb Name" type="text" class="form-control" ng-model="event.suburb">
 				</div></span>
 		</div>
 		<div>
 			<span><label>Street:</label></span>
 			<span>
 				<div>
-					<input type="text" class="form-control" ng-model="event.street">
+					<input type="text" placeholder="Street Name" class="form-control" ng-model="event.street">
 				</div></span>
 		</div>
 		<div>
 			<span><label>No:</label></span>
 			<span>
 				<div>
-					<input type="text" class="form-control" ng-model="event.no">
+					<input type="text" placeholder="Street Number" class="form-control" ng-model="event.no">
 				</div></span>
 		</div>
 		<div>
 			<span><label>Website:</label></span>
 			<span>
 				<div>
-					<input type="text" class="form-control" ng-model="event.site">
+					<input placeholder="www.event.com" type="text" class="form-control" ng-model="event.site">
 				</div></span>
 		</div>
 		<span><label>Date:</label></span>
@@ -88,7 +122,7 @@
 		<script type="text/javascript">
 			$(function() {
 				$('#datetimepicker1').datetimepicker({
-					format : 'DD/MM/YYYY',
+					format : 'YYYY/MM/DD',
 					defaultDate : new Date(),
 					minDate : new Date()
 				});
@@ -98,18 +132,18 @@
 			<span><label>Time:</label></span>
 			<span>
 				<div>
-					<input type="text" class="form-control" ng-model="event.time">
+					<input placeholder="00:00" type="text" class="form-control" ng-model="event.time">
 				</div></span>
 		</div>
 		<div>
 			<span><label>Image:</label></span>
 			<span>
-				<input type="file" class="form-control" fileread="event.img"/>
+				<input type="file" accept="image/*" class="form-control" fileread="event.img"/>
 			</span>
 		</div>
 		<div style="border-top: 1px solid #ecf0f1">
 			<span><a href="#/login">
-				<button class="btn btn-success btn-block" ng-click="create()">
+				<button class="btn btn-success btn-block" ng-click="createEvent()">
 					Create
 				</button> </a></span>
 			<span><a href="#/login">
@@ -118,4 +152,10 @@
 				</button> </a></span>
 		</div>
 	</div>
+	<div>
+		<p style="color: #fff" align="center">
+			&copy; Copyright 2017 by The Traveller Corporation. Designed by Sabrsoft. All Rights Reserved
+		</p>
+	</div>
+</div>
 </div>
