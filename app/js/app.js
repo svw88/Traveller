@@ -195,7 +195,7 @@ app.service("TravelerService", function($http, $window) {
 			headers : {
 				'Content-Type' : 'image/*',
 			},
-			url : 'https://www.googleapis.com/upload/storage/v1/b/travellerstorage/o?uploadType=media&name=images/' + entry.name + entry.id,
+			url : 'https://www.googleapis.com/upload/storage/v1/b/travellerstorage/o?uploadType=media&name=images/'+ entry.date + entry.name + entry.id+".jpeg",
 			data : entry.img
 		});
 
@@ -626,7 +626,7 @@ function($scope, $routeParams, $location, TravelerService, myConfig, ngGeolocati
 				Addr : $scope.event.no + " " + $scope.event.street + ", " + $scope.event.suburb,
 				Site : "http://" + $scope.event.site,
 				Date : $scope.date + " " + $scope.event.time,
-				Image : "https://console.cloud.google.com/storage/browser/travellerstorage/images/" + $scope.event.name + userId[0].id,
+				Image : "https://storage.cloud.google.com/travellerstorage/images/"+ $scope.event.date + $scope.event.name + userId[0].id+".jpeg",
 				UserId : userId[0].id,
 				Alias : userId[0].alias
 			};
