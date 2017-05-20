@@ -48,40 +48,39 @@
 		</ul>
 	</div>
 	<!-- /#sidebar-wrapper -->
+</div>
+<!-- Page Content -->
 
-	<!-- Page Content -->
-
-	<div id="page-content-wrapper">
-		<br>
-		<div class="main-frame">
-			<div class="navbar-header">
-				<label style="padding: 10px 0px 10px 0px; margin: 0px">Welcome Traveller</label>
-			</div>
-		</div>
-		<div class="main-frame">
-			<div style="margin-top: 10px">
-				<span><label for="country">Country</label></span>
-				<span> <select class="form-control" id="country" ng-change="getStates()" ng-model="country" ng-options="item.name for item in countries"></select></span>
-			</div>
-			<div>
-				<span><label for="state">State</label></span>
-				<span> <select class="form-control" id="state" ng-change="getCities()" ng-model="state" ng-options="item.name for item in states"></select></span>
-			</div>
-			<div>
-				<span><label for="city">City</label></span>
-				<span> <select class="form-control" id="city" ng-model="city" ng-options="item.name for item in cities"></select></span>
-			</div>
-			<div style="border-top: 1px solid #ecf0f1">
-				<button type="button" class="btn btn-success btn-block" ng-click="search()">
-					Search
-				</button>
-			</div>
-		</div>
-		<div>
-			<p style="color: #fff" align="center">
-				&copy; Copyright 2017 by The Traveller Corporation. Designed by Sabrsoft. All Rights Reserved
-			</p>
+<div id="page-content-wrapper">
+	<br>
+	<div class="main-frame">
+		<div class="navbar-header">
+			<label style="padding: 10px 0px 10px 0px; margin: 0px">Welcome Traveller</label>
 		</div>
 	</div>
-
+	<div class="main-frame">
+		<div style="margin-top: 10px">
+			<span><label for="country">Country</label></span>
+			<span> <select class="form-control" id="country" ng-change="getStates()" ng-model="country" ng-options="item.name for item in countries"></select></span>
+		</div>
+		<div>
+			<span><label for="state">State</label></span>
+			<span> <select class="form-control" id="state" ng-change="getCities()" ng-model="state" ng-options="item.name for item in states"></select></span>
+		</div>
+		<div>
+			<span><label for="city">City</label></span>
+			<span> <select class="form-control" id="city" ng-model="city" ng-options="item.name for item in cities"></select></span>
+		</div>
+		<div style="border-top: 1px solid #ecf0f1">
+			<button type="button" class="btn btn-success btn-block" ng-click="search()">
+				Search
+			</button>
+		</div>
+	</div>
+	<div>
+		<p style="color: #fff" align="center">
+			&copy; Copyright 2017 by The Traveller Corporation. Designed by Sabrsoft. All Rights Reserved
+		</p>
+	</div>
 </div>
+

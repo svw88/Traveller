@@ -45,64 +45,63 @@
 		</ul>
 	</div>
 	<!-- /#sidebar-wrapper -->
+</div>
+<!-- Page Content -->
 
-	<!-- Page Content -->
-
-	<div id="page-content-wrapper">
-		<br>
-		<div class="main-frame" style="max-width: 900px">
-			<div class="navbar-header">
-				<label style="padding: 10px 0px 10px 0px; margin: 0px">My Events</label>
-			</div>
+<div id="page-content-wrapper">
+	<br>
+	<div class="main-frame" style="max-width: 900px">
+		<div class="navbar-header">
+			<label style="padding: 10px 0px 10px 0px; margin: 0px">My Events</label>
 		</div>
-		<div class="main-frame" style="max-width: 900px">
-			<div class="event-form" ng-repeat="item in events | orderBy: 'Date'">
+	</div>
+	<div class="main-frame" style="max-width: 900px">
+		<div class="event-form" ng-repeat="item in events | orderBy: 'Date'">
+			<div>
+				<a href="{{item.Site}}"><h1>{{item.Name}}</h1></a>
+			</div>
+			<span style="width: 33% !important;">
+				<div class="image-padding" align="center" ng-hide="events[0].Name == 'No More Events'" >
+					<img ng-src="{{item.Image}}"/>
+				</div> </span>
+			<span class="mobile-desc">
 				<div>
-					<a href="{{item.Site}}"><h1>{{item.Name}}</h1></a>
+					<p>{{item.Description}}
+					</p>
 				</div>
-				<span style="width: 33% !important;">
-					<div class="image-padding" align="center" ng-hide="events[0].Name == 'No More Events'" >
-						<img ng-src="{{item.Image}}"/>
-					</div> </span>
-				<span class="mobile-desc">
-					<div>
-						<p>{{item.Description}}
-						</p>
-					</div>
-					<div class="mobile-hide"  ng-hide="events[0].Name == 'No More Events'" ng-click="searchAlias(item.Alias)">
-						<a href="" style="font-size: 20px">@&nbsp;&nbsp;&nbsp;&nbsp;{{item.Alias}}</a>
-					</div>
-					<div class="mobile-hide"  ng-hide="events[0].Name == 'No More Events'">
-						<a style="font-size: 16px" class="glyphicon glyphicon-map-marker" href="https://www.google.com.br/maps/place/{{item.Addr}},{{item.City}},{{item.State}},{{item.Country}}">&nbsp;{{item.Addr}}</a>
-					</div>
-					<div class="mobile-show" style="display: none" style="padding-top: 8px" ng-hide="events[0].Name == 'No More Events'">
-						<a style="font-size: 16px" class="glyphicon glyphicon-map-marker" href="https://www.google.com.br/maps/place/{{item.Addr}},{{item.City}},{{item.State}},{{item.Country}}"></a>
-						&nbsp;&nbsp;
-						<a href="" ng-click="searchAlias(item.Alias)">@&nbsp;&nbsp;{{item.Alias}}</a>
-					</div> </span>
-				<span ng-hide="events[0].Name == 'No More Events'">
-					<div>
-						<label class="mobile-hide">Type: </label><label>{{type(item.Type)}}</label>
-					</div>
-					<div>
-						<label class="mobile-hide">Date: </label><label>{{item.Date | dateToISO | date:"dd/MM/yyyy"}}</label>
-					</div>
-					<div>
-						<label class="mobile-hide">Time: </label><label>{{item.Date | dateToISO | date:"HH:mm"}}</label>
-					</div>
-					<div>
-						<label class="mobile-hide">Price:</label><label>{{item.Currency}} {{item.Price}}</label>
-					</div></span>
-				<button type="button" class="btn btn-success btn-block" ng-click="remove(item.Id)">
-					Remove
-				</button>
-			</div>
+				<div class="mobile-hide"  ng-hide="events[0].Name == 'No More Events'" ng-click="searchAlias(item.Alias)">
+					<a href="" style="font-size: 20px">@&nbsp;&nbsp;&nbsp;&nbsp;{{item.Alias}}</a>
+				</div>
+				<div class="mobile-hide"  ng-hide="events[0].Name == 'No More Events'">
+					<a style="font-size: 16px" class="glyphicon glyphicon-map-marker" href="https://www.google.com.br/maps/place/{{item.Addr}},{{item.City}},{{item.State}},{{item.Country}}">&nbsp;{{item.Addr}}</a>
+				</div>
+				<div class="mobile-show" style="display: none" style="padding-top: 8px" ng-hide="events[0].Name == 'No More Events'">
+					<a style="font-size: 16px" class="glyphicon glyphicon-map-marker" href="https://www.google.com.br/maps/place/{{item.Addr}},{{item.City}},{{item.State}},{{item.Country}}"></a>
+					&nbsp;&nbsp;
+					<a href="" ng-click="searchAlias(item.Alias)">@&nbsp;&nbsp;{{item.Alias}}</a>
+				</div> </span>
+			<span ng-hide="events[0].Name == 'No More Events'">
+				<div>
+					<label class="mobile-hide">Type: </label><label>{{type(item.Type)}}</label>
+				</div>
+				<div>
+					<label class="mobile-hide">Date: </label><label>{{item.Date | dateToISO | date:"dd/MM/yyyy"}}</label>
+				</div>
+				<div>
+					<label class="mobile-hide">Time: </label><label>{{item.Date | dateToISO | date:"HH:mm"}}</label>
+				</div>
+				<div>
+					<label class="mobile-hide">Price:</label><label>{{item.Currency}} {{item.Price}}</label>
+				</div></span>
+			<button type="button" class="btn btn-success btn-block" ng-click="remove(item.Id)">
+				Remove
+			</button>
 		</div>
 	</div>
-	<div>
-		<p style="color: #fff" align="center">
-			&copy; Copyright 2017 by The Traveller Corporation. Designed by Sabrsoft. All Rights Reserved
-		</p>
-	</div>
 </div>
+<div>
+	<p style="color: #fff" align="center">
+		&copy; Copyright 2017 by The Traveller Corporation. Designed by Sabrsoft. All Rights Reserved
+	</p>
 </div>
+
