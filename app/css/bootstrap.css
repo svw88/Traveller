@@ -7160,12 +7160,12 @@ div.form-group label{
 	}
 }
 
-.image-padding-remove{
+.image-padding{
 		padding:10px 20px 20px 20px;
 	}
 	
 @media(max-width: 750px){
-.image-padding-remove{
+.image-padding{
 		padding: 0px !important;
 	}
 }
