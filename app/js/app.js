@@ -364,7 +364,6 @@ function($scope, $routeParams, $location, TravelerService, myConfig, $filter, $g
 		$scope.events = response;		
 		console.log($scope.events);
 			$gapi.client.init({
-			'apiKey' : 'AIzaSyCP7wisAiok7pHAhkHCfvKouiq7rxF8d9U',
 			 'clientId': '632210925469-anpvg0k3nteopm99nlfcn39pmsb9sv45.apps.googleusercontent.com',
 			'scope': 'profile'
 		}).then(function() {
