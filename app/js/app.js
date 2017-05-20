@@ -269,8 +269,8 @@ function($scope, $routeParams, $location, TravelerService, $window) {
 	};
 }]);
 
-app.controller("MainController", ["$scope", "$routeParams", "$location", "TravelerService", "$geolocation", "$route", "$window", "$gapi",
-function($scope, $routeParams, $location, TravelerService, ngGeolocation, $route, $window, $gapi) {
+app.controller("MainController", ["$scope", "$routeParams", "$location", "TravelerService", "$geolocation", "$route", "$window",
+function($scope, $routeParams, $location, TravelerService, ngGeolocation, $route, $window) {
 	$scope.id = userId[0].id;
 	$scope.alias = userId[0].alias;
 
