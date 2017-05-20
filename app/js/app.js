@@ -1,4 +1,4 @@
-var app = angular.module('travelerWeb', ["ngRoute", "ngGeolocation", "ngGapi"]);
+var app = angular.module('travelerWeb', ["ngRoute", "ngGeolocation"]);
 
 app.config(function($routeProvider, $locationProvider) {
 	$locationProvider.hashPrefix('');
@@ -318,18 +318,7 @@ function($scope, $routeParams, $location, TravelerService, ngGeolocation, $route
 				$scope.cities = response;
 				$scope.city = $scope.cities[0];
 			});
-		});
-		$gapi.client.init({
-			'clientId' : '632210925469-anpvg0k3nteopm99nlfcn39pmsb9sv45.apps.googleusercontent.com',
-			'scope' : 'profile'
-		}).then(function() {
-			// 3. Initialize and make the API request.
-			return $gapi.client.request({
-				'path' : 'https://storage.cloud.google.com/travellerstorage/images',
-			});
-		}).then(function(response) {
-			console.log(response);
-		});
+		});		
 	});
 	//};
 	//});
@@ -353,7 +342,7 @@ function($scope, $routeParams, $location, TravelerService, ngGeolocation, $route
 	};
 
 	$scope.search = function() {
-		$location.path("/events/" + $scope.country.name + "/" + $scope.state.name + "/" + $scope.city.name + "/" + -1 + "/All" + "/All");
+		$location.path("/events/" + $scope.country.name + "/" + $scope.state.name + "/" + $scope.city.name + "/" + -1 + "/All" + "/All");		
 	};
 
 	$scope.logout = function() {
