@@ -1,4 +1,4 @@
-var app = angular.module('travelerWeb', ["ngRoute", "ngGeolocation","ngGapi"]);
+var app = angular.module('travelerWeb', ["ngRoute", "ngGeolocation", "ngGapi"]);
 
 app.config(function($routeProvider, $locationProvider) {
 	$locationProvider.hashPrefix('');
@@ -269,8 +269,8 @@ function($scope, $routeParams, $location, TravelerService, $window) {
 	};
 }]);
 
-app.controller("MainController", ["$scope", "$routeParams", "$location", "TravelerService", "$geolocation", "$route", "$window",
-function($scope, $routeParams, $location, TravelerService, ngGeolocation, $route, $window) {
+app.controller("MainController", ["$scope", "$routeParams", "$location", "TravelerService", "$geolocation", "$route", "$window", "$gapi",
+function($scope, $routeParams, $location, TravelerService, ngGeolocation, $route, $window, $gapi) {
 	$scope.id = userId[0].id;
 	$scope.alias = userId[0].alias;
 
@@ -319,6 +319,17 @@ function($scope, $routeParams, $location, TravelerService, ngGeolocation, $route
 				$scope.city = $scope.cities[0];
 			});
 		});
+		$gapi.client.init({
+			'clientId' : '632210925469-anpvg0k3nteopm99nlfcn39pmsb9sv45.apps.googleusercontent.com',
+			'scope' : 'profile'
+		}).then(function() {
+			// 3. Initialize and make the API request.
+			return $gapi.client.request({
+				'path' : 'https://storage.cloud.google.com/travellerstorage/images',
+			});
+		}).then(function(response) {
+			console.log(response);
+		});
 	});
 	//};
 	//});
@@ -352,8 +363,8 @@ function($scope, $routeParams, $location, TravelerService, ngGeolocation, $route
 
 }]);
 
-app.controller("EventsController", ["$scope", "$routeParams", "$location", "TravelerService", "myConfig", "$filter","$gapi",
-function($scope, $routeParams, $location, TravelerService, myConfig, $filter, $gapi) {
+app.controller("EventsController", ["$scope", "$routeParams", "$location", "TravelerService", "myConfig", "$filter",
+function($scope, $routeParams, $location, TravelerService, myConfig, $filter) {
 	$scope.id = userId[0].id;
 	$scope.alias = userId[0].alias;
 	var params = $routeParams;
@@ -361,21 +372,10 @@ function($scope, $routeParams, $location, TravelerService, myConfig, $filter, $g
 	params.date = $filter('date')(new Date(), 'dd-MM-yyyy');
 
 	TravelerService.getEvents(params).then(function(response) {
-		$scope.events = response;		
+		$scope.events = response;
 		console.log($scope.events);
-			$gapi.client.init({
-			 'clientId': '632210925469-anpvg0k3nteopm99nlfcn39pmsb9sv45.apps.googleusercontent.com',
-			'scope': 'profile'
-		}).then(function() {
-			// 3. Initialize and make the API request.
-			return $gapi.client.request({
-				'path' : 'https://storage.cloud.google.com/travellerstorage/images/s3',
-			});
-		}).then(function(response) {
-			console.log(response);
-		});
+
 	});
-	
 
 	$scope.type = function(typeId) {
 		return myConfig[typeId];
