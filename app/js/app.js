@@ -1,4 +1,4 @@
-var app = angular.module('travelerWeb', ["ngRoute", "ngGeolocation"]);
+var app = angular.module('travelerWeb', ["ngRoute", "ngGeolocation","ngGapi"]);
 
 app.config(function($routeProvider, $locationProvider) {
 	$locationProvider.hashPrefix('');
@@ -352,8 +352,8 @@ function($scope, $routeParams, $location, TravelerService, ngGeolocation, $route
 
 }]);
 
-app.controller("EventsController", ["$scope", "$routeParams", "$location", "TravelerService", "myConfig", "$filter",
-function($scope, $routeParams, $location, TravelerService, myConfig, $filter) {
+app.controller("EventsController", ["$scope", "$routeParams", "$location", "TravelerService", "myConfig", "$filter","$gapi",
+function($scope, $routeParams, $location, TravelerService, myConfig, $filter, $gapi) {
 	$scope.id = userId[0].id;
 	$scope.alias = userId[0].alias;
 	var params = $routeParams;
@@ -361,9 +361,22 @@ function($scope, $routeParams, $location, TravelerService, myConfig, $filter) {
 	params.date = $filter('date')(new Date(), 'dd-MM-yyyy');
 
 	TravelerService.getEvents(params).then(function(response) {
-		$scope.events = response;
+		$scope.events = response;		
 		console.log($scope.events);
+			$gapi.client.init({
+			'apiKey' : 'AIzaSyCP7wisAiok7pHAhkHCfvKouiq7rxF8d9U',
+			 'clientId': '632210925469-anpvg0k3nteopm99nlfcn39pmsb9sv45.apps.googleusercontent.com',
+			'scope': 'profile'
+		}).then(function() {
+			// 3. Initialize and make the API request.
+			return $gapi.client.request({
+				'path' : 'https://storage.cloud.google.com/travellerstorage/images/s3',
+			});
+		}).then(function(response) {
+			console.log(response);
+		});
 	});
+	
 
 	$scope.type = function(typeId) {
 		return myConfig[typeId];
@@ -612,7 +625,7 @@ function($scope, $routeParams, $location, TravelerService, myConfig, ngGeolocati
 				$scope.event.date = $scope.date;
 				$scope.event.id = userId[0].id;
 				TravelerService.imageUpload($scope.event);
-			};			
+			};
 
 			var temp = {
 				Name : $scope.event.name,
