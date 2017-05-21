@@ -7052,7 +7052,7 @@ div.table-dist span label {
 
 div.main-frame {
 	max-width: 800px;
-	margin: 20px auto 40px auto;
+	margin: 40px auto;
 	border: 1px solid #ecf0f1;
 	border-radius: 4px;
 	background-color: #fff;
@@ -7112,6 +7112,12 @@ div.main-frame h2{
 
 div.main-frame span button{
 	margin: 0px 15px;
+}
+
+@media(max-width: 750px){
+	div.main-frame span button{
+	margin: 0px 5px;
+}
 }
 
 div.my-date-picker span{
@@ -7242,8 +7248,5 @@ div.form-group label{
 		max-width:44%;
 	}	
 }
-
-
-
 
 /*# sourceMappingURL=bootstrap.css.map */

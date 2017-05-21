@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default">
+<nav class="navbar navbar-default navbar-fixed-top">
 	<div class="container-fluid">
 		<div class="navbar-header">
 			<ul class="nav navbar-nav pull-left">
@@ -56,14 +56,13 @@
 
 <div id="page-content-wrapper">
 	<br>
-
-	<div class="main-frame" style="max-width: 900px">
+	<div class="main-frame" style="max-width: 900px;margin-top: 60px">
 		<div class="navbar-header">
 			<label style="padding: 10px 0px 5px 0px; margin-left: 0px">Events in {{city}}</label>
 		</div>
 	</div>
 	<div class="main-frame" style="max-width: 900px;">
-		<div class="navbar-header mobile-hide" style=" border-bottom: 1px solid #dce4ec;border-radius: 4px;">
+		<div class="navbar-header mobile-hide fixed" style=" border-bottom: 1px solid #dce4ec;border-radius: 4px;">
 			<div style="display: inline-block; width: 70%;">
 				<label class="mobile-hide">Filter by:&nbsp;&nbsp;&nbsp;</label>
 				<select ng-options="val for (key, val) in types" ng-model="typeSelect" ng-change="filterEvents()"></select>
