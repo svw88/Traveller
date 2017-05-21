@@ -77,10 +77,64 @@ app.service("TravelerService", function($http, $window) {
 	};
 
 	travelerService.searchEvents = function(entry) {
-		if (entry.find == undefined || entry.find == "") {
-			entry.find = "?";
-		};
-		return $http.get(serverAddr + "/events/" + entry.date + "/" + entry.country + "/" + entry.state + "/" + entry.city + "/" + entry.id + "/" + entry.types + "/" + entry.find).then(function(data) {
+
+		return $http.get(serverAddr + "/events/" + entry.date + "/" + entry.country + "/" + entry.state + "/" + entry.city + "/" + entry.id + "/search/" + entry.find).then(function(data) {
+			if (data.data.length > 0) {
+				return data.data;
+			} else {
+				return [{
+					City : '',
+					Country : '',
+					Currency : '',
+					Date : '2017-05-19T15:00:00.000Z',
+					Description : '',
+					Id : -1,
+					Image : '',
+					Name : 'No More Events',
+					Price : 0,
+					Site : '',
+					State : '',
+					Type : 1,
+					UserId : -1,
+					Alias : " "
+
+				}];
+			};
+		});
+
+	};
+
+	travelerService.getFilterEvents = function(entry) {
+
+		return $http.get(serverAddr + "/events/" + entry.date + "/" + entry.country + "/" + entry.state + "/" + entry.city + "/" + entry.id + "/" + entry.type).then(function(data) {
+			if (data.data.length > 0) {
+				return data.data;
+			} else {
+				return [{
+					City : '',
+					Country : '',
+					Currency : '',
+					Date : '2017-05-19T15:00:00.000Z',
+					Description : '',
+					Id : -1,
+					Image : '',
+					Name : 'No More Events',
+					Price : 0,
+					Site : '',
+					State : '',
+					Type : 1,
+					UserId : -1,
+					Alias : " "
+
+				}];
+			};
+		});
+
+	};
+
+	travelerService.getSearchFilterEvents = function(entry) {
+
+		return $http.get(serverAddr + "/events/" + entry.date + "/" + entry.country + "/" + entry.state + "/" + entry.city + "/" + entry.id + "/search/" + entry.type +"/"+ entry.find).then(function(data) {
 			if (data.data.length > 0) {
 				return data.data;
 			} else {
@@ -318,7 +372,7 @@ function($scope, $routeParams, $location, TravelerService, ngGeolocation, $route
 				$scope.cities = response;
 				$scope.city = $scope.cities[0];
 			});
-		});		
+		});
 	});
 	//};
 	//});
@@ -342,7 +396,7 @@ function($scope, $routeParams, $location, TravelerService, ngGeolocation, $route
 	};
 
 	$scope.search = function() {
-		$location.path("/events/" + $scope.country.name + "/" + $scope.state.name + "/" + $scope.city.name + "/" + -1 + "/All" + "/All");		
+		$location.path("/events/" + $scope.country.name + "/" + $scope.state.name + "/" + $scope.city.name + "/" + -1 + "/All" + "/All");
 	};
 
 	$scope.logout = function() {
@@ -357,6 +411,7 @@ function($scope, $routeParams, $location, TravelerService, myConfig, $filter) {
 	$scope.id = userId[0].id;
 	$scope.alias = userId[0].alias;
 	var params = $routeParams;
+	params.find = '';
 	var id = '-1';
 	params.date = $filter('date')(new Date(), 'yyyy-MM-dd');
 
@@ -369,45 +424,75 @@ function($scope, $routeParams, $location, TravelerService, myConfig, $filter) {
 	$scope.type = function(typeId) {
 		return myConfig[typeId];
 	};
+
 	$scope.types = {
-		Club : true,
-		Bar : true,
-		Concert : true,
-		Market : true,
-		Festival : true,
-		Charity : true
+		"0" : "All",
+		"1" : "Club",
+		"2" : "Bar",
+		"3" : "Concert",
+		"4" : "Market",
+		"5" : "Festival",
+		"6" : "Charity"
 	};
+	$scope.typeSelect = $scope.types[0];
 
 	$scope.searchEvents = function() {
-		var temp = "";
-		angular.forEach($scope.types, function(x1, z1) {//this is nested angular.forEach loop
-			if (x1) {
-				angular.forEach(myConfig, function(v1, k1) {//this is nested angular.forEach loop
-					if (v1 == z1) {
-						z1 = k1;
-					};
-				});
-				temp = temp + z1 + ",";
-			};
-		});
-		temp = temp.slice(0, -1);
-		params.types = temp;
 
 		params.find = $scope.find;
 
-		console.log(params);
-		TravelerService.searchEvents(params).then(function(response) {
-			$scope.events = response;
-		});
+		if ($scope.typeSelect == 'All' && (params.find == undefined || params.find == '')) {
+			TravelerService.getEvents(params).then(function(response) {
+				$scope.events = response;
+			});
+		} else if ($scope.typeSelect == 'All') {
+			TravelerService.searchEvents(params).then(function(response) {
+				$scope.events = response;
+			});
+		} else if (params.find == undefined || params.find == '') {
+			TravelerService.getFilterEvents(params).then(function(response) {
+				$scope.events = response;
+			});
+		} else {
+			TravelerService.getSearchFilterEvents(params).then(function(response) {
+				$scope.events = response;
+			});
+		}
+		;
+	};
+
+	$scope.filterEvents = function() {
+		if ($scope.typeSelect == 'All' && (params.find == undefined || params.find == '')) {
+			TravelerService.getEvents(params).then(function(response) {
+				$scope.events = response;
+			});
+		} else if ($scope.typeSelect == 'All') {
+			TravelerService.searchEvents(params).then(function(response) {
+				$scope.events = response;
+			});
+		} else if (params.find == undefined || params.find == '') {
+			angular.forEach(myConfig, function(v1, k1) {//this is nested angular.forEach loop
+				if (v1 == $scope.typeSelect) {
+					params.type = parseInt(k1);
+				};
+			});
+			TravelerService.getFilterEvents(params).then(function(response) {
+				$scope.events = response;
+			});
+		} else {
+			angular.forEach(myConfig, function(v1, k1) {//this is nested angular.forEach loop
+				if (v1 == $scope.typeSelect) {
+					params.type = parseInt(k1);
+				};
+			});
+			TravelerService.getSearchFilterEvents(params).then(function(response) {
+				$scope.events = response;
+			});
+		}
+		;
+
 	};
 
 	$scope.searchAlias = function(alias) {
-		var temp = "";
-
-		angular.forEach(myConfig, function(v1, k1) {//this is nested angular.forEach loop
-			temp = temp + k1 + ",";
-		});
-		temp = temp.slice(0, -1);
 
 		$location.path("/user/" + alias);
 	};
@@ -420,17 +505,48 @@ function($scope, $routeParams, $location, TravelerService, myConfig, $filter) {
 	$scope.next = function() {
 		id = params.id;
 		params.id = $scope.events[($scope.events.length - 1)].Id;
-		TravelerService.getEvents(params).then(function(response) {
-			$scope.events = response;
-		});
+		if ($scope.typeSelect == 'All' && (params.find == undefined || params.find == '')) {
+			TravelerService.getEvents(params).then(function(response) {
+				$scope.events = response;
+			});
+		} else if ($scope.typeSelect == 'All') {
+			TravelerService.searchEvents(params).then(function(response) {
+				$scope.events = response;
+			});
+		} else if (params.find == undefined || params.find == '') {
+			TravelerService.getFilterEvents(params).then(function(response) {
+				$scope.events = response;
+			});
+		} else {
+			TravelerService.getSearchFilterEvents(params).then(function(response) {
+				$scope.events = response;
+			});
+		}
+		;
 	};
 
 	$scope.prev = function() {
 		if (id != params.id) {
 			params.id = id;
-			TravelerService.getEvents(params).then(function(response) {
-				$scope.events = response;
-			});
+			if ($scope.typeSelect == 'All' && (params.find == undefined || params.find == '')) {
+				TravelerService.getEvents(params).then(function(response) {
+					$scope.events = response;
+				});
+			} else if ($scope.typeSelect == 'All') {
+				TravelerService.searchEvents(params).then(function(response) {
+					$scope.events = response;
+				});
+			} else if (params.find == undefined || params.find == '') {
+				TravelerService.getFilterEvents(params).then(function(response) {
+					$scope.events = response;
+				});
+			} else {
+				TravelerService.getSearchFilterEvents(params).then(function(response) {
+					$scope.events = response;
+				});
+			}
+			;
+
 		};
 	};
 

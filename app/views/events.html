@@ -13,7 +13,7 @@
 				</li>
 			</ul>
 			<div class="form-group pull-left">
-				<a href="#/"><span class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;Home</a>
+				<a href="#/"><span style="font-size: 20px" class="glyphicon glyphicon-home"></span></a>
 			</div>
 			<div class="form-group pull-right" ng-show="id == -1" style="padding-right: 15px">
 				<a href="#/register"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;Register</a>
@@ -60,50 +60,28 @@
 	<div class="main-frame" style="max-width: 900px">
 		<div class="navbar-header">
 			<label style="padding: 10px 0px 5px 0px">Events in {{city}}</label>
-			<ul class="nav navbar-nav-icon pull-right">
-				<li class="dropdown">
-					<a style="padding:0px" class="dropdown-toggle" data-toggle="dropdown" href=""><span style="width: auto;" class="glyphicon glyphicon-search"></span></a>
-					<ul class="dropdown-menu pull-right">
-						<div class="form-group">
-							<label for="eventName">Find:</label>
-							<input type="text" class="form-control" id="eventName" ng-model="find">
-						</div>
-						<div class="table-dist">
-							<span> <label class="checkbox-inline">
-									<input type="checkbox" value="" ng-model="types.Club">
-									Club</label></span>
-							<span><label class="checkbox-inline">
-									<input type="checkbox" value="" ng-model="types.Bar">
-									Bar</label></span>
-						</div>
-						<div class="table-dist">
-							<span> <label class="checkbox-inline" >
-									<input type="checkbox" value="" ng-model="types.Concert">
-									Concert</label></span>
-							<span><label class="checkbox-inline">
-									<input type="checkbox" value="" ng-model="types.Market">
-									Market</label></span>
-						</div>
-						<div class="table-dist">
-							<span> <label class="checkbox-inline">
-									<input type="checkbox" value="" ng-model="types.Festival">
-									Festival</label></span>
-							<span><label class="checkbox-inline">
-									<input type="checkbox" value="" ng-model="types.Charity">
-									Charity</label></span>
-						</div>
-						<br>
-						<div>
-							<button class="btn btn-success btn-block" ng-click="searchEvents()">
-								Search
-							</button>
-						</div>
-					</ul>
-				</li>
-			</ul>
 		</div>
 	</div>
-	<div class="main-frame" style="max-width: 900px">
+	<div class="main-frame" style="max-width: 900px;">
+		<div class="navbar-header mobile-hide" style=" border-bottom: 1px solid #dce4ec;border-radius: 4px;">
+			<div style="display: inline-block; width: 70%;">
+				<label class="mobile-hide">Filter by:&nbsp;&nbsp;&nbsp;</label>
+				<select ng-options="val for (key, val) in types" ng-model="typeSelect" ng-change="filterEvents()"></select>
+				<label class="mobile-hide">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Search:&nbsp;&nbsp;&nbsp;</label>
+				<input type="text" id="eventName" ng-model="find">
+				<a ng-click="searchEvents()" href=""><span style="width: auto;" class="glyphicon glyphicon-search"></span></a>
+			</div>
+		</div>
+		<div class="navbar-header mobile-show" style=" border-bottom: 1px solid #dce4ec;border-radius: 4px; display:none">
+			<div style="display: inline-block; width: 30%;">
+				<label class="mobile-hide">Filter by:&nbsp;&nbsp;&nbsp;</label>
+				<select ng-options="val for (key, val) in types" ng-model="typeSelect" ng-change="filterEvents()"></select>
+			</div>
+			<div style="display: inline-block; width: 69%">
+				<input type="text" id="eventName" ng-model="find">
+				<a ng-click="searchEvents()" href=""><span style="width: auto;" class="glyphicon glyphicon-search"></span></a>
+			</div>
+		</div>
 		<div class="event-form" ng-repeat="item in events | orderBy: 'Date'">
 			<div>
 				<a href="{{item.Site}}"><h1>{{item.Name}}</h1></a>
