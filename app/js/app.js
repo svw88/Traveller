@@ -358,7 +358,7 @@ function($scope, $routeParams, $location, TravelerService, myConfig, $filter) {
 	$scope.alias = userId[0].alias;
 	var params = $routeParams;
 	var id = '-1';
-	params.date = $filter('date')(new Date(), 'dd-MM-yyyy');
+	params.date = $filter('date')(new Date(), 'yyyy-MM-dd');
 
 	TravelerService.getEvents(params).then(function(response) {
 		$scope.events = response;
@@ -444,7 +444,7 @@ function($scope, $routeParams, $location, TravelerService, myConfig, $filter) {
 		alias : $routeParams.alias,
 		id : '-1'
 	};
-	params.date = $filter('date')(new Date(), 'dd-MM-yyyy');
+	params.date = $filter('date')(new Date(), 'yyyy-MM-dd');
 
 	var id = '-1';
 
@@ -487,7 +487,7 @@ function($scope, $routeParams, $location, TravelerService, myConfig, $route, $fi
 	$scope.alias = userId[0].alias;
 	var params = {
 		userId : userId[0].id,
-		date : $filter('date')(new Date(), 'dd-MM-yyyy')
+		date : $filter('date')(new Date(), 'yyyy-MM-dd')
 
 	};
 
