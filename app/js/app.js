@@ -249,7 +249,7 @@ app.service("TravelerService", function($http, $window) {
 			headers : {
 				'Content-Type' : 'image/*',
 			},
-			url : 'https://www.googleapis.com/upload/storage/v1/b/travellerstorage/o?uploadType=media&name=images/' + entry.date + entry.id + ".jpeg",
+			url : 'https://www.googleapis.com/upload/storage/v1/b/travellerweb-168202.appspot.com/o?uploadType=media&name=images/' +entry.name+ entry.date + entry.id + ".jpeg",
 			data : entry.img
 		});
 
@@ -743,7 +743,7 @@ function($scope, $routeParams, $location, TravelerService, myConfig, ngGeolocati
 				Addr : $scope.event.no + " " + $scope.event.street + ", " + $scope.event.suburb,
 				Site : "http://" + $scope.event.site,
 				Date : $scope.date + " " + $scope.event.time,
-				Image : "https://storage.cloud.google.com/travellerstorage/images/" + $scope.date + userId[0].id + ".jpeg",
+				Image : "https://storage.cloud.google.com/travellerweb-168202.appspot.com/images/" +$scope.event.name+ $scope.date + userId[0].id + ".jpeg",
 				UserId : userId[0].id,
 				Alias : userId[0].alias
 			};

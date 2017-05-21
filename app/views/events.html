@@ -59,7 +59,7 @@
 
 	<div class="main-frame" style="max-width: 900px">
 		<div class="navbar-header">
-			<label style="padding: 10px 0px 5px 0px">Events in {{city}}</label>
+			<label style="padding: 10px 0px 5px 0px; margin-left: 0px">Events in {{city}}</label>
 		</div>
 	</div>
 	<div class="main-frame" style="max-width: 900px;">
@@ -67,7 +67,7 @@
 			<div style="display: inline-block; width: 70%;">
 				<label class="mobile-hide">Filter by:&nbsp;&nbsp;&nbsp;</label>
 				<select ng-options="val for (key, val) in types" ng-model="typeSelect" ng-change="filterEvents()"></select>
-				<label class="mobile-hide">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Search:&nbsp;&nbsp;&nbsp;</label>
+				<label class="mobile-hide">Search:&nbsp;&nbsp;&nbsp;</label>
 				<input type="text" id="eventName" ng-model="find">
 				<a ng-click="searchEvents()" href=""><span style="width: auto;" class="glyphicon glyphicon-search"></span></a>
 			</div>

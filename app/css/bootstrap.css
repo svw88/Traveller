@@ -7064,6 +7064,10 @@ div.main-frame span{
 	padding: 10px;
 }
 
+div.main-frame label{
+	margin-left: 40px;
+}
+
 div.main-frame select{
   font-size: 15px;
   line-height: 1.42857143;
