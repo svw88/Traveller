@@ -82,25 +82,27 @@
 			</div>
 		</div>
 		<div class="event-form" ng-repeat="item in events | orderBy: 'Date'">
-			<div>
-				<a href="{{item.Site}}"><h1>{{item.Name}}</h1></a>
-			</div>
 			<span style="width: 33% !important;">
 				<div class="image-padding" align="center" ng-hide="events[0].Name == 'No More Events'" >
 					<img ng-src="{{item.Image}}"/>
 				</div> </span>
 			<span class="mobile-desc">
-				<div>
-					<p>{{item.Description}}
-					</p>
+				<div style="margin-bottom: 10px">
+					<h1>{{item.Name}}<a ng-hide="events[0].Name == 'No More Events'" style="font-size: 25px; float: right; padding: 0px 15px 0px 0px !important" class="glyphicon glyphicon-calendar" href="#/events/{{item.Id}}"></a></h1>
 				</div>
+				<br>
 				<div class="mobile-hide"  ng-hide="events[0].Name == 'No More Events'" ng-click="searchAlias(item.Alias)">
 					<a href="" style="font-size: 20px">@&nbsp;&nbsp;&nbsp;&nbsp;{{item.Alias}}</a>
+				</div>
+				<div class="mobile-hide"  ng-hide="events[0].Name == 'No More Events'">
+					<a style="font-size: 16px" class="glyphicon glyphicon-globe" href="http://{{item.Site}}">&nbsp;{{item.Site}}</a>
 				</div>
 				<div class="mobile-hide"  ng-hide="events[0].Name == 'No More Events'">
 					<a style="font-size: 16px" class="glyphicon glyphicon-map-marker" href="https://www.google.com.br/maps/place/{{item.Addr}},{{item.City}},{{item.State}},{{item.Country}}">&nbsp;{{item.Addr}}</a>
 				</div>
 				<div class="mobile-show" style="display: none" style="padding-top: 8px" ng-hide="events[0].Name == 'No More Events'">
+					<a style="font-size: 16px" class="glyphicon glyphicon-globe" href="http://{{item.Site}}"></a>
+					&nbsp;&nbsp;
 					<a style="font-size: 16px" class="glyphicon glyphicon-map-marker" href="https://www.google.com.br/maps/place/{{item.Addr}},{{item.City}},{{item.State}},{{item.Country}}"></a>
 					&nbsp;&nbsp;
 					<a href="" ng-click="searchAlias(item.Alias)">@&nbsp;&nbsp;{{item.Alias}}</a>

@@ -7146,14 +7146,21 @@ div.event-form span{
 }
 
 div.event-form img{
-    max-width: 75%;
-    height: auto;
-    padding-top: 5px;
+    height: 170px;
+    width:160px;
+    max-width: 100%;
+}
+
+@media(max-width: 750px){	
+div.event-form img{
+    height: 85px;
+    width:80px;
+}
 }
 
 div.event-form label{
     width: 25%;
-    	padding: 15px 0px 15px 0px;
+    	padding: 10px 0px 10px 0px;
 }
 div.event-form p{
 	font-size:14px;
@@ -7167,11 +7174,10 @@ div.event-form a{
 
 div.event-form h1{
 	text-transform: uppercase;
-	padding: 20px 0px 0px 0px;
+	padding: 0px;
 	margin: 0px;
     font-size: 20px;
     font-weight: bold;
-    text-align: center;
     color: #2c3e50;
 }
 
@@ -7193,14 +7199,15 @@ div.form-group label{
 }
 
 .image-padding{
-		padding:10px 20px 20px 20px;
+		padding:20px 10px;
 	}
 	
-@media(max-width: 750px){
+@media(max-width: 750px){	
 .image-padding{
-		padding: 0px !important;
+		padding:15px 10px 10px 10px;
 	}
 }
+
 @media(max-width: 750px){	
 .event-form label{
 		font-size: 11px !important;
@@ -7211,7 +7218,7 @@ div.form-group label{
 }
 @media(max-width: 750px){	
 .event-form p{
-		font-size: 10px !important;
+		font-size: 12px !important;
 		margin:0px !important;
 		min-height: 40px !important;
 	}	
@@ -7219,13 +7226,13 @@ div.form-group label{
 @media(max-width: 750px){	
 .event-form a{
 		font-size: 12px !important;
+		padding: 0px !important;
 	}
 
 @media(max-width: 750px){	
 .event-form h1{
-		text-align:center !important;
 		font-size: 12px !important;
-		padding: 10px 0px 0px 0px !important;
+		padding: 10px 0px !important;
 		
 	}
 	}	

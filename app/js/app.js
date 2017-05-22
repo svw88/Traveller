@@ -17,6 +17,9 @@ app.config(function($routeProvider, $locationProvider) {
 	}).when("/events/:country/:state/:city/:id/:types/:find", {
 		templateUrl : "views/events.html",
 		controller : "EventsController"
+	}).when("/events/:id", {
+		templateUrl : "views/eventpage.html",
+		controller : "EventPageController"
 	}).when("/user/:alias", {
 		templateUrl : "views/userEvents.html",
 		controller : "UserEventsController"
@@ -51,6 +54,34 @@ app.service("TravelerService", function($http, $window) {
 	travelerService.getEvents = function(entry) {
 
 		return $http.get(serverAddr + "/events/" + entry.date + "/" + entry.country + "/" + entry.state + "/" + entry.city + "/" + entry.id).then(function(data) {
+			if (data.data.length > 0) {
+				return data.data;
+			} else {
+				return [{
+					City : '',
+					Country : '',
+					Currency : '',
+					Date : '2017-05-19T15:00:00.000Z',
+					Description : '',
+					Id : -1,
+					Image : '',
+					Name : 'No More Events',
+					Price : 0,
+					Site : '',
+					State : '',
+					Type : 1,
+					UserId : -1,
+					Alias : ""
+
+				}];
+			};
+		});
+
+	};
+
+	travelerService.getEvent = function(entry) {
+
+		return $http.get(serverAddr + "/events/" + entry.id).then(function(data) {
 			if (data.data.length > 0) {
 				return data.data;
 			} else {
@@ -134,7 +165,7 @@ app.service("TravelerService", function($http, $window) {
 
 	travelerService.getSearchFilterEvents = function(entry) {
 
-		return $http.get(serverAddr + "/events/" + entry.date + "/" + entry.country + "/" + entry.state + "/" + entry.city + "/" + entry.id + "/search/" + entry.type +"/"+ entry.find).then(function(data) {
+		return $http.get(serverAddr + "/events/" + entry.date + "/" + entry.country + "/" + entry.state + "/" + entry.city + "/" + entry.id + "/search/" + entry.type + "/" + entry.find).then(function(data) {
 			if (data.data.length > 0) {
 				return data.data;
 			} else {
@@ -249,7 +280,7 @@ app.service("TravelerService", function($http, $window) {
 			headers : {
 				'Content-Type' : 'image/*',
 			},
-			url : 'https://www.googleapis.com/upload/storage/v1/b/travellerweb-168202.appspot.com/o?uploadType=media&name=image-' +entry.name+ entry.date.replace('/','-').replace('/','-') + entry.id + ".jpeg",
+			url : 'https://www.googleapis.com/upload/storage/v1/b/travellerweb-168202.appspot.com/o?uploadType=media&name=image-' + entry.name + entry.date.replace('/', '-').replace('/', '-') + entry.id + ".jpeg",
 			data : entry.img
 
 		});
@@ -419,7 +450,6 @@ function($scope, $routeParams, $location, TravelerService, myConfig, $filter) {
 	TravelerService.getEvents(params).then(function(response) {
 		$scope.events = response;
 		console.log($scope.events);
-
 	});
 
 	$scope.type = function(typeId) {
@@ -553,6 +583,34 @@ function($scope, $routeParams, $location, TravelerService, myConfig, $filter) {
 
 }]);
 
+app.controller("EventPageController", ["$scope", "$routeParams", "$location", "TravelerService", "myConfig", "$filter", "$sce",
+function($scope, $routeParams, $location, TravelerService, myConfig, $filter, $sce) {
+	$scope.id = userId[0].id;
+	$scope.alias = userId[0].alias;
+	var params = $routeParams;
+
+	TravelerService.getEvent(params).then(function(response) {
+		$scope.events = response;
+		console.log($scope.events);
+		$scope.gmap = $sce.trustAsResourceUrl("https://www.google.com/maps/embed/v1/place?key=AIzaSyCGbvYrgjTZu1wbTfp_zIfY810vrX6q3nQ&q=" + $scope.events[0].Addr + "," + $scope.events[0].City + "," + $scope.events[0].State + "," + $scope.events[0].Country);
+	});
+
+	$scope.type = function(typeId) {
+		return myConfig[typeId];
+	};
+
+	$scope.searchAlias = function(alias) {
+
+		$location.path("/user/" + alias);
+	};
+	$scope.city = $routeParams.city;
+
+	$scope.logout = function() {
+		userId[0].id = -1;
+	};
+
+}]);
+
 app.controller("UserEventsController", ["$scope", "$routeParams", "$location", "TravelerService", "myConfig", "$filter",
 function($scope, $routeParams, $location, TravelerService, myConfig, $filter) {
 	$scope.id = userId[0].id;
@@ -648,21 +706,24 @@ function($scope, $routeParams, $location, TravelerService, myConfig, ngGeolocati
 		id : 0,
 		name : ''
 	}];
-	TravelerService.getCountries().then(function(response) {
-		$scope.countries = response;
-		$scope.country = $scope.countries[0];
-	}).then(function() {
-		TravelerService.getStates($scope.country.id).then(function(response) {
-			$scope.states = response;
-			$scope.state = $scope.states[0];
-		}).then(function(response) {
-			TravelerService.getCities($scope.state.id).then(function(response) {
-				$scope.cities = response;
-				$scope.city = $scope.cities[0];
+	if (userId[0].id != -1) {
+		TravelerService.getCountries().then(function(response) {
+			$scope.countries = response;
+			$scope.country = $scope.countries[0];
+		}).then(function() {
+			TravelerService.getStates($scope.country.id).then(function(response) {
+				$scope.states = response;
+				$scope.state = $scope.states[0];
+			}).then(function(response) {
+				TravelerService.getCities($scope.state.id).then(function(response) {
+					$scope.cities = response;
+					$scope.city = $scope.cities[0];
+				});
 			});
 		});
-
-	});
+	} else {
+		$location.path("/");
+	};
 
 	$scope.logout = function() {
 		userId[0].id = -1;
@@ -720,9 +781,9 @@ function($scope, $routeParams, $location, TravelerService, myConfig, ngGeolocati
 
 				var ctx = canvas.getContext("2d");
 				canvas.width = 207;
-				canvas.height = 242;
-				ctx.drawImage(img, 5, 5, 207, 242);
-				var dataurl = canvas.toDataURL("image/png", 0.7);
+				canvas.height = 274;
+				ctx.drawImage(img, 0, 0, 207, 274);
+				var dataurl = canvas.toDataURL("image/jpeg", 0.7);
 				var blob = dataURItoBlob(dataurl);
 				$scope.event.img = new File([blob], 'fileName.jpeg', {
 					type : "'image/jpeg"
@@ -741,10 +802,10 @@ function($scope, $routeParams, $location, TravelerService, myConfig, ngGeolocati
 				Country : $scope.country.name,
 				State : $scope.state.name,
 				City : $scope.city.name,
-				Addr : $scope.event.no + " " + $scope.event.street + ", " + $scope.event.suburb,
-				Site : "http://" + $scope.event.site,
+				Addr : $scope.event.street + ", " + $scope.event.suburb,
+				Site : $scope.event.site,
 				Date : $scope.date + " " + $scope.event.time,
-				Image : "https://www.googleapis.com/download/storage/v1/b/travellerweb-168202.appspot.com/o/image-" +$scope.event.name+ $scope.date.replace('/','-').replace('/','-') + userId[0].id + ".jpeg?alt=media",
+				Image : "https://www.googleapis.com/download/storage/v1/b/travellerweb-168202.appspot.com/o/image-" + $scope.event.name + $scope.date.replace('/', '-').replace('/', '-') + userId[0].id + ".jpeg?alt=media",
 				UserId : userId[0].id,
 				Alias : userId[0].alias
 			};
@@ -785,7 +846,9 @@ function() {
 
 app.filter('dateToISO', function() {
 	return function(input) {
-		return new Date(input).toISOString();
+		if (input != undefined) {
+			return new Date(input).toISOString();
+		};
 	};
 });
 
