@@ -275,7 +275,7 @@ app.service("TravelerService", function($http, $window) {
 
 	travelerService.imageUpload = function(entry) {
 		console.log(entry);
-		$http({
+		return $http({
 			method : 'POST',
 			headers : {
 				'Content-Type' : 'image/*',
@@ -283,13 +283,15 @@ app.service("TravelerService", function($http, $window) {
 			url : 'https://www.googleapis.com/upload/storage/v1/b/travellerweb-168202.appspot.com/o?uploadType=media&name=image-' + entry.name + entry.date.replace('/', '-').replace('/', '-') + entry.id + ".jpeg",
 			data : entry.img
 
+		}).then(function(data) {
+			return data;
 		});
 
 	};
 
 	travelerService.removeEvent = function(entry) {
-		$http.delete(serverAddr + '/remove/' + entry).then(function(data) {
-			return data.data;
+		return $http.delete(serverAddr + '/remove/' + entry).then(function(data) {
+			return data;
 		});
 
 	};
@@ -690,7 +692,9 @@ function($scope, $routeParams, $location, TravelerService, myConfig, $route, $fi
 
 	$scope.remove = function(Id) {
 		console.log(Id);
-		TravelerService.removeEvent(Id);
+		TravelerService.removeEvent(Id).then(function(response) {
+			$route.reload();
+		});
 	};
 
 }]);
@@ -790,7 +794,9 @@ function($scope, $routeParams, $location, TravelerService, myConfig, ngGeolocati
 				});
 				$scope.event.date = $scope.date;
 				$scope.event.id = userId[0].id;
-				TravelerService.imageUpload($scope.event);
+				TravelerService.imageUpload($scope.event).then(function(response) {
+					$location.path("/login");
+				});
 			};
 
 			var temp = {
@@ -815,11 +821,8 @@ function($scope, $routeParams, $location, TravelerService, myConfig, ngGeolocati
 					temp["Type"] = parseInt(k1);
 				};
 			});
-			console.log(temp);
 
 			TravelerService.create(temp);
-
-			$location.path("/login");
 		};
 	};
 }]);
