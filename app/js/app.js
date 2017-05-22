@@ -261,7 +261,6 @@ app.service("TravelerService", function($http, $window) {
 	};
 
 	travelerService.create = function(entry) {
-		console.log(entry);
 		$http({
 			method : 'POST',
 			headers : {
@@ -274,7 +273,6 @@ app.service("TravelerService", function($http, $window) {
 	};
 
 	travelerService.imageUpload = function(entry) {
-		console.log(entry);
 		return $http({
 			method : 'POST',
 			headers : {
@@ -305,7 +303,6 @@ app.service("TravelerService", function($http, $window) {
 			url : serverAddr + '/register',
 			data : entry
 		});
-		console.log(entry);
 	};
 
 	travelerService.login = function(entry) {
@@ -451,7 +448,6 @@ function($scope, $routeParams, $location, TravelerService, myConfig, $filter) {
 
 	TravelerService.getEvents(params).then(function(response) {
 		$scope.events = response;
-		console.log($scope.events);
 	});
 
 	$scope.type = function(typeId) {
@@ -593,7 +589,6 @@ function($scope, $routeParams, $location, TravelerService, myConfig, $filter, $s
 
 	TravelerService.getEvent(params).then(function(response) {
 		$scope.events = response;
-		console.log($scope.events);
 		$scope.gmap = $sce.trustAsResourceUrl("https://www.google.com/maps/embed/v1/place?key=AIzaSyCGbvYrgjTZu1wbTfp_zIfY810vrX6q3nQ&q=" + $scope.events[0].Addr + "," + $scope.events[0].City + "," + $scope.events[0].State + "," + $scope.events[0].Country);
 	});
 
@@ -628,7 +623,6 @@ function($scope, $routeParams, $location, TravelerService, myConfig, $filter) {
 	TravelerService.getUserEvents(params).then(function(response) {
 		$scope.events = response;
 		$scope.alias = response[0].Alias;
-		console.log($scope.events);
 	});
 
 	$scope.type = function(typeId) {
@@ -670,7 +664,6 @@ function($scope, $routeParams, $location, TravelerService, myConfig, $route, $fi
 
 	if (userId[0].id != -1) {
 		TravelerService.getMyEvents(params).then(function(response) {
-			console.log(response);
 			$scope.events = response;
 
 		});
@@ -691,7 +684,6 @@ function($scope, $routeParams, $location, TravelerService, myConfig, $route, $fi
 	};
 
 	$scope.remove = function(Id) {
-		console.log(Id);
 		TravelerService.removeEvent(Id).then(function(response) {
 			$route.reload();
 		});
