@@ -8,6 +8,15 @@ app.config(function($routeProvider, $locationProvider) {
 	}).when("/login", {
 		templateUrl : "views/myEvents.html",
 		controller : "MyEventsController"
+	}).when("/about", {
+		templateUrl : "views/about.html",
+		controller : "MainController"
+	}).when("/terms", {
+		templateUrl : "views/terms.html",
+		controller : "MainController"
+	}).when("/privacy", {
+		templateUrl : "views/privacy.html",
+		controller : "MainController"
 	}).when("/sign", {
 		templateUrl : "views/login.html",
 		controller : "LoginDataController"

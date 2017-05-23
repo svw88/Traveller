@@ -1,0 +1,148 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<ul class="nav navbar-nav pull-left">
+				<li class="dropdown">
+					<a href="" id="menu-toggle"><span style="font-size: 20px" class="glyphicon glyphicon-align-justify"></span></a>
+					<script>
+						$("#menu-toggle").click(function(e) {
+							e.preventDefault();
+							$("#wrapper").toggleClass("toggled");
+						});
+					</script>
+				</li>
+			</ul>
+			<div class="form-group pull-left">
+				<a href="#/"><span style="font-size: 20px" class="glyphicon glyphicon-home"></span></a>
+			</div>
+			<div class="form-group pull-right" ng-show="id == -1" style="padding-right: 15px">
+				<a href="#/register"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;Register</a>
+			</div>
+			<div class="form-group pull-right" ng-show="id == -1">
+				<a href="#/sign"><span class="glyphicon glyphicon-log-in"></span>&nbsp;&nbsp;Login</a>
+			</div>
+			<div class="form-group pull-left" ng-show="id != -1">
+				<a href="#/login"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;{{alias}}</a>
+			</div>
+		</div>
+	</div>
+</nav>
+<div id="wrapper">
+
+	<!-- Sidebar -->
+	<div id="sidebar-wrapper">
+		<ul class="sidebar-nav">
+			<div style="margin-top: 10px">
+				<li>
+					<a href="#/about"><span class="glyphicon glyphicon-education"></span>&nbsp;&nbsp;About</a>
+				</li>
+				<li>
+					<a href="#/terms"><span class="glyphicon glyphicon-inbox"></span>&nbsp;&nbsp;Terms</a>
+				</li>
+				<li>
+					<a href="#/privacy"><span class="glyphicon glyphicon-lock"></span>&nbsp;&nbsp;Privacy</a>
+				</li>
+			</div>
+			<div ng-show="id != -1" style="margin-top: 10px">
+				<li>
+					<a href="#/login"><span class="glyphicon glyphicon-book"></span>&nbsp;&nbsp;My Events</a>
+				</li>
+				<li>
+					<a href="#/create"><span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;New Event</a>
+				</li>
+				<li>
+					<a href="#/" ng-click="logout()"><span class="glyphicon glyphicon-log-out"></span>&nbsp;&nbsp;Logout</a>
+				</li>
+			</div>
+		</ul>
+	</div>
+	<!-- /#sidebar-wrapper -->
+</div>
+<!-- Page Content -->
+
+<div id="page-content-wrapper">
+	<br>
+	<div class="main-frame" style="margin-top: 65px">
+		<div class="navbar-header">
+			<label style="padding: 10px 0px 10px 0px; margin: 0px">Privacy Policy</label>
+		</div>
+	</div>
+	<div class="main-frame" style="padding:20px; max-height:700px; overflow: auto">
+		<p>
+			The Traveller Corporation. (“traveller-events”) takes the private nature of your personal information very seriously.
+			This privacy policy, which we adapted from a policy originally provided by Automattic (WordPress.com), describes how we treat the information we collect when you visit and use our websites. Please read this notice very carefully.
+		</p>
+		<p>
+			Website Visitors
+		</p>
+		<p>
+			Like most website operators, traveller-events collects non-personally-identifying information of the sort that web browsers and servers typically make available, such as the browser type, language preference, referring site, and the date and time of each visitor request. traveller-events’s purpose in collecting non-personally identifying information is to better understand how traveller-events’s visitors use its website. From time to time, traveller-events may release non-personally-identifying information in the aggregate, e.g. by publishing a report on trends in the usage of its website.
+			traveller-events also collects potentially personally-identifying information like Internet Protocol (IP) addresses. traveller-events does not use such information to identify its visitors, and does not disclose such information, other than under the same circumstances that it uses and discloses personally-identifying information, as described below.
+			Gathering of Personally-Identifying Information
+			Certain visitors to traveller-events’s websites choose to interact with traveller-events in ways that require traveller-events to gather personally-identifying information. The amount and type of information that traveller-events gathers depends on the nature of the interaction. For example, we ask visitors who sign up for traveller-events.com to provide a username and email address. In each case, traveller-events collects such information only insofar as is necessary or appropriate to fulfill the purpose of the visitor’s interaction with traveller-events. traveller-events does not disclose personally-identifying information other than as described below. And visitors can always refuse to supply personally-identifying information, with the caveat that it may prevent them from engaging in certain website-related activities.
+		</p>
+		<p>
+			Aggregated Statistics
+		</p>
+		<p>
+			traveller-events may collect statistics about the behavior of visitors to its websites. For instance, traveller-events may monitor the most popular collections on traveller-events.com. traveller-events may display this information publicly or provide it to others. However, traveller-events does not disclose personally-identifying information other than as described below.
+			Protection of Certain Personally-Identifying Information
+			traveller-events discloses potentially personally-identifying and personally-identifying information only to those of its employees, contractors and affiliated organizations that (i) need to know that information in order to process it on traveller-events’s behalf or to provide services available at traveller-events’s websites, and (ii) that have agreed not to disclose it to others. Some of those employees, contractors and affiliated organizations may be located outside of your home country; by using traveller-events’s websites, you consent to the transfer of such information to them. In addition, in some cases we may choose to buy or sell assets. In these types of transactions, user information is typically one of the business assets that is transferred. Moreover, if traveller-events or substantially all of its assets were acquired, or in the unlikely event that traveller-events goes out of business or enters bankruptcy, user information would be one of the assets that is transferred or acquired by a third party. You acknowledge that such transfers may occur, and that any acquiror of traveller-events may continue to use your personal and non-personal information only as set forth in this policy. Otherwise, traveller-events will not rent or sell potentially personally-identifying and personally-identifying information to anyone.
+			Other than to its employees, contractors and affiliated organizations, as described above, traveller-events discloses potentially personally-identifying and personally-identifying information only when required to do so by law, or when traveller-events believes in good faith that disclosure is reasonably necessary to protect the property or rights of traveller-events, third parties or the public at large. If you are a registered user of a traveller-events website and have supplied your email address, traveller-events may occasionally send you an email to tell you about new features, solicit your feedback, or just keep you up to date with what’s going on with traveller-events and its products. If you send us a request (for example via a support email or via one of our feedback mechanisms), we reserve the right to publish it in order to help us clarify or respond to your request or to help us support other users. traveller-events takes all measures reasonably necessary to protect against the unauthorized access, use, alteration or destruction of potentially personally-identifying and personally-identifying information.
+			You should also be aware that if you submit information to “chat rooms,” “forums” or “message boards” such information becomes public information, meaning that you lose any privacy rights you might have with regards to that information. Such disclosures may also increase your chances of receiving unwanted communications.
+		</p>
+		<p>
+			Cookies
+		</p>
+		<p>
+			A cookie is a string of information that a website stores on a visitor’s computer, and that the visitor’s browser provides to the website each time the visitor returns. traveller-events uses cookies to help traveller-events identify and track visitors, their usage of traveller-events websites, and their website access preferences. traveller-events visitors who do not wish to have cookies placed on their computers should set their browsers to refuse cookies before using traveller-events’s websites, with the drawback that certain features of traveller-events’s websites may not function properly without the aid of cookies.
+		</p>
+		<p>
+			Ads
+		</p>
+		<p>
+			Ads appearing on any traveller-events websites may be delivered to users by advertising partners, who may set cookies. These cookies allow the ad server to recognize your computer each time they send you an online advertisement to compile information about you or others who use your computer. This information allows ad networks to, among other things, deliver targeted advertisements that they believe will be of most interest to you. This privacy policy covers the use of cookies by traveller-events and does not cover the use of cookies by any advertisers.
+		</p>
+		<p>
+			Links to Third Party Sites
+		</p>
+		<p>
+			This privacy policy only applies to information collected by traveller-events. This privacy policy does not apply to the practices of companies that traveller-events does not own or control, or employees that traveller-events does not manage. A traveller-events website may contain links to third party websites. Any information you provide to, or that is collected by, third-party sites may be subject to the privacy policies of those sites, if any. We encourage you to read such privacy policies of any third-party sites you visit. It is the sole responsibility of such third parties to adhere to any applicable restrictions on the disclosure of your personally-identifying information, and traveller-events and its affiliates shall not be liable for wrongful use or disclosure of your personally-identifying information by any third party.
+		</p>
+		<p>
+			Security
+		</p>
+		<p>
+			All non-personally-identifying information, potentially personally-identifying and personally identifying-information described above is stored on restricted database servers.
+		</p>
+		<p>
+			Choice/Opt-out
+		</p>
+		<p>
+			If we ever send you information by email concerning new products, services or information that you did not expressly request, we will provide you with an email address by which you may request no further notices.
+		</p>
+		<p>
+			Address Book Data
+		</p>
+		<p>
+			Any external address book data (email contacts, etc.) that a user voluntarily gives traveller-events access to will only be used for the described feature (looking up friends, etc.), and will not be stored or repurposed.
+		</p>
+		<p>
+			Privacy Policy Changes
+		</p>
+		<p>
+			Although most changes are likely to be minor, traveller-events may change its privacy policy from time to time, and in traveller-events’s sole discretion. traveller-events encourages visitors to frequently check this page for any changes to its privacy policy. Your continued use of this site after any change in this privacy policy will constitute your acceptance of such change.
+		</p>
+		<p>
+			Contact Us
+		</p>
+		<p>
+			If you have any questions about this privacy policy or our sites in general, please contact us.
+		</p>
+	</div>
+	<div>
+		<p style="color: #fff" align="center">
+			&copy; Copyright 2017 by The Traveller Corporation. Designed by Sabrsoft. All Rights Reserved
+		</p>
+	</div>
+</div>

@@ -7174,6 +7174,8 @@ div.event-form label{
 div.event-form p{
 	font-size:14px;
     min-height: 75px;
+    max-height: 80px;
+    overflow: auto;
     white-space: pre-wrap;
 }
 
