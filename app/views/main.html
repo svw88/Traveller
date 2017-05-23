@@ -40,9 +40,6 @@
 					<li>
 						<a href="#/create"><span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;New Event</a>
 					</li>
-					<li>
-						<a href="#/" ng-click="logout()"><span class="glyphicon glyphicon-log-out"></span>&nbsp;&nbsp;Logout</a>
-					</li>
 				</div>
 				<li>
 					<a href="#/about"><span class="glyphicon glyphicon-education"></span>&nbsp;&nbsp;About</a>
@@ -52,6 +49,9 @@
 				</li>
 				<li>
 					<a href="#/privacy"><span class="glyphicon glyphicon-lock"></span>&nbsp;&nbsp;Privacy</a>
+				</li>
+				<li ng-show="id != -1">
+					<a href="#/" ng-click="logout()"><span class="glyphicon glyphicon-log-out"></span>&nbsp;&nbsp;Logout</a>
 				</li>
 			</div>
 
