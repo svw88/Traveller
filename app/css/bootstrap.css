@@ -7125,7 +7125,16 @@ div.my-date-picker span{
 	width: auto;
 	padding: 0px;
 }
+div.events-container{
+		max-height: 650px;
+		overflow: auto;
+	}	
 
+@media(max-width: 750px){		
+div.events-container{
+		max-height: 350px;
+	}	
+}
 div.event-form{
 	width:100%;
 	border-bottom: 1px solid #ecf0f1;
@@ -7256,5 +7265,6 @@ div.form-group label{
 		max-width:44%;
 	}	
 }
+
 
 /*# sourceMappingURL=bootstrap.css.map */
