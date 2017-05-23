@@ -262,13 +262,15 @@ app.service("TravelerService", function($http, $window) {
 	};
 
 	travelerService.create = function(entry) {
-		$http({
+		return $http({
 			method : 'POST',
 			headers : {
 				'Content-Type' : 'application/json; charset=utf-8'
 			},
 			url : serverAddr + '/create',
 			data : entry
+		}).then(function(data) {
+			return data;
 		});
 
 	};
@@ -788,50 +790,54 @@ function($scope, $routeParams, $location, TravelerService, myConfig, ngGeolocati
 				$scope.event.date = $scope.date;
 				$scope.event.id = userId[0].id;
 				TravelerService.imageUpload($scope.event).then(function(response) {
+
 					$scope.response = response.status;
-					console.log($scope.response);
+
 					if ($scope.response == 200) {
-						$location.path("/login");
+
+						var temp = {
+							Name : $scope.event.name,
+							Description : $scope.event.description,
+							Type : 0,
+							Price : parseInt($scope.event.price),
+							Currency : $scope.event.currency,
+							Country : $scope.country.name,
+							State : $scope.state.name,
+							City : $scope.city.name,
+							Addr : $scope.event.street + ", " + $scope.event.suburb,
+							Site : $scope.event.site,
+							Date : $scope.date + " " + $scope.event.time,
+							Image : "https://www.googleapis.com/download/storage/v1/b/travellerweb-168202.appspot.com/o/image-" + $scope.event.name + $scope.event.date.replace('/', '-').replace('/', '-') + userId[0].id + ".jpeg?alt=media",
+							UserId : userId[0].id,
+							Alias : userId[0].alias
+						};
+
+						angular.forEach(myConfig, function(v1, k1) {//this is nested angular.forEach loop
+							if (v1 == $scope.type) {
+								temp["Type"] = parseInt(k1);
+							};
+						});
+
+						TravelerService.create(temp).then(function(response) {
+							if (response.name == undefined) {
+								$window.alert("Error - Please fill out each field in the correct suggested format");
+							} else {
+								$location.path("/login");
+							};
+
+						});
+
 					} else {
-						$scope.showModal = true;
+						$window.alert("Error - Image files must be in .jpeg or .png format");
 					};
 
 				});
 
-				var temp = {
-					Name : $scope.event.name,
-					Description : $scope.event.description,
-					Type : 0,
-					Price : parseInt($scope.event.price),
-					Currency : $scope.event.currency,
-					Country : $scope.country.name,
-					State : $scope.state.name,
-					City : $scope.city.name,
-					Addr : $scope.event.street + ", " + $scope.event.suburb,
-					Site : $scope.event.site,
-					Date : $scope.date + " " + $scope.event.time,
-					Image : "https://www.googleapis.com/download/storage/v1/b/travellerweb-168202.appspot.com/o/image-" + $scope.event.name + $scope.event.date.replace('/', '-').replace('/', '-') + userId[0].id + ".jpeg?alt=media",
-					UserId : userId[0].id,
-					Alias : userId[0].alias
-				};
-
-				angular.forEach(myConfig, function(v1, k1) {//this is nested angular.forEach loop
-					if (v1 == $scope.type) {
-						temp["Type"] = parseInt(k1);
-					};
-				});
-
-				TravelerService.create(temp);
 			};
 
-		} else {
-			$scope.showModal = true;
 		};
 	};
-	
-	$scope.ok = function() {
-		$scope.showModal = false;
-	};
+
 }]);
 
 app.directive("fileread", [
