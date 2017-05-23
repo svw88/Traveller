@@ -317,6 +317,15 @@ app.service("TravelerService", function($http, $window) {
 		});
 	};
 
+	travelerService.checkUser = function(entry) {
+
+		return $http.get(serverAddr + "/check/" + entry.Email + "/" + entry.Alias).then(function(data) {
+
+			return data.data;
+		});
+
+	};
+
 	travelerService.login = function(entry) {
 
 		return $http.get(serverAddr + "/login/" + entry.Email + "/" + entry.Password).then(function(data) {
@@ -342,8 +351,22 @@ app.controller("LoginDataController", ["$scope", "$routeParams", "$location", "T
 function($scope, $routeParams, $location, TravelerService, $window) {
 
 	$scope.register = function() {
-		TravelerService.register($scope.signUp);
-		$location.path("/");
+		TravelerService.checkUser($scope.signUp).then(function(response) {
+			if (response.length > 0) {
+				if (response[0].email == $scope.signUp.Email && response[0].alias == $scope.signUp.Alias) {
+					$window.alert("Email And Alias Already Taken");
+				} else if (response[0].email == $scope.signUp.Email && response[0].alias != $scope.signUp.Alias) {
+					$window.alert("Email Already Taken");
+				} else {
+					$window.alert("Alias Already Taken");
+				}
+				;
+			} else {
+				TravelerService.register($scope.signUp);
+				$location.path("/sign");
+			}
+			;
+		});
 	};
 
 	$scope.back = function() {
@@ -360,6 +383,8 @@ function($scope, $routeParams, $location, TravelerService, $window) {
 			if (response.length > 0) {
 				userId = response;
 				$location.path("/login");
+			} else {
+				$window.alert("Incorrect User Name Or Password");
 			};
 		});
 
