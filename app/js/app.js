@@ -697,7 +697,6 @@ function($scope, $routeParams, $location, TravelerService, myConfig, ngGeolocati
 	$scope.alias = userId[0].alias;
 	$scope.types = myConfig;
 	$scope.type = myConfig[1];
-	$scope.date = $filter('date')(new Date(), 'yyyy/MM/dd');
 	$scope.countries = [{
 		id : 0,
 		name : ''
