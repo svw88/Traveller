@@ -56,6 +56,7 @@ app.service("TravelerService", function($http, $window) {
 		return $http.get(serverAddr + "/events/" + entry.date + "/" + entry.country + "/" + entry.state + "/" + entry.city + "/" + entry.id).then(function(data) {
 			if (data.data.length > 0) {
 				return data.data;
+
 			} else {
 				return [{
 					City : '',
@@ -622,7 +623,7 @@ function($scope, $routeParams, $location, TravelerService, myConfig, $filter) {
 
 	TravelerService.getUserEvents(params).then(function(response) {
 		$scope.events = response;
-		$scope.alias = response[0].Alias;
+		$scope.userAlias = response[0].Alias;
 	});
 
 	$scope.type = function(typeId) {
@@ -697,6 +698,7 @@ function($scope, $routeParams, $location, TravelerService, myConfig, ngGeolocati
 	$scope.alias = userId[0].alias;
 	$scope.types = myConfig;
 	$scope.type = myConfig[1];
+	$scope.date = $filter('date')(new Date(), 'yyyy/MM/dd');
 	$scope.countries = [{
 		id : 0,
 		name : ''
@@ -788,9 +790,8 @@ function($scope, $routeParams, $location, TravelerService, myConfig, ngGeolocati
 				TravelerService.imageUpload($scope.event).then(function(response) {
 					$location.path("/login");
 				});
-			};
-
-			var temp = {
+				
+				var temp = {
 				Name : $scope.event.name,
 				Description : $scope.event.description,
 				Type : 0,
@@ -802,7 +803,7 @@ function($scope, $routeParams, $location, TravelerService, myConfig, ngGeolocati
 				Addr : $scope.event.street + ", " + $scope.event.suburb,
 				Site : $scope.event.site,
 				Date : $scope.date + " " + $scope.event.time,
-				Image : "https://www.googleapis.com/download/storage/v1/b/travellerweb-168202.appspot.com/o/image-" + $scope.event.name + $scope.date.replace('/', '-').replace('/', '-') + userId[0].id + ".jpeg?alt=media",
+				Image : "https://www.googleapis.com/download/storage/v1/b/travellerweb-168202.appspot.com/o/image-" + $scope.event.name + $scope.event.date.replace('/', '-').replace('/', '-') + userId[0].id + ".jpeg?alt=media",
 				UserId : userId[0].id,
 				Alias : userId[0].alias
 			};
@@ -814,6 +815,9 @@ function($scope, $routeParams, $location, TravelerService, myConfig, ngGeolocati
 			});
 
 			TravelerService.create(temp);
+			};
+
+			
 		};
 	};
 }]);
@@ -841,7 +845,9 @@ function() {
 app.filter('dateToISO', function() {
 	return function(input) {
 		if (input != undefined) {
-			return new Date(input).toISOString();
+			var date = new Date(input);
+			var userTimezoneOffset = date.getTimezoneOffset() * 60000;
+			return new Date(date.getTime() + userTimezoneOffset);
 		};
 	};
 });

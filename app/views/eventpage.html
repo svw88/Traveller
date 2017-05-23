@@ -67,7 +67,7 @@
 				<div class="image-padding" align="center" ng-hide="events[0].Name == 'No More events'" >
 					<img ng-src="{{events[0].Image}}"/>
 				</div> </span>
-			<span class="mobile-desc">
+			<span class="mobile-desc" style="padding-right: 10px">
 				<div>
 					<p>{{events[0].Description}}
 					</p>
@@ -78,8 +78,11 @@
 				<div class="mobile-show" style="display: none" style="padding-top: 8px" ng-hide="events[0].Name == 'No More Events'">
 					<a href="" ng-click="searchAlias(events[0].Alias)">@&nbsp;&nbsp;{{events[0].Alias}}</a>
 				</div>
-				<div ng-hide="events[0].Name == 'No More Events'">
+				<div class="mobile-hide" ng-hide="events[0].Name == 'No More Events'">
 					<a style="font-size: 16px" class="glyphicon glyphicon-globe" href="http://{{events[0].Site}}">&nbsp;{{events[0].Site}}</a>
+				</div>
+				<div class="mobile-show" style="display: none" ng-hide="events[0].Name == 'No More Events'">
+					<a style="font-size: 16px" class="glyphicon glyphicon-globe" href="http://{{events[0].Site}}"></a>
 				</div></span>
 			<span ng-hide="events[0].Name == 'No More Events'">
 				<div>

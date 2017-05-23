@@ -7179,6 +7179,8 @@ div.event-form h1{
     font-size: 20px;
     font-weight: bold;
     color: #2c3e50;
+    max-width:85%;
+    display: inline-block;
 }
 
 div.form-group label{
@@ -7225,14 +7227,13 @@ div.form-group label{
 	
 @media(max-width: 750px){	
 .event-form a{
-		font-size: 12px !important;
+		font-size: 14px !important;
 		padding: 0px !important;
 	}
 
 @media(max-width: 750px){	
 .event-form h1{
 		font-size: 12px !important;
-		padding: 10px 0px !important;
 		
 	}
 	}	

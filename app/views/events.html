@@ -86,9 +86,9 @@
 				<div class="image-padding" align="center" ng-hide="events[0].Name == 'No More Events'" >
 					<img ng-src="{{item.Image}}"/>
 				</div> </span>
-			<span class="mobile-desc">
+			<span class="mobile-desc" style="padding-right: 10px">
 				<div style="margin-bottom: 10px">
-					<h1>{{item.Name}}<a ng-hide="events[0].Name == 'No More Events'" style="font-size: 25px; float: right; padding: 0px 15px 0px 0px !important" class="glyphicon glyphicon-calendar" href="#/events/{{item.Id}}"></a></h1>
+					<h1>{{item.Name}}</h1><a ng-hide="events[0].Name == 'No More Events'" style="font-size: 25px; float: right; padding: 0px !important" class="glyphicon glyphicon-calendar" href="#/events/{{item.Id}}"></a>
 				</div>
 				<br>
 				<div class="mobile-hide"  ng-hide="events[0].Name == 'No More Events'" ng-click="searchAlias(item.Alias)">
