@@ -1,4 +1,4 @@
-var app = angular.module('travelerWeb', ["ngRoute", "ngGeolocation"]);
+var app = angular.module('travelerWeb', ["ngRoute", "ngGeolocation", "ngCookies"]);
 
 app.config(function($routeProvider, $locationProvider) {
 	$locationProvider.hashPrefix('');
@@ -347,8 +347,8 @@ app.service("TravelerService", function($http, $window) {
 
 });
 
-app.controller("LoginDataController", ["$scope", "$routeParams", "$location", "TravelerService", "$window",
-function($scope, $routeParams, $location, TravelerService, $window) {
+app.controller("LoginDataController", ["$scope", "$routeParams", "$location", "TravelerService", "$window", "$cookies",
+function($scope, $routeParams, $location, TravelerService, $window, $cookies) {
 
 	$scope.register = function() {
 		TravelerService.checkUser($scope.signUp).then(function(response) {
@@ -381,7 +381,7 @@ function($scope, $routeParams, $location, TravelerService, $window) {
 		TravelerService.login($scope.signUp).then(function(response) {
 
 			if (response.length > 0) {
-				userId = response;
+				$cookies.putObject('userInfo', response);
 				$location.path("/login");
 			} else {
 				$window.alert("Incorrect User Name Or Password");
@@ -391,10 +391,16 @@ function($scope, $routeParams, $location, TravelerService, $window) {
 	};
 }]);
 
-app.controller("MainController", ["$scope", "$routeParams", "$location", "TravelerService", "$geolocation", "$route", "$window",
-function($scope, $routeParams, $location, TravelerService, ngGeolocation, $route, $window) {
-	$scope.id = userId[0].id;
-	$scope.alias = userId[0].alias;
+app.controller("MainController", ["$scope", "$routeParams", "$location", "TravelerService", "$geolocation", "$route", "$window", "$cookies",
+function($scope, $routeParams, $location, TravelerService, ngGeolocation, $route, $window, $cookies) {
+	var userInfo = $cookies.getObject('userInfo');
+	if (userInfo != undefined) {
+		$scope.id = userInfo[0].id;
+		$scope.alias = userInfo[0].alias;
+	} else {
+		$scope.id = userId[0].id;
+		$scope.alias = userId[0].alias;
+	};
 
 	//$window.navigator.permissions.query({
 	//'name' : 'geolocation'
@@ -468,16 +474,22 @@ function($scope, $routeParams, $location, TravelerService, ngGeolocation, $route
 	};
 
 	$scope.logout = function() {
-		userId[0].id = -1;
+		$cookies.remove('userInfo');
 		$route.reload();
 	};
 
 }]);
 
-app.controller("EventsController", ["$scope", "$routeParams", "$location", "TravelerService", "myConfig", "$filter",
-function($scope, $routeParams, $location, TravelerService, myConfig, $filter) {
-	$scope.id = userId[0].id;
-	$scope.alias = userId[0].alias;
+app.controller("EventsController", ["$scope", "$routeParams", "$location", "TravelerService", "myConfig", "$filter", "$cookies","$route",
+function($scope, $routeParams, $location, TravelerService, myConfig, $filter, $cookies, $route) {
+	var userInfo = $cookies.getObject('userInfo');
+	if (userInfo != undefined) {
+		$scope.id = userInfo[0].id;
+		$scope.alias = userInfo[0].alias;
+	} else {
+		$scope.id = userId[0].id;
+		$scope.alias = userId[0].alias;
+	};
 	var params = $routeParams;
 	params.find = '';
 	var id = '-1';
@@ -565,7 +577,8 @@ function($scope, $routeParams, $location, TravelerService, myConfig, $filter) {
 	$scope.city = $routeParams.city;
 
 	$scope.logout = function() {
-		userId[0].id = -1;
+		$cookies.remove('userInfo');
+		$route.reload();
 	};
 
 	$scope.next = function() {
@@ -618,10 +631,16 @@ function($scope, $routeParams, $location, TravelerService, myConfig, $filter) {
 
 }]);
 
-app.controller("EventPageController", ["$scope", "$routeParams", "$location", "TravelerService", "myConfig", "$filter", "$sce",
-function($scope, $routeParams, $location, TravelerService, myConfig, $filter, $sce) {
-	$scope.id = userId[0].id;
-	$scope.alias = userId[0].alias;
+app.controller("EventPageController", ["$scope", "$routeParams", "$location", "TravelerService", "myConfig", "$filter", "$sce", "$cookies", "$route",
+function($scope, $routeParams, $location, TravelerService, myConfig, $filter, $sce, $cookies, $route) {
+	var userInfo = $cookies.getObject('userInfo');
+	if (userInfo != undefined) {
+		$scope.id = userInfo[0].id;
+		$scope.alias = userInfo[0].alias;
+	} else {
+		$scope.id = userId[0].id;
+		$scope.alias = userId[0].alias;
+	};
 	var params = $routeParams;
 
 	TravelerService.getEvent(params).then(function(response) {
@@ -640,15 +659,22 @@ function($scope, $routeParams, $location, TravelerService, myConfig, $filter, $s
 	$scope.city = $routeParams.city;
 
 	$scope.logout = function() {
-		userId[0].id = -1;
+		$cookies.remove('userInfo');
+		$route.reload();
 	};
 
 }]);
 
-app.controller("UserEventsController", ["$scope", "$routeParams", "$location", "TravelerService", "myConfig", "$filter",
-function($scope, $routeParams, $location, TravelerService, myConfig, $filter) {
-	$scope.id = userId[0].id;
-	$scope.alias = userId[0].alias;
+app.controller("UserEventsController", ["$scope", "$routeParams", "$location", "TravelerService", "myConfig", "$filter", "$cookies", "$route",
+function($scope, $routeParams, $location, TravelerService, myConfig, $filter, $cookies, $route) {
+	var userInfo = $cookies.getObject('userInfo');
+	if (userInfo != undefined) {
+		$scope.id = userInfo[0].id;
+		$scope.alias = userInfo[0].alias;
+	} else {
+		$scope.id = userId[0].id;
+		$scope.alias = userId[0].alias;
+	};
 	var params = {
 		alias : $routeParams.alias,
 		id : '-1'
@@ -667,7 +693,8 @@ function($scope, $routeParams, $location, TravelerService, myConfig, $filter) {
 	};
 
 	$scope.logout = function() {
-		userId[0].id = -1;
+		$cookies.remove('userInfo');
+		$route.reload();
 	};
 
 	$scope.next = function() {
@@ -689,17 +716,23 @@ function($scope, $routeParams, $location, TravelerService, myConfig, $filter) {
 
 }]);
 
-app.controller("MyEventsController", ["$scope", "$routeParams", "$location", "TravelerService", "myConfig", "$route", "$filter",
-function($scope, $routeParams, $location, TravelerService, myConfig, $route, $filter) {
-	$scope.id = userId[0].id;
-	$scope.alias = userId[0].alias;
+app.controller("MyEventsController", ["$scope", "$routeParams", "$location", "TravelerService", "myConfig", "$route", "$filter","$cookies",
+function($scope, $routeParams, $location, TravelerService, myConfig, $route, $filter, $cookies) {
+	var userInfo = $cookies.getObject('userInfo');
+	if (userInfo != undefined) {
+		$scope.id = userInfo[0].id;
+		$scope.alias = userInfo[0].alias;
+	} else {
+		$scope.id = userId[0].id;
+		$scope.alias = userId[0].alias;
+	};
 	var params = {
-		userId : userId[0].id,
+		userId : $scope.id,
 		date : $filter('date')(new Date(), 'yyyy-MM-dd')
 
 	};
 
-	if (userId[0].id != -1) {
+	if (userInfo != undefined) {
 		TravelerService.getMyEvents(params).then(function(response) {
 			$scope.events = response;
 
@@ -713,7 +746,8 @@ function($scope, $routeParams, $location, TravelerService, myConfig, $route, $fi
 	};
 
 	$scope.logout = function() {
-		userId[0].id = -1;
+		$cookies.remove('userInfo');
+		$route.reload();
 	};
 
 	$scope.refresh = function() {
@@ -728,10 +762,16 @@ function($scope, $routeParams, $location, TravelerService, myConfig, $route, $fi
 
 }]);
 
-app.controller("CreateEventController", ["$scope", "$routeParams", "$location", "TravelerService", "myConfig", "$geolocation", "$window", "$route", "$filter",
-function($scope, $routeParams, $location, TravelerService, myConfig, ngGeolocation, $window, $route, $filter) {
-	$scope.id = userId[0].id;
-	$scope.alias = userId[0].alias;
+app.controller("CreateEventController", ["$scope", "$routeParams", "$location", "TravelerService", "myConfig", "$geolocation", "$window", "$route", "$filter","$cookies",
+function($scope, $routeParams, $location, TravelerService, myConfig, ngGeolocation, $window, $route, $filter, $cookies) {
+	var userInfo = $cookies.getObject('userInfo');
+	if (userInfo != undefined) {
+		$scope.id = userInfo[0].id;
+		$scope.alias = userInfo[0].alias;
+	} else {
+		$scope.id = userId[0].id;
+		$scope.alias = userId[0].alias;
+	};
 	$scope.types = myConfig;
 	$scope.type = myConfig[1];
 	$scope.date = $filter('date')(new Date(), 'yyyy/MM/dd');
@@ -739,7 +779,7 @@ function($scope, $routeParams, $location, TravelerService, myConfig, ngGeolocati
 		id : 0,
 		name : ''
 	}];
-	if (userId[0].id != -1) {
+	if (userInfo != undefined) {
 		TravelerService.getCountries().then(function(response) {
 			$scope.countries = response;
 			$scope.country = $scope.countries[0];
@@ -759,7 +799,7 @@ function($scope, $routeParams, $location, TravelerService, myConfig, ngGeolocati
 	};
 
 	$scope.logout = function() {
-		userId[0].id = -1;
+		$cookies.remove('userInfo');
 		$route.reload();
 	};
 
@@ -806,7 +846,7 @@ function($scope, $routeParams, $location, TravelerService, myConfig, ngGeolocati
 	};
 	$scope.createEvent = function() {
 
-		if (userId[0].id != -1) {
+		if (userInfo != undefined) {
 			var canvas = document.createElement("canvas");
 			var img = new Image();
 			img.src = $scope.event.img;
@@ -842,8 +882,8 @@ function($scope, $routeParams, $location, TravelerService, myConfig, ngGeolocati
 							Site : $scope.event.site,
 							Date : $scope.date + " " + $scope.event.time,
 							Image : "https://www.googleapis.com/download/storage/v1/b/travellerweb-168202.appspot.com/o/image-" + $scope.event.name + $scope.event.date.replace('/', '-').replace('/', '-') + userId[0].id + ".jpeg?alt=media",
-							UserId : userId[0].id,
-							Alias : userId[0].alias
+							UserId : $scope.id,
+							Alias : $scope.alias
 						};
 
 						angular.forEach(myConfig, function(v1, k1) {//this is nested angular.forEach loop
@@ -853,7 +893,7 @@ function($scope, $routeParams, $location, TravelerService, myConfig, ngGeolocati
 						});
 
 						TravelerService.create(temp).then(function(response) {
-							if (response.name == undefined) {
+							if (response.length > 0 && response.name == undefined) {
 								$window.alert("Error - Please fill out each field in the correct suggested format");
 							} else {
 								$location.path("/login");
