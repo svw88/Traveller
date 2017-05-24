@@ -58,7 +58,7 @@ app.service("TravelerService", function($http, $window) {
 
 	var travelerService = {};
 
-	var serverAddr = "http://traveller-168120.appspot.com/Tasks";
+	var serverAddr = "https://traveller-168120.appspot.com/Tasks";
 
 	travelerService.getEvents = function(entry) {
 
