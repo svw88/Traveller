@@ -1088,6 +1088,7 @@ html {
 body {
   font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 15px;
+  line-height: 1.42857143;
   color: #2c3e50;
   background-image: url('images/background.jpg');
   background-size: cover;
