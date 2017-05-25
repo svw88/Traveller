@@ -372,7 +372,7 @@ function($scope, $routeParams, $location, TravelerService, $window, $cookies) {
 	$scope.back = function() {
 		$window.history.back();
 	};
-	
+
 	$scope.goToLogin = function() {
 		$location.path("/login");
 	};
@@ -484,7 +484,7 @@ function($scope, $routeParams, $location, TravelerService, ngGeolocation, $route
 
 }]);
 
-app.controller("EventsController", ["$scope", "$routeParams", "$location", "TravelerService", "myConfig", "$filter", "$cookies","$route",
+app.controller("EventsController", ["$scope", "$routeParams", "$location", "TravelerService", "myConfig", "$filter", "$cookies", "$route",
 function($scope, $routeParams, $location, TravelerService, myConfig, $filter, $cookies, $route) {
 	var userInfo = $cookies.getObject('userInfo');
 	if (userInfo != undefined) {
@@ -720,7 +720,7 @@ function($scope, $routeParams, $location, TravelerService, myConfig, $filter, $c
 
 }]);
 
-app.controller("MyEventsController", ["$scope", "$routeParams", "$location", "TravelerService", "myConfig", "$route", "$filter","$cookies",
+app.controller("MyEventsController", ["$scope", "$routeParams", "$location", "TravelerService", "myConfig", "$route", "$filter", "$cookies",
 function($scope, $routeParams, $location, TravelerService, myConfig, $route, $filter, $cookies) {
 	var userInfo = $cookies.getObject('userInfo');
 	if (userInfo != undefined) {
@@ -766,7 +766,7 @@ function($scope, $routeParams, $location, TravelerService, myConfig, $route, $fi
 
 }]);
 
-app.controller("CreateEventController", ["$scope", "$routeParams", "$location", "TravelerService", "myConfig", "$geolocation", "$window", "$route", "$filter","$cookies",
+app.controller("CreateEventController", ["$scope", "$routeParams", "$location", "TravelerService", "myConfig", "$geolocation", "$window", "$route", "$filter", "$cookies",
 function($scope, $routeParams, $location, TravelerService, myConfig, ngGeolocation, $window, $route, $filter, $cookies) {
 	var userInfo = $cookies.getObject('userInfo');
 	if (userInfo != undefined) {
