@@ -26,7 +26,7 @@ app.config(function($routeProvider, $locationProvider) {
 	}).when("/events/:country/:state/:city/:id/:types/:find", {
 		templateUrl : "views/events.html",
 		controller : "EventsController"
-	}).when("/events/:id", {
+	}).when("/events/:id/:name", {
 		templateUrl : "views/eventpage.html",
 		controller : "EventPageController"
 	}).when("/user/:alias", {
