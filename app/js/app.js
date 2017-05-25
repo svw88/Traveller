@@ -372,6 +372,10 @@ function($scope, $routeParams, $location, TravelerService, $window, $cookies) {
 	$scope.back = function() {
 		$window.history.back();
 	};
+	
+	$scope.goToLogin = function() {
+		$location.path("/login");
+	};
 
 	$scope.sign = function() {
 		$location.path("/register");

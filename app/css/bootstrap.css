@@ -1088,7 +1088,6 @@ html {
 body {
   font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 15px;
-  line-height: 1.42857143;
   color: #2c3e50;
   background-image: url('images/background.jpg');
   background-size: cover;
@@ -7173,8 +7172,9 @@ div.event-form label{
 }
 div.event-form p{
 	font-size:14px;
-    min-height: 75px;
-    max-height: 80px;
+    min-height: 65px;
+    max-height: 70px;
+    max-width: 100%;
     overflow: auto;
     white-space: pre-wrap;
 }
@@ -7234,6 +7234,7 @@ div.form-group label{
 		font-size: 12px !important;
 		margin:0px !important;
 		min-height: 40px !important;
+		max-height: 50px !important;
 	}	
 	
 @media(max-width: 750px){	
