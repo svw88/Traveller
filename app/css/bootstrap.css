@@ -1093,6 +1093,11 @@ body {
   background-image: url('images/background.jpg');
   background-size: cover;
 }
+@media(max-width: 900px){
+	body {
+  		background-image: url('images/background-mobile.jpg');
+}
+}
 input,
 button,
 select,

@@ -374,7 +374,7 @@ function($scope, $routeParams, $location, TravelerService, $window, $cookies) {
 	};
 
 	$scope.goToLogin = function() {
-		$location.path("/login");
+		$location.path("/sign");
 	};
 
 	$scope.sign = function() {
