@@ -87,31 +87,31 @@
 		<div class="events-container">
 			<div class="event-form" ng-repeat="item in events | orderBy: 'Date'">
 				<span style="width: 33% !important;">
-					<div class="image-padding" align="center" ng-hide="events[0].Name == 'No More Events'" >
+					<div class="image-padding" align="center" ng-hide="events[0].Name == 'No More Events' || events[0].Name == 'No Events'" >
 						<img ng-src="{{item.Image}}"/>
 					</div> </span>
 				<span class="mobile-desc" style="padding-right: 10px">
 					<div style="margin-bottom: 10px">
-						<h1>{{item.Name}}</h1><a ng-hide="events[0].Name == 'No More Events'" style="font-size: 25px; float: right; padding: 0px !important" class="glyphicon glyphicon-calendar" href="#/events/{{item.Id}}/{{item.Name}}"></a>
+						<h1>{{item.Name}}</h1><a ng-hide="events[0].Name == 'No More Events' || events[0].Name == 'No Events'" style="font-size: 25px; float: right; padding: 0px !important" class="glyphicon glyphicon-calendar" href="#/events/{{item.Id}}/{{item.Name}}"></a>
 					</div>
 					<br>
-					<div class="mobile-hide"  ng-hide="events[0].Name == 'No More Events'" ng-click="searchAlias(item.Alias)">
+					<div class="mobile-hide"  ng-hide="events[0].Name == 'No More Events' || events[0].Name == 'No Events'" ng-click="searchAlias(item.Alias)">
 						<a href="" style="font-size: 20px">@&nbsp;&nbsp;&nbsp;&nbsp;{{item.Alias}}</a>
 					</div>
-					<div class="mobile-hide"  ng-hide="events[0].Name == 'No More Events'">
+					<div class="mobile-hide"  ng-hide="events[0].Name == 'No More Events' || events[0].Name == 'No Events'">
 						<a style="font-size: 16px" class="glyphicon glyphicon-globe" href="http://{{item.Site}}">&nbsp;{{item.Site}}</a>
 					</div>
-					<div class="mobile-hide"  ng-hide="events[0].Name == 'No More Events'">
+					<div class="mobile-hide"  ng-hide="events[0].Name == 'No More Events' || events[0].Name == 'No Events'">
 						<a style="font-size: 16px" class="glyphicon glyphicon-map-marker" href="https://www.google.com.br/maps/place/{{item.Addr}},{{item.City}},{{item.State}},{{item.Country}}">&nbsp;{{item.Addr}}</a>
 					</div>
-					<div class="mobile-show" style="display: none" style="padding-top: 8px" ng-hide="events[0].Name == 'No More Events'">
+					<div class="mobile-show" style="display: none" style="padding-top: 8px" ng-hide="events[0].Name == 'No More Events' || events[0].Name == 'No Events'">
 						<a style="font-size: 16px" class="glyphicon glyphicon-globe" href="http://{{item.Site}}"></a>
 						&nbsp;&nbsp;
 						<a style="font-size: 16px" class="glyphicon glyphicon-map-marker" href="https://www.google.com.br/maps/place/{{item.Addr}},{{item.City}},{{item.State}},{{item.Country}}"></a>
 						&nbsp;&nbsp;
 						<a href="" ng-click="searchAlias(item.Alias)">@&nbsp;&nbsp;{{item.Alias}}</a>
 					</div> </span>
-				<span ng-hide="events[0].Name == 'No More Events'">
+				<span ng-hide="events[0].Name == 'No More Events' || events[0].Name == 'No Events'">
 					<div>
 						<label class="mobile-hide">Type: </label><label>{{type(item.Type)}}</label>
 					</div>
@@ -131,7 +131,7 @@
 						Previous
 					</button> </span>
 				<span>
-					<button ng-hide="events[0].Name == 'No More Events'" type="button" class="btn btn-success btn-block" ng-click="next()">
+					<button ng-hide="events[0].Name == 'No More Events' || events[0].Name == 'No Events'" type="button" class="btn btn-success btn-block" ng-click="next()">
 						Next
 					</button> </span>
 			</div>

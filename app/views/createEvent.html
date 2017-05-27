@@ -87,7 +87,13 @@
 					<input placeholder="0" style="max-width:310px; display: inline-block" type="text" class="form-control" ng-model="event.price"required>
 				</div></span>
 		</div>
-		<div style="margin-top: 10px">
+		<div>
+			<span><label>My Location:</label></span>
+			<span> <label class="switch">
+					<input type="checkbox" ng-model="myLocation" ng-change="getLocation()">
+					<div class="slider round"></div> </label> </span>
+		</div>
+		<div>
 			<span><label for="country">Country:</label></span>
 			<span> <select class="form-control" id="country" ng-change="getStates()" ng-model="country" ng-options="item.name for item in countries"></select></span>
 		</div>

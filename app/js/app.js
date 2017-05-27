@@ -66,6 +66,24 @@ app.service("TravelerService", function($http, $window) {
 			if (data.data.length > 0) {
 				return data.data;
 
+			} else if (entry.id == -1) {
+				return [{
+					City : '',
+					Country : '',
+					Currency : '',
+					Date : '2017-05-19T15:00:00.000Z',
+					Description : '',
+					Id : -1,
+					Image : '',
+					Name : 'No Events',
+					Price : 0,
+					Site : '',
+					State : '',
+					Type : 1,
+					UserId : -1,
+					Alias : ""
+
+				}];
 			} else {
 				return [{
 					City : '',
@@ -84,7 +102,8 @@ app.service("TravelerService", function($http, $window) {
 					Alias : ""
 
 				}];
-			};
+			}
+			;
 		});
 
 	};
@@ -94,6 +113,24 @@ app.service("TravelerService", function($http, $window) {
 		return $http.get(serverAddr + "/events/" + entry.id).then(function(data) {
 			if (data.data.length > 0) {
 				return data.data;
+			} else if (entry.id == -1) {
+				return [{
+					City : '',
+					Country : '',
+					Currency : '',
+					Date : '2017-05-19T15:00:00.000Z',
+					Description : '',
+					Id : -1,
+					Image : '',
+					Name : 'No Events',
+					Price : 0,
+					Site : '',
+					State : '',
+					Type : 1,
+					UserId : -1,
+					Alias : ""
+
+				}];
 			} else {
 				return [{
 					City : '',
@@ -112,7 +149,8 @@ app.service("TravelerService", function($http, $window) {
 					Alias : ""
 
 				}];
-			};
+			}
+			;
 		});
 
 	};
@@ -122,6 +160,24 @@ app.service("TravelerService", function($http, $window) {
 		return $http.get(serverAddr + "/events/" + entry.date + "/" + entry.country + "/" + entry.state + "/" + entry.city + "/" + entry.id + "/search/" + entry.find).then(function(data) {
 			if (data.data.length > 0) {
 				return data.data;
+			} else if (entry.id == -1) {
+				return [{
+					City : '',
+					Country : '',
+					Currency : '',
+					Date : '2017-05-19T15:00:00.000Z',
+					Description : '',
+					Id : -1,
+					Image : '',
+					Name : 'No Events',
+					Price : 0,
+					Site : '',
+					State : '',
+					Type : 1,
+					UserId : -1,
+					Alias : ""
+
+				}];
 			} else {
 				return [{
 					City : '',
@@ -140,7 +196,8 @@ app.service("TravelerService", function($http, $window) {
 					Alias : " "
 
 				}];
-			};
+			}
+			;
 		});
 
 	};
@@ -150,6 +207,24 @@ app.service("TravelerService", function($http, $window) {
 		return $http.get(serverAddr + "/events/" + entry.date + "/" + entry.country + "/" + entry.state + "/" + entry.city + "/" + entry.id + "/" + entry.type).then(function(data) {
 			if (data.data.length > 0) {
 				return data.data;
+			} else if (entry.id == -1) {
+				return [{
+					City : '',
+					Country : '',
+					Currency : '',
+					Date : '2017-05-19T15:00:00.000Z',
+					Description : '',
+					Id : -1,
+					Image : '',
+					Name : 'No Events',
+					Price : 0,
+					Site : '',
+					State : '',
+					Type : 1,
+					UserId : -1,
+					Alias : ""
+
+				}];
 			} else {
 				return [{
 					City : '',
@@ -168,7 +243,8 @@ app.service("TravelerService", function($http, $window) {
 					Alias : " "
 
 				}];
-			};
+			}
+			;
 		});
 
 	};
@@ -178,6 +254,24 @@ app.service("TravelerService", function($http, $window) {
 		return $http.get(serverAddr + "/events/" + entry.date + "/" + entry.country + "/" + entry.state + "/" + entry.city + "/" + entry.id + "/search/" + entry.type + "/" + entry.find).then(function(data) {
 			if (data.data.length > 0) {
 				return data.data;
+			} else if (entry.id == -1) {
+				return [{
+					City : '',
+					Country : '',
+					Currency : '',
+					Date : '2017-05-19T15:00:00.000Z',
+					Description : '',
+					Id : -1,
+					Image : '',
+					Name : 'No Events',
+					Price : 0,
+					Site : '',
+					State : '',
+					Type : 1,
+					UserId : -1,
+					Alias : ""
+
+				}];
 			} else {
 				return [{
 					City : '',
@@ -196,7 +290,8 @@ app.service("TravelerService", function($http, $window) {
 					Alias : " "
 
 				}];
-			};
+			}
+			;
 		});
 
 	};
@@ -206,6 +301,24 @@ app.service("TravelerService", function($http, $window) {
 		return $http.get(serverAddr + "/events/" + entry.date + "/" + entry.alias + "/" + entry.id).then(function(data) {
 			if (data.data.length > 0) {
 				return data.data;
+			} else if (entry.id == -1) {
+				return [{
+					City : '',
+					Country : '',
+					Currency : '',
+					Date : '2017-05-19T15:00:00.000Z',
+					Description : '',
+					Id : -1,
+					Image : '',
+					Name : 'No Events',
+					Price : 0,
+					Site : '',
+					State : '',
+					Type : 1,
+					UserId : -1,
+					Alias : ""
+
+				}];
 			} else {
 				return [{
 					City : '',
@@ -224,7 +337,8 @@ app.service("TravelerService", function($http, $window) {
 					Alias : " "
 
 				}];
-			};
+			}
+			;
 		});
 	};
 
@@ -280,6 +394,18 @@ app.service("TravelerService", function($http, $window) {
 			data : entry
 		}).then(function(data) {
 			return data;
+		});
+
+	};
+
+	travelerService.locationCreate = function(entry) {
+		$http({
+			method : 'POST',
+			headers : {
+				'Content-Type' : 'application/json; charset=utf-8'
+			},
+			url : serverAddr + '/location',
+			data : entry
 		});
 
 	};
@@ -397,7 +523,9 @@ function($scope, $routeParams, $location, TravelerService, $window, $cookies) {
 
 app.controller("MainController", ["$scope", "$routeParams", "$location", "TravelerService", "$geolocation", "$route", "$window", "$cookies",
 function($scope, $routeParams, $location, TravelerService, ngGeolocation, $route, $window, $cookies) {
+
 	var userInfo = $cookies.getObject('userInfo');
+
 	if (userInfo != undefined) {
 		$scope.id = userInfo[0].id;
 		$scope.alias = userInfo[0].alias;
@@ -406,54 +534,64 @@ function($scope, $routeParams, $location, TravelerService, ngGeolocation, $route
 		$scope.alias = userId[0].alias;
 	};
 
-	//$window.navigator.permissions.query({
-	//'name' : 'geolocation'
-	//}).then(function(permissions) {
-	//if (permissions.state == 'prompt') {
-	//ngGeolocation.getCurrentPosition();
-	//$route.reload();
-	//} else if (permissions.state == 'granted') {
-	//ngGeolocation.getCurrentPosition().then(function(position) {
-	//TravelerService.location(position.coords).then(function(response) {
-	//$scope.location = response;
-	//}).then(TravelerService.getCountries().then(function(response) {
-	//	$scope.countries = response;
-	//}).then(function(response) {
-	//$scope.countries.splice(0, 0, {
-	//Name : $scope.location[6].long_name
-	//});
-	//$scope.country = $scope.countries[0];
-	//$scope.states = [{
-	//Name : $scope.location[5].long_name
-	//}];
-	//$scope.state = $scope.states[0];
-	//$scope.cities = [{
-	//	Name : $scope.location[4].long_name
-	//	}];
-	//	$scope.city = $scope.cities[0];
-	//	}));
-	//	});
-	//} else {
-	$scope.countries = [{
-		id : 0,
-		name : ''
-	}];
-	TravelerService.getCountries().then(function(response) {
-		$scope.countries = response;
-		$scope.country = $scope.countries[0];
-	}).then(function() {
-		TravelerService.getStates($scope.country.id).then(function(response) {
-			$scope.states = response;
-			$scope.state = $scope.states[0];
-		}).then(function(response) {
-			TravelerService.getCities($scope.state.id).then(function(response) {
-				$scope.cities = response;
-				$scope.city = $scope.cities[0];
+	$scope.getLocation = function() {
+		if ($scope.myLocation == true) {
+			$window.navigator.permissions.query({
+				'name' : 'geolocation'
+			}).then(function(permissions) {
+				if (permissions.state == 'prompt') {
+					ngGeolocation.getCurrentPosition().then(function(position) {
+					});
+					$scope.getLocation();
+				} else if (permissions.state == 'granted') {
+					ngGeolocation.getCurrentPosition().then(function(position) {
+						TravelerService.location(position.coords).then(function(response) {
+							$scope.location = response;
+							var entry = {
+								countryName : $scope.location[6].long_name,
+								stateName : $scope.location[5].long_name,
+								cityName : $scope.location[4].long_name
+							};
+							TravelerService.locationCreate(entry);
+						}).then(function(response) {
+							$scope.countries = [{
+								name : $scope.location[6].long_name
+							}];
+							$scope.country = $scope.countries[0];
+							$scope.states = [{
+								name : $scope.location[5].long_name
+							}];
+							$scope.state = $scope.states[0];
+							$scope.cities = [{
+								name : $scope.location[4].long_name
+							}];
+							$scope.city = $scope.cities[0];							
+						});
+					});
+				} else {
+					$window.alert("Please allow location services in your browser");
+					$route.reload();
+				}
+				;
 			});
-		});
-	});
-	//};
-	//});
+		} else {
+			TravelerService.getCountries().then(function(response) {
+				$scope.countries = response;
+				$scope.country = $scope.countries[0];
+			}).then(function() {
+				TravelerService.getStates($scope.country.id).then(function(response) {
+					$scope.states = response;
+					$scope.state = $scope.states[0];
+				}).then(function(response) {
+					TravelerService.getCities($scope.state.id).then(function(response) {
+						$scope.cities = response;
+						$scope.city = $scope.cities[0];
+					});
+				});
+			});
+
+		};
+	};
 
 	$scope.getStates = function() {
 		TravelerService.getStates($scope.country.Name).then(function(response) {
@@ -481,6 +619,8 @@ function($scope, $routeParams, $location, TravelerService, ngGeolocation, $route
 		$cookies.remove('userInfo');
 		$route.reload();
 	};
+
+	$scope.getLocation();
 
 }]);
 
@@ -912,6 +1052,59 @@ function($scope, $routeParams, $location, TravelerService, myConfig, ngGeolocati
 				});
 
 			};
+
+		};
+	};
+
+	$scope.getLocation = function() {
+		if ($scope.myLocation == true) {
+			$window.navigator.permissions.query({
+				'name' : 'geolocation'
+			}).then(function(permissions) {
+				if (permissions.state == 'prompt') {
+					ngGeolocation.getCurrentPosition().then(function(position) {
+					});
+					$scope.getLocation();
+				} else if (permissions.state == 'granted') {
+					ngGeolocation.getCurrentPosition().then(function(position) {
+						TravelerService.location(position.coords).then(function(response) {
+							$scope.location = response;
+						}).then(function(response) {
+							$scope.countries = [{
+								name : $scope.location[6].long_name
+							}];
+							$scope.country = $scope.countries[0];
+							$scope.states = [{
+								name : $scope.location[5].long_name
+							}];
+							$scope.state = $scope.states[0];
+							$scope.cities = [{
+								name : $scope.location[4].long_name
+							}];
+							$scope.city = $scope.cities[0];
+						});
+					});
+				} else {
+					$window.alert("Please allow location services in your browser");
+					$route.reload();
+				}
+				;
+			});
+		} else {
+			TravelerService.getCountries().then(function(response) {
+				$scope.countries = response;
+				$scope.country = $scope.countries[0];
+			}).then(function() {
+				TravelerService.getStates($scope.country.id).then(function(response) {
+					$scope.states = response;
+					$scope.state = $scope.states[0];
+				}).then(function(response) {
+					TravelerService.getCities($scope.state.id).then(function(response) {
+						$scope.cities = response;
+						$scope.city = $scope.cities[0];
+					});
+				});
+			});
 
 		};
 	};

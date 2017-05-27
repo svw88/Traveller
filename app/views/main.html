@@ -67,6 +67,12 @@
 	</div>
 	<div class="main-frame">
 		<div style="margin-top: 10px">
+			<span><label>My Location</label></span>
+			<span> <label class="switch">
+					<input type="checkbox" ng-model="myLocation" ng-change="getLocation()">
+					<div class="slider round"></div> </label> </span>
+		</div>
+		<div>
 			<span><label for="country">Country</label></span>
 			<span> <select class="form-control" id="country" ng-change="getStates()" ng-model="country" ng-options="item.name for item in countries"></select></span>
 		</div>
