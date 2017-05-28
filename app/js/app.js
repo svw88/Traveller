@@ -593,11 +593,11 @@ function($scope, $routeParams, $location, TravelerService, ngGeolocation, $route
 		};
 	};
 
-	$scope.getStates = function() {
-		TravelerService.getStates($scope.country.Name).then(function(response) {
+	$scope.getStates = function() {				
+		TravelerService.getStates($scope.country.id).then(function(response) {
 			$scope.states = response;
 			$scope.state = $scope.states[0];
-			TravelerService.getCities($scope.state.Name).then(function(response) {
+			TravelerService.getCities($scope.state.id).then(function(response) {
 				$scope.cities = response;
 				$scope.city = $scope.cities[0];
 			});
@@ -605,7 +605,7 @@ function($scope, $routeParams, $location, TravelerService, ngGeolocation, $route
 	};
 
 	$scope.getCities = function() {
-		TravelerService.getCities($scope.state.Name).then(function(response) {
+		TravelerService.getCities($scope.state.id).then(function(response) {
 			$scope.cities = response;
 			$scope.city = $scope.cities[0];
 		});
@@ -972,10 +972,10 @@ function($scope, $routeParams, $location, TravelerService, myConfig, ngGeolocati
 
 
 	$scope.getStates = function() {
-		TravelerService.getStates($scope.country.Name).then(function(response) {
+		TravelerService.getStates($scope.country.id).then(function(response) {
 			$scope.states = response;
 			$scope.state = $scope.states[0];
-			TravelerService.getCities($scope.state.Name).then(function(response) {
+			TravelerService.getCities($scope.state.id).then(function(response) {
 				$scope.cities = response;
 				$scope.city = $scope.cities[0];
 			});
@@ -983,7 +983,7 @@ function($scope, $routeParams, $location, TravelerService, myConfig, ngGeolocati
 	};
 
 	$scope.getCities = function() {
-		TravelerService.getCities($scope.state.Name).then(function(response) {
+		TravelerService.getCities($scope.state.id).then(function(response) {
 			$scope.cities = response;
 			$scope.city = $scope.cities[0];
 		});
